@@ -303,16 +303,9 @@ dist_url = https://atom.io/download/atom-shell
 
 ## Getting Help
 
-If your question is directly related to the addon or their usage, post a question on `stack-overflow` and use the `trusted-curl` tag.
+If your question is directly related to the addon or their usage, post a question on [Issues](https://github.com/TrustedPlus/trusted-curl/issues)
 
 ## Contributing
 
 Read [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-## Donations / Patreon
-
-Some people have been asking if there are any means to support my work, I've created a patreon page for that: https://www.patreon.com/jonathancardoso
-
-If you want to donate via PayPal, use the same e-mail that is available on my GitHub profile: https://github.com/JCMais
-
-And thanks for reading till here! 😄
