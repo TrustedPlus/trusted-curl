@@ -1,29 +1,6 @@
 # node-libcurl<!-- omit in toc -->
-[![NPM version][npm-image]][npm-url]
-[![node][node-image]][node-url]
-[![license][license-image]][license-url]
 
-[![Travis CI Status][travis-image]][travis-url]
-[![AppVeyor CI Status][appveyor-image]][appveyor-url]
-[![Code Quality][codeclimate-image]][codeclimate-url]
-[![Dependencies][deps-image]][deps-url]
-
-[npm-image]:https://img.shields.io/npm/v/node-libcurl.svg?style=flat-square
-[npm-url]:https://www.npmjs.org/package/node-libcurl
-[travis-image]:https://img.shields.io/travis/JCMais/node-libcurl/master.svg?style=flat-square
-[travis-url]:https://travis-ci.com/JCMais/node-libcurl
-[appveyor-image]:https://ci.appveyor.com/api/projects/status/u7ox641jyb6hxrkt/branch/master?svg=true
-[appveyor-url]:https://ci.appveyor.com/project/JCMais/node-libcurl
-[codeclimate-image]:https://img.shields.io/codeclimate/github/JCMais/node-libcurl.svg?style=flat-square
-[codeclimate-url]:https://codeclimate.com/github/JCMais/node-libcurl
-[node-image]:https://img.shields.io/badge/node.js-%3E=_4-green.svg?style=flat-square
-[node-url]:https://nodejs.org/download/
-[license-image]:https://img.shields.io/github/license/JCMais/node-libcurl.svg?style=flat-square
-[license-url]:https://raw.githubusercontent.com/JCMais/node-libcurl/develop/LICENSE-MIT
-[deps-image]:https://img.shields.io/david/JCMais/node-libcurl.svg?style=flat-square
-[deps-url]:https://david-dm.org/jcmais/node-libcurl
-
-[Libcurl](https://github.com/bagder/curl) bindings for Node.js.
+[Libcurl](https://github.com/curl/curl) bindings for Node.js.
 _Based on the work from [jiangmiao/node-curl](https://github.com/jiangmiao/node-curl)._
 
 - [Quick Start](#quick-start)
@@ -50,12 +27,21 @@ _Based on the work from [jiangmiao/node-curl](https://github.com/jiangmiao/node-
 ## Quick Start
 
 ### Install
-```shell
-npm i node-libcurl --save
+windows
+```bat
+git clone --recurse-submodules https://github.com/TrustedPlus/trusted-curl.git
+cd trusted-curl\deps\curl-for-windows
+python configure.py
+cd ../..
+npm install --build-from-source
+tsc
 ```
-or
+linux
 ```shell
-yarn add node-libcurl
+git clone https://github.com/TrustedPlus/trusted-curl.git
+cd ./trusted-curl
+npm install --build-from-source
+tsc
 ```
 ### Simple Request - Async / Await
 > this API is experimental and is subject to changes without a major version bump
