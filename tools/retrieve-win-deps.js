@@ -61,7 +61,7 @@ const cleanupAndExit = (code = 0) => {
 }
 
 // Check if we are on the root git dir. That is, someone is running this
-//  directly from the node-libcurl repo.
+//  directly from the trusted-curl repo.
 exec('git rev-parse --show-toplevel', execConfig, function(err, stdout) {
   // Make sure we are the root git repo
   //  path.relative will return an empty string if both paths are equal

@@ -1,5 +1,5 @@
 {
-  "name": "node-libcurl",
+  "name": "trusted-curl",
   "version": "2.0.1",
   "author": "Jonathan Cardoso <me@jonathancardoso.com>",
   "description": "Node bindings for libcurl. Based on the work from node-curl.",
@@ -7,16 +7,16 @@
     "node-curl",
     "curl",
     "libcurl",
-    "node-libcurl"
+    "trusted-curl"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/JCMais/node-libcurl",
+  "homepage": "https://github.com/TrustedPlus/trusted-curl",
   "repository": {
     "type": "git",
-    "url": "git://github.com/JCMais/node-libcurl.git"
+    "url": "git://github.com/TrustedPlus/trusted-curl.git"
   },
   "bugs": {
-    "url": "https://github.com/JCMais/node-libcurl/issues"
+    "url": "https://github.com/TrustedPlus/trusted-curl/issues"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -43,7 +43,7 @@
     "module_name": "node_libcurl",
     "module_path": "./lib/binding/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
-    "host": "https://github.com/JCMais/node-libcurl/releases/download",
+    "host": "https://github.com/TrustedPlus/trusted-curl/releases/download",
     "remote_path": "./v{version}/"
   },
   "dependencies": {

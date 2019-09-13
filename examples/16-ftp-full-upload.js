@@ -34,7 +34,7 @@ const headerList = [
 
 const filePath = path.join(__dirname, localFile)
 const fileContent = Buffer.from(`
-  This was a test file uploaded using node-libcurl
+  This was a test file uploaded using trusted-curl
 `)
 
 fs.writeFileSync(filePath, fileContent)

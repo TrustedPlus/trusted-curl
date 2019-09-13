@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/node-libcurl
+cd ~/trusted-curl
 
 user=$(whoami)
 

@@ -13,7 +13,7 @@
  */
 const { Curl, CurlFeature } = require('../dist')
 
-// by default all Curl instances set their user agent to `node-libcurl/${addonVersion}`
+// by default all Curl instances set their user agent to `trusted-curl/${addonVersion}`
 //  when they are created
 //  you can change it using:
 Curl.defaultUserAgent = 'Something Else'

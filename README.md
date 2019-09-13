@@ -1,4 +1,4 @@
-# node-libcurl<!-- omit in toc -->
+# trusted-curl<!-- omit in toc -->
 
 [Libcurl](https://github.com/curl/curl) bindings for Node.js.
 _Based on the work from [jiangmiao/node-curl](https://github.com/jiangmiao/node-curl)._
@@ -47,14 +47,14 @@ tsc
 > this API is experimental and is subject to changes without a major version bump
 
 ```javascript
-const { curly } = require('node-libcurl');
+const { curly } = require('trusted-curl');
 
 const { statusCode, data, headers } = await curly.get('http://www.google.com')
 ```
 
 ### Simple Request
 ```javascript
-const { Curl } = require('node-libcurl');
+const { Curl } = require('trusted-curl');
 
 const curl = new Curl();
 
@@ -78,7 +78,7 @@ curl.perform();
 ### MultiPart Upload / HttpPost libcurl Option
 
 ```javascript
-const { Curl } = require('node-libcurl');
+const { Curl } = require('trusted-curl');
 
 const curl = new Curl();
 const close = curl.close.bind(curl);
@@ -121,7 +121,7 @@ and on the following platforms:
 * Mac OS X 64 bits
 * Windows 32 and 64 bits
 
-Installing via `yarn add node-libcurl` or `npm install node-libcurl` should download a prebuilt binary and no compilation will be needed. However if you trying to install on `nw.js` or `electron` additional steps will be required, check their corresponding section on building from source.
+Installing via `yarn add trusted-curl` or `npm install trusted-curl` should download a prebuilt binary and no compilation will be needed. However if you trying to install on `nw.js` or `electron` additional steps will be required, check their corresponding section on building from source.
 
 The prebuilt binary is statically built with the following library versions, features and protocols:
 ```
@@ -135,11 +135,11 @@ If there is no prebuilt binary available that matches your system, or if the ins
 If you don't want to use the prebuilt binary even if it works on your system, you can pass a flag when installing:
 > With `npm`
 ```sh
-npm install node-libcurl --build-from-source
+npm install trusted-curl --build-from-source
 ```
 > With `yarn`
 ```sh
-npm_config_build_from_source=true yarn add node-libcurl
+npm_config_build_from_source=true yarn add trusted-curl
 ```
 
 ### Important Notes on Prebuilt Binaries / Direct Installation
@@ -156,11 +156,11 @@ If you want to build a statically linked version of the addon yourself, you need
 
 > If using `npm`:
 ```sh
-npm install node-libcurl --build-from-source --curl_static_build=true
+npm install trusted-curl --build-from-source --curl_static_build=true
 ```
 > If using `yarn`:
 ```sh
-npm_config_build_from_source=true npm_config_curl_static_build=true yarn add node-libcurl
+npm_config_build_from_source=true npm_config_curl_static_build=true yarn add trusted-curl
 ```
 
 The build process will use `curl-config` available on path, if you want to overwrite it to your own libcurl installation one, you can set the `curl_config_bin` variable, like mentioned above for `curl_static_build`.
@@ -230,7 +230,7 @@ To ignore the UI and install directly from the command line, use:
 sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
 ```
 
-After that you can try to install `node-libcurl` again.
+After that you can try to install `trusted-curl` again.
 
 ### Building on Windows
 
@@ -253,7 +253,7 @@ cinst nasm
 
 Currently there is no support to use other libcurl version than the one provided by the [curl-for-windows](https://github.com/JCMais/curl-for-windows) submodule (help is appreciated on adding this feature).
 
-An important note about building the addon on Windows is that we have to do some "hacks" with the header files included by `node-gyp`/`nw-gyp`. The reason for that is because as we are using a standalone version of OpenSSL, we don't want to use the OpenSSL headers provided by Node.js, which are by default added to `<nw-gyp-or-node-gyp-folder>/include/node/openssl`, so what we do is that before compilation that folder is renamed to `openssl.disabled`. After a successful installation the folder is renamed back to their original name, **however** if any error happens during compilation the folder will stay renamed until the addon is compiled successfully. More info on why that was needed and some context can be found on issue [#164](https://github.com/JCMais/node-libcurl/issues/164).
+An important note about building the addon on Windows is that we have to do some "hacks" with the header files included by `node-gyp`/`nw-gyp`. The reason for that is because as we are using a standalone version of OpenSSL, we don't want to use the OpenSSL headers provided by Node.js, which are by default added to `<nw-gyp-or-node-gyp-folder>/include/node/openssl`, so what we do is that before compilation that folder is renamed to `openssl.disabled`. After a successful installation the folder is renamed back to their original name, **however** if any error happens during compilation the folder will stay renamed until the addon is compiled successfully. More info on why that was needed and some context can be found on issue [#164](https://github.com/JCMais/trusted-curl/issues/164).
 
 ### Electron / NW.js
 
@@ -270,11 +270,11 @@ For building from source on NW.js you first need to make sure you have nw-gyp in
 Then:
 > yarn
 ```
-npm_config_build_from_source=true npm_config_runtime=node-webkit npm_config_target=0.38.2 yarn add node-libcurl
+npm_config_build_from_source=true npm_config_runtime=node-webkit npm_config_target=0.38.2 yarn add trusted-curl
 ```
 > npm
 ```bash
-npm install node-libcurl --build-from-source --runtime=node-webkit --target=0.38.2 --save
+npm install trusted-curl --build-from-source --runtime=node-webkit --target=0.38.2 --save
 ```
 
 where `target` is the current version of NW.js you are using
@@ -283,12 +283,12 @@ where `target` is the current version of NW.js you are using
 
 > yarn
 ```bash
-npm_config_build_from_source=true npm_config_runtime=electron npm_config_target=$(yarn --silent electron --version) npm_config_disturl=https://atom.io/download/atom-shell yarn add node-libcurl
+npm_config_build_from_source=true npm_config_runtime=electron npm_config_target=$(yarn --silent electron --version) npm_config_disturl=https://atom.io/download/atom-shell yarn add trusted-curl
 ```
 
 > npm
 ```bash
-npm install node-libcurl --build-from-source --runtime=electron --target=$(yarn --silent electron --version) --disturl=https://atom.io/download/atom-shell --save
+npm install trusted-curl --build-from-source --runtime=electron --target=$(yarn --silent electron --version) --disturl=https://atom.io/download/atom-shell --save
 ```
 
 Where `target` is the version of electron you are using, in our case, we are just using the version returned by the locally installed `electron` binary.
@@ -303,7 +303,7 @@ dist_url = https://atom.io/download/atom-shell
 
 ## Getting Help
 
-If your question is directly related to the addon or their usage, post a question on `stack-overflow` and use the `node-libcurl` tag.
+If your question is directly related to the addon or their usage, post a question on `stack-overflow` and use the `trusted-curl` tag.
 
 ## Contributing
 

@@ -49,7 +49,7 @@ describe('Put Upload', () => {
     curl = new Curl()
     curl.setOpt(Curl.option.URL, url + '/upload/upload-result.test')
     curl.setOpt(Curl.option.HTTPHEADER, [
-      'Content-Type: application/node-libcurl.raw',
+      'Content-Type: application/trusted-curl.raw',
     ])
 
     //write random bytes to a file, this will be our test file.

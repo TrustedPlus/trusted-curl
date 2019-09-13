@@ -33,7 +33,7 @@ describe('Binary Data', () => {
     curl.setOpt('URL', `http://${host}:${port}`)
     curl.setOpt('POSTFIELDSIZE', size)
     curl.setOpt('POSTFIELDS', buffer.toString())
-    curl.setOpt('HTTPHEADER', ['Content-Type: application/node-libcurl.raw'])
+    curl.setOpt('HTTPHEADER', ['Content-Type: application/trusted-curl.raw'])
 
     curl.on('end', (status, data) => {
       curl.close()

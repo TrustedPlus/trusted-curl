@@ -150,7 +150,7 @@ class Curl extends EventEmitter {
     return _Curl.VERSION_NUM >= (x << 16) + (y << 8) + z
   }
 
-  static defaultUserAgent = `node-libcurl/${pkg.version}`
+  static defaultUserAgent = `trusted-curl/${pkg.version}`
 
   /**
    * Returns the number of handles currently open in the internal multi handle being used.

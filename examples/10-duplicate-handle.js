@@ -22,7 +22,7 @@ const { Curl } = require('../dist')
 
 // Do not run this against some real site unless you want to trigger some DDOS protection against you
 const url = 'http://localhost:8080/'
-const data = { 'Hi!': 'This was sent using node-libcurl <3!' }
+const data = { 'Hi!': 'This was sent using trusted-curl <3!' }
 
 const shouldCopyEventListeners = true
 

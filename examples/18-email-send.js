@@ -27,7 +27,7 @@ const rawEmail = [
   'To: ' + receiver + '\r\n',
   'From: ' + sender + '\r\n',
   //remember the message-ID must be different for each email sent
-  'Message-ID: <node-libcurl-email-test-1@sub.domain.tld>\r\n',
+  'Message-ID: <trusted-curl-email-test-1@sub.domain.tld>\r\n',
   'Subject: SMTP TLS example message\r\n',
   '\r\n',
   'The body of the message starts here.\r\n',

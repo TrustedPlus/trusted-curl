@@ -15,7 +15,7 @@ const versionTag =
 const args = process.argv.splice(2, 2)
 const validArgs = ['--publish', '--unpublish']
 
-log.heading = 'node-libcurl'
+log.heading = 'trusted-curl'
 
 if (args.length !== 2) {
   log.error('', 'invalid number of arguments passed to module-packaging script')

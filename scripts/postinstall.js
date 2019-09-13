@@ -29,7 +29,7 @@ if (fs.existsSync(opensslFolderDisabled)) {
 const buildFlags = require('./buildFlags')
 const exec = require('./execPromise')
 
-log.heading = 'node-libcurl'
+log.heading = 'trusted-curl'
 
 const rootPath = path.join(__dirname, '..')
 
@@ -64,16 +64,16 @@ module.exports = function install() {
   return exec(`${executable} "${file}"`)
     .catch(function(e) {
       if (~e.toString().indexOf('Module version mismatch')) {
-        log.warn('node-libcurl was built for a different version of node.')
+        log.warn('trusted-curl was built for a different version of node.')
         log.warn(
-          'If you are building node-libcurl for electron/nwjs you can ignore this warning.',
+          'If you are building trusted-curl for electron/nwjs you can ignore this warning.',
         )
       } else {
         throw e
       }
     })
     .then(function() {
-      // If we're using node-libcurl from a package manager then let's clean up after
+      // If we're using trusted-curl from a package manager then let's clean up after
       // ourselves when we install successfully.
       if (!buildFlags.mustBuild) {
         // We can't remove the source files yet because apparently the
