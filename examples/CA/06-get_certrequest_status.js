@@ -2,9 +2,9 @@ const { Curl } = require('../../dist')
 
 const curl = new Curl()
 const url =
-'https://testca2012.cryptopro.ru/ui/api/certrequest/100a4027-57dd-4433-9e2e-aaca00cd0fa2' //{GUID}
-var name = 'g1212'
-var password = '5399435110'
+'https://testca2012.cryptopro.ru/ui/api/certrequest/dda305a3-5942-420a-b317-aaca00dde8df' //{GUID}
+var name = 'g12'
+var password = '9185543195'
 
 curl.setOpt(Curl.option.URL, url)
 //curl.setOpt('SSL_VERIFYHOST', 0)
