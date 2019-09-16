@@ -53,7 +53,8 @@
     "node-pre-gyp": "0.13.0",
     "npmlog": "4.1.2",
     "osenv": "0.1.5",
-    "tslib": "^1.9.3"
+    "tslib": "^1.9.3",
+    "yarn": "^1.17.3"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.2.0",
