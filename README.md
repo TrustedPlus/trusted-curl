@@ -22,7 +22,6 @@ _Based on the work from [jiangmiao/node-curl](https://github.com/jiangmiao/node-
     - [electron (aka atom-shell)](#electron-aka-atom-shell)
 - [Getting Help](#getting-help)
 - [Contributing](#contributing)
-- [Donations / Patreon](#donations--patreon)
 
 ## Quick Start
 
