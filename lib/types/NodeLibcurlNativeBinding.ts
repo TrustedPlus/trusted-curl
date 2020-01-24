@@ -6,7 +6,6 @@
  */
 import {
   CurlNativeBindingObject,
-  CurlVersionInfoNativeBindingObject,
   EasyNativeBindingObject,
   MultiNativeBindingObject,
   ShareNativeBindingObject,
@@ -25,7 +24,6 @@ export interface NodeLibcurlNativeBinding {
   //   }
   // >
   Curl: CurlNativeBindingObject
-  CurlVersionInfo: CurlVersionInfoNativeBindingObject
   Easy: EasyNativeBindingObject
   Multi: MultiNativeBindingObject
   Share: ShareNativeBindingObject

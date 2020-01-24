@@ -811,10 +811,6 @@ NAN_METHOD(GlobalInit) {
                    ? static_cast<long>(Nan::To<int32_t>(info[0]).FromJust())  // NOLINT(runtime/int)
                    : CURL_GLOBAL_ALL;
 
-  curl_version_info_data* version = curl_version_info(CURLVERSION_NOW);
-  isLibcurlBuiltWithThreadedResolver =
-      (version->features & CURL_VERSION_ASYNCHDNS) == CURL_VERSION_ASYNCHDNS;
-
   CURLcode globalInitRetCode;
 
   // We only add the allloc wrappers if we are running libcurl without the threaded resolver

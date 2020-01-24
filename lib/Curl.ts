@@ -49,7 +49,7 @@ const bindingPath = binary.find(
 const bindings: NodeLibcurlNativeBinding = require(bindingPath)
 
 // tslint:disable-next-line
-const { Curl: _Curl, CurlVersionInfo } = bindings
+const { Curl: _Curl } = bindings
 
 if (
   !process.env.NODE_LIBCURL_DISABLE_GLOBAL_INIT_CALL ||
@@ -109,26 +109,6 @@ class Curl extends EventEmitter {
    * This is automatically called when the process is exiting
    */
   static globalCleanup = _Curl.globalCleanup
-
-  /**
-   * Returns an object with a representation of the current libcurl version and their features/protocols.
-   *
-   * This is basically [curl_version_info()](https://curl.haxx.se/libcurl/c/curl_version_info.html)
-   */
-  static getVersionInfo = () => CurlVersionInfo
-
-  /**
-   * Returns a string that looks like the one returned by
-   * ```
-   * curl -V
-   * ```
-   */
-  static getVersionInfoString = () => {
-    const protocols = CurlVersionInfo.protocols.join(', ')
-    const features = CurlVersionInfo.features.join(', ')
-
-    return [`Protocols: ${protocols}`, `Features: ${features}`].join('\n')
-  }
 
   static isVersionGreaterOrEqualThan = (
     x: number,

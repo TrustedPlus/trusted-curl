@@ -10,9 +10,3 @@ const { Curl } = require('../dist')
 
 console.log('Curl.VERSION_NUM, integer:')
 console.log(Curl.VERSION_NUM)
-
-console.log('Curl.getVersionInfo():')
-console.log(Curl.getVersionInfo())
-
-console.log('Curl.getVersionInfoString():')
-console.log(Curl.getVersionInfoString())

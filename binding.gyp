@@ -23,7 +23,6 @@
         'src/Multi.cc',
         'src/Curl.cc',
         'src/CurlHttpPost.cc',
-        'src/CurlVersionInfo.cc',
       ],
       'include_dirs' : [
         "<!(node -e \"require('nan')\")",

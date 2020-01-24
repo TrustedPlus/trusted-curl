@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 #include "Curl.h"
-#include "CurlVersionInfo.h"
 #include "Easy.h"
 #include "Multi.h"
 #include "Share.h"
@@ -50,7 +49,6 @@ NAN_MODULE_INIT(Init) {
   Easy::Initialize(target);
   Multi::Initialize(target);
   Share::Initialize(target);
-  CurlVersionInfo::Initialize(target);
 
   node::AtExit(AtExitCallback, NULL);
 }
