@@ -678,7 +678,6 @@ NAN_MODULE_INIT(Initialize) {
 
   Nan::SetMethod(obj, "globalInit", GlobalInit);
   Nan::SetMethod(obj, "globalCleanup", GlobalCleanup);
-  Nan::SetMethod(obj, "getVersion", GetVersion);
   Nan::SetMethod(obj, "getCount", GetCount);
   Nan::SetAccessor(obj, Nan::New("VERSION_NUM").ToLocalChecked(), GetterVersionNum, 0,
                    v8::Local<v8::Value>(), v8::DEFAULT, attributes);
@@ -736,18 +735,6 @@ void AdjustMemory(ssize_t diff) {
   }
 
   Nan::AdjustExternalMemory(static_cast<int>(diff));
-}
-
-// Return human readable string with the version number of libcurl and some of its important
-// components (like OpenSSL version).
-NAN_METHOD(GetVersion) {
-  Nan::HandleScope scope;
-
-  const char* version = curl_version();
-
-  v8::Local<v8::Value> versionObj = Nan::New<v8::String>(version).ToLocalChecked();
-
-  info.GetReturnValue().Set(versionObj);
 }
 
 NAN_METHOD(GetCount) {

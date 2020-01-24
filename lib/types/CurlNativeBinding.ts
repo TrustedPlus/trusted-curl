@@ -13,7 +13,6 @@ import { MultiOption } from '../generated/MultiOption'
 export declare interface CurlNativeBindingObject {
   globalInit(flags: CurlGlobalInit): number
   globalCleanup(): void
-  getVersion(): string
   VERSION_NUM: number
 
   info: CurlInfo

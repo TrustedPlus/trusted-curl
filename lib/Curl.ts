@@ -111,13 +111,6 @@ class Curl extends EventEmitter {
   static globalCleanup = _Curl.globalCleanup
 
   /**
-   * Returns libcurl version string.
-   * The string shows which features are enabled,
-   *  and the version of the libraries that libcurl was built with.
-   */
-  static getVersion = _Curl.getVersion
-
-  /**
    * Returns an object with a representation of the current libcurl version and their features/protocols.
    *
    * This is basically [curl_version_info()](https://curl.haxx.se/libcurl/c/curl_version_info.html)
@@ -131,15 +124,10 @@ class Curl extends EventEmitter {
    * ```
    */
   static getVersionInfoString = () => {
-    const version = Curl.getVersion()
     const protocols = CurlVersionInfo.protocols.join(', ')
     const features = CurlVersionInfo.features.join(', ')
 
-    return [
-      `Version: ${version}`,
-      `Protocols: ${protocols}`,
-      `Features: ${features}`,
-    ].join('\n')
+    return [`Protocols: ${protocols}`, `Features: ${features}`].join('\n')
   }
 
   static isVersionGreaterOrEqualThan = (
