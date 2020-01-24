@@ -813,14 +813,7 @@ NAN_METHOD(GlobalInit) {
 
   CURLcode globalInitRetCode;
 
-  // We only add the allloc wrappers if we are running libcurl without the threaded resolver
-  //  that is because v8 AdjustAmountOfExternalAllocatedMemory must be called from the Node thread
-  if (!isLibcurlBuiltWithThreadedResolver) {
-    globalInitRetCode = curl_global_init_mem(flags, MallocCallback, FreeCallback, ReallocCallback,
-                                             StrdupCallback, CallocCallback);
-  } else {
-    globalInitRetCode = curl_global_init(flags);
-  }
+  globalInitRetCode = curl_global_init(flags);
 
   info.GetReturnValue().Set(globalInitRetCode);
 }
