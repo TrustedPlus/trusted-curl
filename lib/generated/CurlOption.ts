@@ -854,13 +854,6 @@ export interface CurlOption {
   readonly PROTOCOLS: 'PROTOCOLS'
 
   /**
-   * Proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html)
-   */
-  readonly PROXY: 'PROXY'
-
-  /**
    * Proxy CA cert bundle.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_CAINFO.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_CAINFO.html)
@@ -2387,13 +2380,6 @@ export const CurlOptionCamelCaseMap = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROTOCOLS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROTOCOLS.html)
    */
   protocols: 'PROTOCOLS',
-
-  /**
-   * Proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html)
-   */
-  proxy: 'PROXY',
 
   /**
    * Proxy CA cert bundle.
@@ -5031,20 +5017,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROTOCOLS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROTOCOLS.html)
    */
   protocols?: string | number | boolean | null
-
-  /**
-   * Proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html)
-   */
-  PROXY?: string | number | boolean | null
-
-  /**
-   * Proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY.html)
-   */
-  proxy?: string | number | boolean | null
 
   /**
    * Proxy CA cert bundle.

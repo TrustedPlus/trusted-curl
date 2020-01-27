@@ -336,8 +336,6 @@ const std::vector<CurlConstant> curlOptionString = {
     {"PRE_PROXY", CURLOPT_PRE_PROXY},
 #endif
 
-    {"PROXY", CURLOPT_PROXY},
-
 #if NODE_LIBCURL_VER_GE(7, 52, 0)
     {"PROXY_CAINFO", CURLOPT_PROXY_CAINFO},
     {"PROXY_CAPATH", CURLOPT_PROXY_CAPATH},
