@@ -518,13 +518,6 @@ export interface CurlOption {
   readonly HTTPPOST: 'HTTPPOST'
 
   /**
-   * Tunnel through the HTTP proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html](https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html)
-   */
-  readonly HTTPPROXYTUNNEL: 'HTTPPROXYTUNNEL'
-
-  /**
    * Ignore Content-Length.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_IGNORE_CONTENT_LENGTH.html](https://curl.haxx.se/libcurl/c/CURLOPT_IGNORE_CONTENT_LENGTH.html)
@@ -2039,13 +2032,6 @@ export const CurlOptionCamelCaseMap = {
   httpPost: 'HTTPPOST',
 
   /**
-   * Tunnel through the HTTP proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html](https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html)
-   */
-  httpProxyTunnel: 'HTTPPROXYTUNNEL',
-
-  /**
    * Ignore Content-Length.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_IGNORE_CONTENT_LENGTH.html](https://curl.haxx.se/libcurl/c/CURLOPT_IGNORE_CONTENT_LENGTH.html)
@@ -3130,7 +3116,6 @@ export type CurlOptionName =
   | 'HTTPGET'
   | 'HTTPHEADER'
   | 'HTTPPOST'
-  | 'HTTPPROXYTUNNEL'
   | 'IGNORE_CONTENT_LENGTH'
   | 'INFILESIZE'
   | 'INFILESIZE_LARGE'
@@ -4316,20 +4301,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPOST.html)
    */
   httpPost?: HttpPostField[] | null
-
-  /**
-   * Tunnel through the HTTP proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html](https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html)
-   */
-  HTTPPROXYTUNNEL?: string | number | boolean | null
-
-  /**
-   * Tunnel through the HTTP proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html](https://curl.haxx.se/libcurl/c/CURLOPT_HTTPPROXYTUNNEL.html)
-   */
-  httpProxyTunnel?: string | number | boolean | null
 
   /**
    * Ignore Content-Length.
