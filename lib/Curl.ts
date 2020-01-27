@@ -408,26 +408,6 @@ class Curl extends EventEmitter {
   }
 
   /**
-   * Reset this handle options to their defaults.
-   */
-  reset() {
-    this.removeAllListeners()
-    this.handle.reset()
-
-    // add callbacks back as reset will remove them
-    this.handle.setOpt(
-      Curl.option.WRITEFUNCTION,
-      this.defaultWriteFunction.bind(this),
-    )
-    this.handle.setOpt(
-      Curl.option.HEADERFUNCTION,
-      this.defaultHeaderFunction.bind(this),
-    )
-
-    return this
-  }
-
-  /**
    * Close this handle.
    *
    * **NOTE:** After closing the handle, it should not be used anymore! Doing so will throw an exception.

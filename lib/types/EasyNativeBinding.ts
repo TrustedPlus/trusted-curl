@@ -174,13 +174,6 @@ export declare class EasyNativeBinding {
   perform(): CurlCode
 
   /**
-   * Reset this handle to their original state.
-   *
-   * Official libcurl documentation: [curl_easy_reset()](http://curl.haxx.se/libcurl/c/curl_easy_reset.html)
-   */
-  reset(): CurlCode
-
-  /**
    * The only time this method should be used is when one enables the internal polling of the connection socket used by
    *  this handle (by calling `Easy#monitorSocketEvents`)
    * The callback is going to be called everytime there is some change to the socket.

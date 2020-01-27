@@ -903,7 +903,6 @@ NAN_MODULE_INIT(Easy::Initialize) {
   Nan::SetPrototypeMethod(tmpl, "send", Easy::Send);
   Nan::SetPrototypeMethod(tmpl, "recv", Easy::Recv);
   Nan::SetPrototypeMethod(tmpl, "perform", Easy::Perform);
-  Nan::SetPrototypeMethod(tmpl, "reset", Easy::Reset);
   Nan::SetPrototypeMethod(tmpl, "onSocketEvent", Easy::OnSocketEvent);
   Nan::SetPrototypeMethod(tmpl, "monitorSocketEvents", Easy::MonitorSocketEvents);
   Nan::SetPrototypeMethod(tmpl, "unmonitorSocketEvents", Easy::UnmonitorSocketEvents);
@@ -1657,34 +1656,6 @@ NAN_METHOD(Easy::Perform) {
   v8::Local<v8::Integer> ret = Nan::New<v8::Integer>(static_cast<int32_t>(code));
 
   info.GetReturnValue().Set(ret);
-}
-
-NAN_METHOD(Easy::Reset) {
-  Nan::HandleScope scope;
-
-  Easy* obj = Nan::ObjectWrap::Unwrap<Easy>(info.This());
-
-  if (!obj->isOpen) {
-    Nan::ThrowError("Curl handle closed.");
-    return;
-  }
-
-  curl_easy_reset(obj->ch);
-
-  // reset the URL,
-  // https://github.com/bagder/curl/commit/ac6da721a3740500cc0764947385eb1c22116b83
-  curl_easy_setopt(obj->ch, CURLOPT_URL, "");
-
-  obj->callbacks.clear();
-  obj->ResetRequiredHandleOptions();
-
-  obj->toFree = nullptr;
-  obj->toFree = std::make_shared<Easy::ToFree>();
-
-  obj->readDataFileDescriptor = -1;
-  obj->readDataOffset = -1;
-
-  info.GetReturnValue().Set(info.This());
 }
 
 NAN_METHOD(Easy::DupHandle) {
