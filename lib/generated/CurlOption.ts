@@ -575,13 +575,6 @@ export interface CurlOption {
   readonly KEEP_SENDING_ON_ERROR: 'KEEP_SENDING_ON_ERROR'
 
   /**
-   * Client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html)
-   */
-  readonly KEYPASSWD: 'KEYPASSWD'
-
-  /**
    * Kerberos security level.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KRBLEVEL.html](https://curl.haxx.se/libcurl/c/CURLOPT_KRBLEVEL.html)
@@ -2166,13 +2159,6 @@ export const CurlOptionCamelCaseMap = {
   keepSendingOnError: 'KEEP_SENDING_ON_ERROR',
 
   /**
-   * Client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html)
-   */
-  keyPasswd: 'KEYPASSWD',
-
-  /**
    * Kerberos security level.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KRBLEVEL.html](https://curl.haxx.se/libcurl/c/CURLOPT_KRBLEVEL.html)
@@ -3279,7 +3265,6 @@ export type CurlOptionName =
   | 'IPRESOLVE'
   | 'ISSUERCERT'
   | 'KEEP_SENDING_ON_ERROR'
-  | 'KEYPASSWD'
   | 'KRBLEVEL'
   | 'LOCALPORT'
   | 'LOCALPORTRANGE'
@@ -4580,20 +4565,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KEEP_SENDING_ON_ERROR.html](https://curl.haxx.se/libcurl/c/CURLOPT_KEEP_SENDING_ON_ERROR.html)
    */
   keepSendingOnError?: string | number | boolean | null
-
-  /**
-   * Client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html)
-   */
-  KEYPASSWD?: string | number | boolean | null
-
-  /**
-   * Client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_KEYPASSWD.html)
-   */
-  keyPasswd?: string | number | boolean | null
 
   /**
    * Kerberos security level.
