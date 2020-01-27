@@ -36,7 +36,7 @@ export const serverHttp2 = http2.createSecureServer({
 app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.raw({ limit: '100MB', type: 'application/trusted-curl.raw' }))
-  .use(cookiesParser())
+  .use(cookieParser())
 
 app.disable('etag')
 

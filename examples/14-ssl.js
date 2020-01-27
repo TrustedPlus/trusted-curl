@@ -26,10 +26,8 @@ curl.setOpt('FOLLOWLOCATION', 1)
 // More info on http://curl.haxx.se/docs/sslcerts.html and http://curl.haxx.se/docs/caextract.html
 if (certfile) {
   curl.setOpt('CAINFO', certfile)
-  //This is not a boolean field! 0 -> Disabled, 2 -> Enabled
-  curl.setOpt('SSL_VERIFYHOST', 2)
 } else {
-  curl.setOpt('SSL_VERIFYHOST', 0)
+  //
 }
 
 curl.on('end', curl.close.bind(curl))

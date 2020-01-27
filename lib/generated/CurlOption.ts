@@ -1275,13 +1275,6 @@ export interface CurlOption {
   readonly SSL_SESSIONID_CACHE: 'SSL_SESSIONID_CACHE'
 
   /**
-   * Verify the host name in the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html)
-   */
-  readonly SSL_VERIFYHOST: 'SSL_VERIFYHOST'
-
-  /**
    * Verify the SSL certificate's status.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html)
@@ -2838,13 +2831,6 @@ export const CurlOptionCamelCaseMap = {
   sslSessionIdCache: 'SSL_SESSIONID_CACHE',
 
   /**
-   * Verify the host name in the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html)
-   */
-  sslVerifyHost: 'SSL_VERIFYHOST',
-
-  /**
    * Verify the SSL certificate's status.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html)
@@ -3323,7 +3309,6 @@ export type CurlOptionName =
   | 'SSL_FALSESTART'
   | 'SSL_OPTIONS'
   | 'SSL_SESSIONID_CACHE'
-  | 'SSL_VERIFYHOST'
   | 'SSL_VERIFYSTATUS'
   | 'SSLCERT'
   | 'SSLCERTTYPE'
@@ -5934,20 +5919,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_SESSIONID_CACHE.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_SESSIONID_CACHE.html)
    */
   sslSessionIdCache?: string | number | boolean | null
-
-  /**
-   * Verify the host name in the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html)
-   */
-  SSL_VERIFYHOST?: string | number | boolean | null
-
-  /**
-   * Verify the host name in the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html)
-   */
-  sslVerifyHost?: string | number | boolean | null
 
   /**
    * Verify the SSL certificate's status.
