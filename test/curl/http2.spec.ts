@@ -41,7 +41,6 @@ describe('HTTP2', () => {
 
     curl.setOpt('URL', `https://${host}:${portHttp2}/`)
     curl.setOpt('HTTP_VERSION', CurlHttpVersion.V2_0)
-    curl.setOpt('SSL_VERIFYPEER', false)
 
     curl.on('end', statusCode => {
       curl.close()

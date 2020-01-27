@@ -8,8 +8,7 @@ var name = 'g12'
 var password = '9185543195'
 
 curl.setOpt(Curl.option.URL, url)
-//curl.setOpt('SSL_VERIFYHOST', 0)
-//curl.setOpt('SSL_VERIFYPEER', 0)
+
 curl.setOpt(Curl.option.HTTPHEADER, [
   'Authorization: Basic ' +
     Buffer.from(name + ':' + password).toString('base64'),

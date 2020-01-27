@@ -6,7 +6,7 @@
  */
 import 'should'
 
-import { app, host, portHttps, serverHttps } from '../helper/server'
+import { app, caBundle, host, portHttps, serverHttps } from '../helper/server'
 import { Curl } from '../../lib'
 
 describe('SSL', () => {
@@ -27,7 +27,7 @@ describe('SSL', () => {
     const curl = new Curl()
 
     curl.setOpt('URL', `https://${host}:${portHttps}/`)
-    curl.setOpt('SSL_VERIFYPEER', false)
+    curl.setOpt('CAINFO', caBundle)
 
     curl.on('end', statusCode => {
       statusCode.should.be.equal(200)

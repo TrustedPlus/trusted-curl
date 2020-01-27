@@ -12,11 +12,12 @@ import path from 'path'
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import cookiesParser from 'cookie-parser'
+import cookieParser from 'cookie-parser'
 
 const file = path.resolve.bind(this, __dirname)
 const key = fs.readFileSync(file('./ssl/cert.key'))
-const cert = fs.readFileSync(file('./ssl/cert.pem'))
+export const caBundle = file('./ssl/cert.pem')
+const cert = fs.readFileSync(caBundle)
 
 export const app = express()
 export const server = http.createServer(app)

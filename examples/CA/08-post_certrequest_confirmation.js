@@ -12,8 +12,7 @@ const data = {
 }
 
 curl.setOpt(Curl.option.URL, url)
-//curl.setOpt('SSL_VERIFYHOST', 0)
-//curl.setOpt('SSL_VERIFYPEER', 0)
+
 curl.setOpt(Curl.option.HTTPHEADER, [
   'Content-Type: application/json',
   'Accept: */*',

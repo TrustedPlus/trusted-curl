@@ -1289,13 +1289,6 @@ export interface CurlOption {
   readonly SSL_VERIFYHOST: 'SSL_VERIFYHOST'
 
   /**
-   * Verify the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html)
-   */
-  readonly SSL_VERIFYPEER: 'SSL_VERIFYPEER'
-
-  /**
    * Verify the SSL certificate's status.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html)
@@ -2866,13 +2859,6 @@ export const CurlOptionCamelCaseMap = {
   sslVerifyHost: 'SSL_VERIFYHOST',
 
   /**
-   * Verify the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html)
-   */
-  sslVerifyPeer: 'SSL_VERIFYPEER',
-
-  /**
    * Verify the SSL certificate's status.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYSTATUS.html)
@@ -3353,7 +3339,6 @@ export type CurlOptionName =
   | 'SSL_OPTIONS'
   | 'SSL_SESSIONID_CACHE'
   | 'SSL_VERIFYHOST'
-  | 'SSL_VERIFYPEER'
   | 'SSL_VERIFYSTATUS'
   | 'SSLCERT'
   | 'SSLCERTTYPE'
@@ -5992,20 +5977,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html)
    */
   sslVerifyHost?: string | number | boolean | null
-
-  /**
-   * Verify the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html)
-   */
-  SSL_VERIFYPEER?: string | number | boolean | null
-
-  /**
-   * Verify the SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html)
-   */
-  sslVerifyPeer?: string | number | boolean | null
 
   /**
    * Verify the SSL certificate's status.

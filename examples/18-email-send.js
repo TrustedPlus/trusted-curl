@@ -48,8 +48,6 @@ curl.setOpt(Curl.option.URL, url)
 
 curl.setOpt(Curl.option.USE_SSL, CurlUseSsl.All)
 curl.setOpt(Curl.option.CAINFO, certfile)
-// This is not safe, but you probably will need it if you are using a self signed certificate.
-//curl.setOpt(Curl.option.SSL_VERIFYPEER, false);
 
 curl.setOpt(Curl.option.MAIL_FROM, sender)
 // Make sure that MAIL_RCPT is an array

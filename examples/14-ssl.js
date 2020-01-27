@@ -28,10 +28,8 @@ if (certfile) {
   curl.setOpt('CAINFO', certfile)
   //This is not a boolean field! 0 -> Disabled, 2 -> Enabled
   curl.setOpt('SSL_VERIFYHOST', 2)
-  curl.setOpt('SSL_VERIFYPEER', 1)
 } else {
   curl.setOpt('SSL_VERIFYHOST', 0)
-  curl.setOpt('SSL_VERIFYPEER', 0)
 }
 
 curl.on('end', curl.close.bind(curl))
