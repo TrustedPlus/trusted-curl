@@ -8,7 +8,6 @@
 
 #include "Curl.h"
 #include "CurlHttpPost.h"
-#include "Share.h"
 #include "make_unique.h"
 
 #include <algorithm>
@@ -1032,27 +1031,6 @@ NAN_METHOD(Easy::SetOpt) {
     return;
   } else if ((optionId = IsInsideCurlConstantStruct(curlOptionSpecific, opt))) {
     switch (optionId) {
-      case CURLOPT_SHARE:
-        if (value->IsNull()) {
-          setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_SHARE, NULL);
-        } else {
-          if (!value->IsObject() || !Nan::New(Share::constructor)->HasInstance(value)) {
-            Nan::ThrowTypeError(
-                "Invalid value for the SHARE option. It must be a Share "
-                "instance.");
-            return;
-          }
-
-          Share* share = Nan::ObjectWrap::Unwrap<Share>(value.As<v8::Object>());
-
-          if (!share->isOpen) {
-            Nan::ThrowError("Share handle is already closed.");
-            return;
-          }
-
-          setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_SHARE, share->sh);
-        }
-        break;
     }
     // linked list options
   } else if ((optionId = IsInsideCurlConstantStruct(curlOptionLinkedList, opt))) {

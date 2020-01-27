@@ -4,7 +4,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Share } from '../Share'
 import {
   CurlOptionName,
   DataCallbackOptions,
@@ -113,12 +112,6 @@ export declare class EasyNativeBinding {
     option: 'TRAILERFUNCTION',
     value: (() => string[] | false) | null,
   ): CurlCode
-  /**
-   * Use `Curl.option` for predefined constants.
-   *
-   * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
-   */
-  setOpt(option: 'SHARE', value: Share | null): CurlCode
   /**
    * Use `Curl.option` for predefined constants.
    *

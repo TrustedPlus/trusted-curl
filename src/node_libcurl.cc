@@ -7,7 +7,6 @@
 #include "Curl.h"
 #include "Easy.h"
 #include "Multi.h"
-#include "Share.h"
 
 #include <curl/curl.h>
 #include <nan.h>
@@ -48,7 +47,6 @@ NAN_MODULE_INIT(Init) {
   Initialize(target);
   Easy::Initialize(target);
   Multi::Initialize(target);
-  Share::Initialize(target);
 
   node::AtExit(AtExitCallback, NULL);
 }

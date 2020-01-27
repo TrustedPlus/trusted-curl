@@ -185,17 +185,3 @@ export enum CurlCode {
   CURLE_FTP_PARTIAL_FILE = CURLE_PARTIAL_FILE,
   CURLE_FTP_BAD_DOWNLOAD_RESUME = CURLE_BAD_DOWNLOAD_RESUME,
 }
-
-// https://github.com/curl/curl/blob/e1be825453/include/curl/curl.h#L2675
-/**
- * @public
- */
-export enum CurlShareCode {
-  CURLSHE_OK /* all is fine */,
-  CURLSHE_BAD_OPTION /* 1 */,
-  CURLSHE_IN_USE /* 2 */,
-  CURLSHE_INVALID /* 3 */,
-  CURLSHE_NOMEM /* 4 out of memory */,
-  CURLSHE_NOT_BUILT_IN /* 5 feature not present in lib */,
-  CURLSHE_LAST,
-}

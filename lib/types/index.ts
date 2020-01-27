@@ -13,7 +13,3 @@ export {
   MultiNativeBindingObject,
 } from './MultiNativeBinding'
 export { NodeLibcurlNativeBinding } from './NodeLibcurlNativeBinding'
-export {
-  ShareNativeBinding,
-  ShareNativeBindingObject,
-} from './ShareNativeBinding'

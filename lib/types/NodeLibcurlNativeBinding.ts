@@ -8,7 +8,6 @@ import {
   CurlNativeBindingObject,
   EasyNativeBindingObject,
   MultiNativeBindingObject,
-  ShareNativeBindingObject,
 } from './'
 
 // type Constructable<T, B> = {
@@ -26,5 +25,4 @@ export interface NodeLibcurlNativeBinding {
   Curl: CurlNativeBindingObject
   Easy: EasyNativeBindingObject
   Multi: MultiNativeBindingObject
-  Share: ShareNativeBindingObject
 }

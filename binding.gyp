@@ -19,7 +19,6 @@
       'sources': [
         'src/node_libcurl.cc',
         'src/Easy.cc',
-        'src/Share.cc',
         'src/Multi.cc',
         'src/Curl.cc',
         'src/CurlHttpPost.cc',

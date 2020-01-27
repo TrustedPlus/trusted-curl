@@ -9,7 +9,6 @@
 
 import { CurlGssApi } from '../enum/CurlGssApi'
 import { CurlSslOpt } from '../enum/CurlSslOpt'
-import { Share } from '../Share'
 
 /**
  * @public
@@ -1211,13 +1210,6 @@ export interface CurlOption {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html)
    */
   readonly SERVICE_NAME: 'SERVICE_NAME'
-
-  /**
-   * Share object to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html](https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html)
-   */
-  readonly SHARE: 'SHARE'
 
   /**
    * Socks5 authentication methods.
@@ -2846,13 +2838,6 @@ export const CurlOptionCamelCaseMap = {
   serviceName: 'SERVICE_NAME',
 
   /**
-   * Share object to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html](https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html)
-   */
-  share: 'SHARE',
-
-  /**
    * Socks5 authentication methods.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SOCKS5_AUTH.html](https://curl.haxx.se/libcurl/c/CURLOPT_SOCKS5_AUTH.html)
@@ -3455,7 +3440,6 @@ export type CurlOptionName =
   | 'SASL_IR'
   | 'SEEKFUNCTION'
   | 'SERVICE_NAME'
-  | 'SHARE'
   | 'SOCKS5_AUTH'
   | 'SOCKS5_GSSAPI_NEC'
   | 'SOCKS5_GSSAPI_SERVICE'
@@ -3544,7 +3528,6 @@ export type SpecificOptions =
   | 'FNMATCH_FUNCTION'
   | 'SEEKFUNCTION'
   | 'TRAILERFUNCTION'
-  | 'SHARE'
   | 'HTTPPOST'
   | 'GSSAPI_DELEGATION'
   | 'PROXY_SSL_OPTIONS'
@@ -5964,20 +5947,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html)
    */
   serviceName?: string | number | boolean | null
-
-  /**
-   * Share object to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html](https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html)
-   */
-  SHARE?: Share | null
-
-  /**
-   * Share object to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html](https://curl.haxx.se/libcurl/c/CURLOPT_SHARE.html)
-   */
-  share?: Share | null
 
   /**
    * Socks5 authentication methods.

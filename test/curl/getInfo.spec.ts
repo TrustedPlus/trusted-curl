@@ -38,33 +38,12 @@ describe('getInfo()', () => {
   it('should not work with non-implemented infos', done => {
     curl.on('end', status => {
       if (status !== 200) {
-        throw Error('Invalid status code: ' + status)
+        throw Error(`Invalid status code: ${status}`)
       }
 
       ;(() => {
         curl.getInfo(Curl.info.PRIVATE)
       }).should.throw(/^Unsupported/)
-
-      done()
-    })
-
-    curl.on('error', done)
-
-    curl.perform()
-  })
-
-  it('should get all infos', done => {
-    curl.on('end', status => {
-      if (status !== 200) {
-        throw Error('Invalid status code: ' + status)
-      }
-
-      for (const infoId in Curl.info) {
-        if (Curl.info.hasOwnProperty(infoId) && infoId !== 'debug') {
-          // @ts-ignore
-          curl.getInfo(infoId)
-        }
-      }
 
       done()
     })
