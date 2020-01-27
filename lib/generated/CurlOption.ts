@@ -1548,13 +1548,6 @@ export interface CurlOption {
   readonly UNRESTRICTED_AUTH: 'UNRESTRICTED_AUTH'
 
   /**
-   * Sets the interval at which connection upkeep are performed.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html](https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html)
-   */
-  readonly UPKEEP_INTERVAL_MS: 'UPKEEP_INTERVAL_MS'
-
-  /**
    * Upload data.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UPLOAD.html](https://curl.haxx.se/libcurl/c/CURLOPT_UPLOAD.html)
@@ -3174,13 +3167,6 @@ export const CurlOptionCamelCaseMap = {
   unrestrictedAuth: 'UNRESTRICTED_AUTH',
 
   /**
-   * Sets the interval at which connection upkeep are performed.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html](https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html)
-   */
-  upkeepIntervalMs: 'UPKEEP_INTERVAL_MS',
-
-  /**
    * Upload data.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UPLOAD.html](https://curl.haxx.se/libcurl/c/CURLOPT_UPLOAD.html)
@@ -3488,7 +3474,6 @@ export type CurlOptionName =
   | 'TRANSFERTEXT'
   | 'UNIX_SOCKET_PATH'
   | 'UNRESTRICTED_AUTH'
-  | 'UPKEEP_INTERVAL_MS'
   | 'UPLOAD'
   | 'UPLOAD_BUFFERSIZE'
   | 'URL'
@@ -6619,20 +6604,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UNRESTRICTED_AUTH.html](https://curl.haxx.se/libcurl/c/CURLOPT_UNRESTRICTED_AUTH.html)
    */
   unrestrictedAuth?: string | number | boolean | null
-
-  /**
-   * Sets the interval at which connection upkeep are performed.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html](https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html)
-   */
-  UPKEEP_INTERVAL_MS?: string | number | boolean | null
-
-  /**
-   * Sets the interval at which connection upkeep are performed.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html](https://curl.haxx.se/libcurl/c/CURLOPT_UPKEEP_INTERVAL_MS.html)
-   */
-  upkeepIntervalMs?: string | number | boolean | null
 
   /**
    * Upload data.
