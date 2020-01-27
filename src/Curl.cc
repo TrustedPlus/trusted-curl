@@ -24,7 +24,6 @@ bool isLibcurlBuiltWithThreadedResolver = true;
 const std::vector<CurlConstant> curlOptionNotImplemented = {
     // Options that are complex to add support for.
     {"SSL_CTX_FUNCTION", CURLOPT_SSL_CTX_FUNCTION},
-    {"OPENSOCKETFUNCTION", CURLOPT_OPENSOCKETFUNCTION},
     {"CLOSESOCKETFUNCTION", CURLOPT_CLOSESOCKETFUNCTION},
     {"SOCKOPTFUNCTION", CURLOPT_SOCKOPTFUNCTION},
 
