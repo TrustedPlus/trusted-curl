@@ -819,13 +819,6 @@ export interface CurlOption {
   readonly POSTREDIR: 'POSTREDIR'
 
   /**
-   * Socks proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html)
-   */
-  readonly PRE_PROXY: 'PRE_PROXY'
-
-  /**
    * Commands to run just before transfer.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PREQUOTE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PREQUOTE.html)
@@ -2333,13 +2326,6 @@ export const CurlOptionCamelCaseMap = {
   postRedir: 'POSTREDIR',
 
   /**
-   * Socks proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html)
-   */
-  preProxy: 'PRE_PROXY',
-
-  /**
    * Commands to run just before transfer.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PREQUOTE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PREQUOTE.html)
@@ -3159,7 +3145,6 @@ export type CurlOptionName =
   | 'POSTFIELDSIZE_LARGE'
   | 'POSTQUOTE'
   | 'POSTREDIR'
-  | 'PRE_PROXY'
   | 'PREQUOTE'
   | 'PROGRESSFUNCTION'
   | 'PROTOCOLS'
@@ -4903,20 +4888,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_POSTREDIR.html](https://curl.haxx.se/libcurl/c/CURLOPT_POSTREDIR.html)
    */
   postRedir?: string | number | boolean | null
-
-  /**
-   * Socks proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html)
-   */
-  PRE_PROXY?: string | number | boolean | null
-
-  /**
-   * Socks proxy to use.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PRE_PROXY.html)
-   */
-  preProxy?: string | number | boolean | null
 
   /**
    * Commands to run just before transfer.
