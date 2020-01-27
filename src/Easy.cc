@@ -56,43 +56,6 @@ Easy::Easy() {
   ++Easy::currentOpenedHandles;
 }
 
-Easy::Easy(Easy* orig) {
-  assert(orig);
-  assert(orig != this);  // should not duplicate itself
-
-  this->ch = curl_easy_duphandle(orig->ch);
-  assert(this->ch && "Could not duplicate libcurl easy handle.");
-
-  NODE_LIBCURL_ADJUST_MEM(MEMORY_PER_HANDLE);
-
-  Nan::HandleScope scope;
-
-  // copy the orig callbacks to the current handle
-  this->callbacks.insert(orig->callbacks.begin(), orig->callbacks.end());
-
-  if (orig->cbOnSocketEvent) {
-    this->cbOnSocketEvent = orig->cbOnSocketEvent;
-  }
-
-  // make sure to reset the *DATA options when duplicating a handle. We are
-  // setting all of them, even if they are not set.
-  curl_easy_setopt(this->ch, CURLOPT_CHUNK_DATA, this);
-  curl_easy_setopt(this->ch, CURLOPT_DEBUGDATA, this);
-  curl_easy_setopt(this->ch, CURLOPT_FNMATCH_DATA, this);
-  curl_easy_setopt(this->ch, CURLOPT_PROGRESSDATA, this);
-#if NODE_LIBCURL_VER_GE(7, 32, 0)
-  curl_easy_setopt(this->ch, CURLOPT_XFERINFODATA, this);
-#endif
-  // no need to reset the _DATA option for the READ, SEEK and WRITE callbacks,
-  // since they are reset on ResetRequiredHandleOptions()
-
-  this->toFree = orig->toFree;
-
-  this->ResetRequiredHandleOptions();
-
-  ++Easy::currentOpenedHandles;
-}
-
 // Implementation of equality operator overload.
 bool Easy::operator==(const Easy& other) const { return this->ch == other.ch; }
 
@@ -942,7 +905,6 @@ NAN_MODULE_INIT(Easy::Initialize) {
   Nan::SetPrototypeMethod(tmpl, "upkeep", Easy::Upkeep);
   Nan::SetPrototypeMethod(tmpl, "pause", Easy::Pause);
   Nan::SetPrototypeMethod(tmpl, "reset", Easy::Reset);
-  Nan::SetPrototypeMethod(tmpl, "dupHandle", Easy::DupHandle);
   Nan::SetPrototypeMethod(tmpl, "onSocketEvent", Easy::OnSocketEvent);
   Nan::SetPrototypeMethod(tmpl, "monitorSocketEvents", Easy::MonitorSocketEvents);
   Nan::SetPrototypeMethod(tmpl, "unmonitorSocketEvents", Easy::UnmonitorSocketEvents);
@@ -973,20 +935,7 @@ NAN_METHOD(Easy::New) {
   v8::Local<v8::Value> jsHandle = info[0];
   Easy* obj = nullptr;
 
-  // Copy constructor, used when duplicating handles.
-  if (!jsHandle->IsUndefined()) {
-    if (!jsHandle->IsObject() || !Nan::New(Easy::constructor)->HasInstance(jsHandle)) {
-      Nan::ThrowError(Nan::TypeError("Argument must be an instance of an Easy handle."));
-      return;
-    }
-
-    Easy* orig = Nan::ObjectWrap::Unwrap<Easy>(Nan::To<v8::Object>(info[0]).ToLocalChecked());
-
-    obj = new Easy(orig);
-
-  } else {
-    obj = new Easy();
-  }
+  obj = new Easy();
 
   if (obj) {
     obj->Wrap(info.This());

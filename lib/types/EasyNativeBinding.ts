@@ -199,13 +199,6 @@ export declare class EasyNativeBinding {
   reset(): CurlCode
 
   /**
-   * Duplicate this handle with all their options
-   *
-   * Official libcurl documentation: [curl_easy_duphandle()](http://curl.haxx.se/libcurl/c/curl_easy_duphandle.html)
-   */
-  dupHandle(): EasyNativeBinding
-
-  /**
    * The only time this method should be used is when one enables the internal polling of the connection socket used by
    *  this handle (by calling `Easy#monitorSocketEvents`)
    * The callback is going to be called everytime there is some change to the socket.

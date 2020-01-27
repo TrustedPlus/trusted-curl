@@ -22,7 +22,6 @@ class Easy : public Nan::ObjectWrap {
   class ToFree;
 
   Easy();
-  explicit Easy(Easy* orig);
 
   Easy(const Easy& that);
   Easy& operator=(const Easy& that);

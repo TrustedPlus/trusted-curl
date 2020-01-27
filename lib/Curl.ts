@@ -459,31 +459,6 @@ class Curl extends EventEmitter {
   }
 
   /**
-   * Duplicate this handle with all their options.
-   * Keep in mind that, by default, this also means all event listeners.
-   *
-   * Use the argument to change that behaviour.
-   */
-  dupHandle(shouldCopyEventListeners: boolean = true) {
-    const duplicatedHandle = new Curl(this.handle.dupHandle())
-    const eventsToCopy = ['end', 'error', 'data', 'header']
-
-    duplicatedHandle.features = this.features
-
-    if (shouldCopyEventListeners) {
-      for (let i = 0; i < eventsToCopy.length; i += 1) {
-        const listeners = this.listeners(eventsToCopy[i])
-
-        for (let j = 0; j < listeners.length; j += 1) {
-          duplicatedHandle.on(eventsToCopy[i], listeners[j])
-        }
-      }
-    }
-
-    return duplicatedHandle
-  }
-
-  /**
    * Close this handle.
    *
    * **NOTE:** After closing the handle, it should not be used anymore! Doing so will throw an exception.
