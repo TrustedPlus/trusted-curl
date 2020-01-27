@@ -15,7 +15,6 @@ import { CurlInfoName } from '../generated/CurlInfo'
 
 import { CurlCode } from '../enum/CurlCode'
 import { CurlGssApi } from '../enum/CurlGssApi'
-import { CurlSslOpt } from '../enum/CurlSslOpt'
 import { SocketState } from '../enum/SocketState'
 
 import { FileInfo, HttpPostField } from './'
@@ -114,18 +113,6 @@ export declare class EasyNativeBinding {
    * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
    */
   setOpt(option: 'GSSAPI_DELEGATION', value: CurlGssApi | null): CurlCode
-  /**
-   * Use `Curl.option` for predefined constants.
-   *
-   * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
-   */
-  setOpt(option: 'PROXY_SSL_OPTIONS', value: CurlSslOpt | null): CurlCode
-  /**
-   * Use `Curl.option` for predefined constants.
-   *
-   * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
-   */
-  setOpt(option: 'SSL_OPTIONS', value: CurlSslOpt | null): CurlCode
   /**
    * Use `Curl.option` for predefined constants.
    *

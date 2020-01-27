@@ -8,7 +8,6 @@
 // Do not edit manually
 
 import { CurlGssApi } from '../enum/CurlGssApi'
-import { CurlSslOpt } from '../enum/CurlSslOpt'
 
 /**
  * @public
@@ -904,13 +903,6 @@ export interface CurlOption {
   readonly PROXY_SSL_CIPHER_LIST: 'PROXY_SSL_CIPHER_LIST'
 
   /**
-   * Control proxy SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html)
-   */
-  readonly PROXY_SSL_OPTIONS: 'PROXY_SSL_OPTIONS'
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -1252,13 +1244,6 @@ export interface CurlOption {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_FALSESTART.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_FALSESTART.html)
    */
   readonly SSL_FALSESTART: 'SSL_FALSESTART'
-
-  /**
-   * Control SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html)
-   */
-  readonly SSL_OPTIONS: 'SSL_OPTIONS'
 
   /**
    * Disable SSL session-id cache.
@@ -2453,13 +2438,6 @@ export const CurlOptionCamelCaseMap = {
   proxySslCipherList: 'PROXY_SSL_CIPHER_LIST',
 
   /**
-   * Control proxy SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html)
-   */
-  proxySslOptions: 'PROXY_SSL_OPTIONS',
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -2801,13 +2779,6 @@ export const CurlOptionCamelCaseMap = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_FALSESTART.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_FALSESTART.html)
    */
   sslFalsestart: 'SSL_FALSESTART',
-
-  /**
-   * Control SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html)
-   */
-  sslOptions: 'SSL_OPTIONS',
 
   /**
    * Disable SSL session-id cache.
@@ -3242,7 +3213,6 @@ export type CurlOptionName =
   | 'PROXY_PINNEDPUBLICKEY'
   | 'PROXY_SERVICE_NAME'
   | 'PROXY_SSL_CIPHER_LIST'
-  | 'PROXY_SSL_OPTIONS'
   | 'PROXY_SSLCERT'
   | 'PROXY_SSLCERTTYPE'
   | 'PROXY_SSLKEY'
@@ -3292,7 +3262,6 @@ export type CurlOptionName =
   | 'SSL_ENABLE_ALPN'
   | 'SSL_ENABLE_NPN'
   | 'SSL_FALSESTART'
-  | 'SSL_OPTIONS'
   | 'SSL_SESSIONID_CACHE'
   | 'SSL_VERIFYSTATUS'
   | 'SSLCERT'
@@ -3361,8 +3330,6 @@ export type SpecificOptions =
   | 'TRAILERFUNCTION'
   | 'HTTPPOST'
   | 'GSSAPI_DELEGATION'
-  | 'PROXY_SSL_OPTIONS'
-  | 'SSL_OPTIONS'
 /**
  * @public
  */
@@ -5164,20 +5131,6 @@ export type CurlOptionValueType = {
   proxySslCipherList?: string | number | boolean | null
 
   /**
-   * Control proxy SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html)
-   */
-  PROXY_SSL_OPTIONS?: CurlSslOpt | null
-
-  /**
-   * Control proxy SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html)
-   */
-  proxySslOptions?: CurlSslOpt | null
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -5862,20 +5815,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_FALSESTART.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_FALSESTART.html)
    */
   sslFalsestart?: string | number | boolean | null
-
-  /**
-   * Control SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html)
-   */
-  SSL_OPTIONS?: CurlSslOpt | null
-
-  /**
-   * Control SSL behavior.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_SSL_OPTIONS.html)
-   */
-  sslOptions?: CurlSslOpt | null
 
   /**
    * Disable SSL session-id cache.

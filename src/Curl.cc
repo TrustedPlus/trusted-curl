@@ -196,7 +196,6 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"PROXYPORT", CURLOPT_PROXYPORT},
 
 #if NODE_LIBCURL_VER_GE(7, 52, 0)
-    {"PROXY_SSL_OPTIONS", CURLOPT_PROXY_SSL_OPTIONS},
     {"PROXY_SSLVERSION", CURLOPT_PROXY_SSLVERSION},
 #endif
 
@@ -221,7 +220,6 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"SSH_COMPRESSION", CURLOPT_SSH_COMPRESSION},
 #endif
 
-    {"SSL_OPTIONS", CURLOPT_SSL_OPTIONS},
     {"SSLENGINE_DEFAULT", CURLOPT_SSLENGINE_DEFAULT},
 
 #if NODE_LIBCURL_VER_GE(7, 36, 0)

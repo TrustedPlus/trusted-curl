@@ -38,7 +38,6 @@ import { CurlCode } from './enum/CurlCode'
 import { CurlFeature } from './enum/CurlFeature'
 import { CurlGlobalInit } from './enum/CurlGlobalInit'
 import { CurlGssApi } from './enum/CurlGssApi'
-import { CurlSslOpt } from './enum/CurlSslOpt'
 
 const bindingPath = binary.find(
   path.resolve(path.join(__dirname, './../package.json')),
@@ -547,18 +546,6 @@ interface Curl {
    * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
    */
   setOpt(option: 'GSSAPI_DELEGATION', value: CurlGssApi | null): this
-  /**
-   * Use `Curl.option` for predefined constants.
-   *
-   * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
-   */
-  setOpt(option: 'PROXY_SSL_OPTIONS', value: CurlSslOpt | null): this
-  /**
-   * Use `Curl.option` for predefined constants.
-   *
-   * Official libcurl documentation: [curl_easy_setopt()](http://curl.haxx.se/libcurl/c/curl_easy_setopt.html)
-   */
-  setOpt(option: 'SSL_OPTIONS', value: CurlSslOpt | null): this
   /**
    * Use `Curl.option` for predefined constants.
    *
