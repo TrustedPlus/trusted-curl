@@ -1658,19 +1658,6 @@ NAN_METHOD(Easy::Perform) {
   info.GetReturnValue().Set(ret);
 }
 
-NAN_METHOD(Easy::DupHandle) {
-  Nan::HandleScope scope;
-
-  // create a new js object using this one as the argument for the constructor.
-  const int argc = 1;
-  v8::Local<v8::Value> argv[argc] = {info.This()};
-  v8::Local<v8::Function> cons = Nan::GetFunction(Nan::New(Easy::constructor)).ToLocalChecked();
-
-  v8::Local<v8::Object> newInstance = Nan::NewInstance(cons, argc, argv).ToLocalChecked();
-
-  info.GetReturnValue().Set(newInstance);
-}
-
 NAN_METHOD(Easy::OnSocketEvent) {
   Nan::HandleScope scope;
 
