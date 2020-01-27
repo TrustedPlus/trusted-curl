@@ -883,13 +883,6 @@ export interface CurlOption {
   readonly PROXY_CRLFILE: 'PROXY_CRLFILE'
 
   /**
-   * Proxy client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html)
-   */
-  readonly PROXY_KEYPASSWD: 'PROXY_KEYPASSWD'
-
-  /**
    * Set the proxy's pinned SSL public key.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_PINNEDPUBLICKEY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_PINNEDPUBLICKEY.html)
@@ -2467,13 +2460,6 @@ export const CurlOptionCamelCaseMap = {
   proxyCrlFile: 'PROXY_CRLFILE',
 
   /**
-   * Proxy client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html)
-   */
-  proxyKeyPasswd: 'PROXY_KEYPASSWD',
-
-  /**
    * Set the proxy's pinned SSL public key.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_PINNEDPUBLICKEY.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_PINNEDPUBLICKEY.html)
@@ -3309,7 +3295,6 @@ export type CurlOptionName =
   | 'PROXY_CAINFO'
   | 'PROXY_CAPATH'
   | 'PROXY_CRLFILE'
-  | 'PROXY_KEYPASSWD'
   | 'PROXY_PINNEDPUBLICKEY'
   | 'PROXY_SERVICE_NAME'
   | 'PROXY_SSL_CIPHER_LIST'
@@ -5195,20 +5180,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_CRLFILE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_CRLFILE.html)
    */
   proxyCrlFile?: string | number | boolean | null
-
-  /**
-   * Proxy client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html)
-   */
-  PROXY_KEYPASSWD?: string | number | boolean | null
-
-  /**
-   * Proxy client key password.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_KEYPASSWD.html)
-   */
-  proxyKeyPasswd?: string | number | boolean | null
 
   /**
    * Set the proxy's pinned SSL public key.
