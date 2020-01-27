@@ -107,7 +107,6 @@ class Easy : public Nan::ObjectWrap {
   static NAN_METHOD(StrError);
 
   // cURL callbacks
-  static size_t SeekFunction(void* userdata, curl_off_t offset, int origin);
   static size_t HeaderFunction(char* ptr, size_t size, size_t nmemb, void* userdata);
   static size_t WriteFunction(char* ptr, size_t size, size_t nmemb, void* userdata);
 

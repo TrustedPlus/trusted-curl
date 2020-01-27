@@ -1184,13 +1184,6 @@ export interface CurlOption {
   readonly SASL_IR: 'SASL_IR'
 
   /**
-   * Callback for seek operations.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html)
-   */
-  readonly SEEKFUNCTION: 'SEEKFUNCTION'
-
-  /**
    * Authentication service name.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html)
@@ -2782,13 +2775,6 @@ export const CurlOptionCamelCaseMap = {
   saslIr: 'SASL_IR',
 
   /**
-   * Callback for seek operations.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html)
-   */
-  seekFunction: 'SEEKFUNCTION',
-
-  /**
    * Authentication service name.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_SERVICE_NAME.html)
@@ -3380,7 +3366,6 @@ export type CurlOptionName =
   | 'RTSP_STREAM_URI'
   | 'RTSP_TRANSPORT'
   | 'SASL_IR'
-  | 'SEEKFUNCTION'
   | 'SERVICE_NAME'
   | 'SOCKS5_AUTH'
   | 'SOCKS5_GSSAPI_NEC'
@@ -3463,7 +3448,6 @@ export type SpecificOptions =
   | 'CHUNK_END_FUNCTION'
   | 'DEBUGFUNCTION'
   | 'FNMATCH_FUNCTION'
-  | 'SEEKFUNCTION'
   | 'TRAILERFUNCTION'
   | 'HTTPPOST'
   | 'GSSAPI_DELEGATION'
@@ -5828,20 +5812,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SASL_IR.html](https://curl.haxx.se/libcurl/c/CURLOPT_SASL_IR.html)
    */
   saslIr?: string | number | boolean | null
-
-  /**
-   * Callback for seek operations.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html)
-   */
-  SEEKFUNCTION?: ((offset: number, origin: number) => number) | null
-
-  /**
-   * Callback for seek operations.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html)
-   */
-  seekFunction?: ((offset: number, origin: number) => number) | null
 
   /**
    * Authentication service name.
