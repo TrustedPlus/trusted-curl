@@ -17,7 +17,7 @@ import { Curl } from '../../lib'
 
 const url = `http://${host}:${port}`
 
-const fileSize = 10 * 1024 //10K
+const fileSize = 10 * 1024 // 10K
 const fileName = path.resolve(__dirname, 'upload.test')
 
 let fileHash = ''
@@ -47,15 +47,15 @@ const hashOfFile = (
 describe('Put Upload', () => {
   beforeEach(done => {
     curl = new Curl()
-    curl.setOpt(Curl.option.URL, url + '/upload/upload-result.test')
+    curl.setOpt(Curl.option.URL, `${url}/upload/upload-result.test`)
     curl.setOpt(Curl.option.HTTPHEADER, [
       'Content-Type: application/trusted-curl.raw',
     ])
 
-    //write random bytes to a file, this will be our test file.
+    // write random bytes to a file, this will be our test file.
     fs.writeFileSync(fileName, crypto.randomBytes(fileSize))
 
-    //get a hash of given file so we can assert later
+    // get a hash of given file so we can assert later
     // that the file sent is equals to the one we created.
     hashOfFile(fileName, (error, hash) => {
       fileHash = hash
@@ -137,14 +137,11 @@ describe('Put Upload', () => {
   })
 
   it('should upload data correctly using READFUNCTION callback option', done => {
-    const CURL_READFUNC_PAUSE = 0x10000001
     const CURL_READFUNC_ABORT = 0x10000000
-    const CURLPAUSE_CONT = 0
 
     const stream = fs.createReadStream(fileName)
 
-    let cancelRequested = false
-    let isPaused = false
+    const cancelRequested = false
     let isEnded = false
 
     curl.setOpt(Curl.option.UPLOAD, true)
@@ -161,21 +158,11 @@ describe('Put Upload', () => {
     stream.on('error', done)
 
     stream.on('readable', () => {
-      // resume curl to let it ask for available data
-      if (isPaused) {
-        isPaused = false
-        curl.pause(CURLPAUSE_CONT)
-      }
+      //
     })
 
     stream.on('end', () => {
       isEnded = true
-
-      // resume curl to let it see there is no more data, just in case it was paused
-      if (isPaused) {
-        isPaused = false
-        curl.pause(CURLPAUSE_CONT)
-      }
     })
 
     curl.setOpt('READFUNCTION', targetBuffer => {
@@ -190,10 +177,6 @@ describe('Put Upload', () => {
         if (isEnded) {
           return 0
         }
-
-        // stream buffer was drained and we need to pause curl while waiting for new data
-        isPaused = true
-        return CURL_READFUNC_PAUSE
       }
 
       readBuffer.copy(targetBuffer)
@@ -216,7 +199,7 @@ describe('Put Upload', () => {
     })
 
     curl.on('error', (_error, errorCode) => {
-      //[Error: Operation was aborted by an application callback]
+      // [Error: Operation was aborted by an application callback]
       errorCode.should.be.equal(42)
 
       done()

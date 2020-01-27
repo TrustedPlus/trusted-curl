@@ -15,7 +15,6 @@ import { CurlInfoName } from '../generated/CurlInfo'
 
 import { CurlCode } from '../enum/CurlCode'
 import { CurlGssApi } from '../enum/CurlGssApi'
-import { CurlPause } from '../enum/CurlPause'
 import { CurlSslOpt } from '../enum/CurlSslOpt'
 import { SocketState } from '../enum/SocketState'
 
@@ -173,16 +172,6 @@ export declare class EasyNativeBinding {
    * Official libcurl documentation: [curl_easy_perform()](http://curl.haxx.se/libcurl/c/curl_easy_perform.html)
    */
   perform(): CurlCode
-
-  /**
-   * Using this function, you can explicitly mark a running connection
-   * to get paused, and you can unpause a connection that was previously paused.
-   *
-   * Use `Curl.pause` for predefined constants
-   *
-   * Official libcurl documentation: [curl_easy_pause()](http://curl.haxx.se/libcurl/c/curl_easy_pause.html)
-   */
-  pause(bitmask: CurlPause): CurlCode
 
   /**
    * Reset this handle to their original state.

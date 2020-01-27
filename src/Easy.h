@@ -100,7 +100,6 @@ class Easy : public Nan::ObjectWrap {
   static NAN_METHOD(Send);
   static NAN_METHOD(Recv);
   static NAN_METHOD(Perform);
-  static NAN_METHOD(Pause);
   static NAN_METHOD(Reset);
   static NAN_METHOD(DupHandle);
   static NAN_METHOD(OnSocketEvent);

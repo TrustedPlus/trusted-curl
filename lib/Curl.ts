@@ -38,7 +38,6 @@ import { CurlCode } from './enum/CurlCode'
 import { CurlFeature } from './enum/CurlFeature'
 import { CurlGlobalInit } from './enum/CurlGlobalInit'
 import { CurlGssApi } from './enum/CurlGssApi'
-import { CurlPause } from './enum/CurlPause'
 import { CurlSslOpt } from './enum/CurlSslOpt'
 
 const bindingPath = binary.find(
@@ -404,23 +403,6 @@ class Curl extends EventEmitter {
     this.isRunning = true
 
     multiHandle.addHandle(this.handle)
-
-    return this
-  }
-
-  /**
-   * Using this function, you can explicitly mark a running connection to get paused, and you can unpause a connection that was previously paused.
-   *
-   * The bitmask argument is a set of bits that sets the new state of the connection.
-   *
-   * Use `Curl.pause` for predefined constants.
-   */
-  pause(bitmask: CurlPause) {
-    const code = this.handle.pause(bitmask)
-
-    if (code !== CurlCode.CURLE_OK) {
-      throw new Error(Easy.strError(code))
-    }
 
     return this
   }

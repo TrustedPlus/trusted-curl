@@ -903,7 +903,6 @@ NAN_MODULE_INIT(Easy::Initialize) {
   Nan::SetPrototypeMethod(tmpl, "send", Easy::Send);
   Nan::SetPrototypeMethod(tmpl, "recv", Easy::Recv);
   Nan::SetPrototypeMethod(tmpl, "perform", Easy::Perform);
-  Nan::SetPrototypeMethod(tmpl, "pause", Easy::Pause);
   Nan::SetPrototypeMethod(tmpl, "reset", Easy::Reset);
   Nan::SetPrototypeMethod(tmpl, "onSocketEvent", Easy::OnSocketEvent);
   Nan::SetPrototypeMethod(tmpl, "monitorSocketEvents", Easy::MonitorSocketEvents);
@@ -1658,28 +1657,6 @@ NAN_METHOD(Easy::Perform) {
   v8::Local<v8::Integer> ret = Nan::New<v8::Integer>(static_cast<int32_t>(code));
 
   info.GetReturnValue().Set(ret);
-}
-
-NAN_METHOD(Easy::Pause) {
-  Nan::HandleScope scope;
-
-  Easy* obj = Nan::ObjectWrap::Unwrap<Easy>(info.This());
-
-  if (!obj->isOpen) {
-    Nan::ThrowError("Curl handle is closed.");
-    return;
-  }
-
-  if (!info[0]->IsUint32()) {
-    Nan::ThrowTypeError("Bitmask value must be an integer.");
-    return;
-  }
-
-  uint32_t bitmask = Nan::To<uint32_t>(info[0]).FromJust();
-
-  CURLcode code = curl_easy_pause(obj->ch, static_cast<int>(bitmask));
-
-  info.GetReturnValue().Set(static_cast<int32_t>(code));
 }
 
 NAN_METHOD(Easy::Reset) {
