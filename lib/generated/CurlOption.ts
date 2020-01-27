@@ -379,13 +379,6 @@ export interface CurlOption {
   readonly FTP_SKIP_PASV_IP: 'FTP_SKIP_PASV_IP'
 
   /**
-   * Back to non-TLS again after authentication.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html)
-   */
-  readonly FTP_SSL_CCC: 'FTP_SSL_CCC'
-
-  /**
    * Use EPTR.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_USE_EPRT.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_USE_EPRT.html)
@@ -1991,13 +1984,6 @@ export const CurlOptionCamelCaseMap = {
   ftpSkipPasvIp: 'FTP_SKIP_PASV_IP',
 
   /**
-   * Back to non-TLS again after authentication.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html)
-   */
-  ftpSslCcc: 'FTP_SSL_CCC',
-
-  /**
    * Use EPTR.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_USE_EPRT.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_USE_EPRT.html)
@@ -3293,7 +3279,6 @@ export type CurlOptionName =
   | 'FTP_FILEMETHOD'
   | 'FTP_RESPONSE_TIMEOUT'
   | 'FTP_SKIP_PASV_IP'
-  | 'FTP_SSL_CCC'
   | 'FTP_USE_EPRT'
   | 'FTP_USE_EPSV'
   | 'FTP_USE_PRET'
@@ -4233,20 +4218,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SKIP_PASV_IP.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SKIP_PASV_IP.html)
    */
   ftpSkipPasvIp?: string | number | boolean | null
-
-  /**
-   * Back to non-TLS again after authentication.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html)
-   */
-  FTP_SSL_CCC?: string | number | boolean | null
-
-  /**
-   * Back to non-TLS again after authentication.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html](https://curl.haxx.se/libcurl/c/CURLOPT_FTP_SSL_CCC.html)
-   */
-  ftpSslCcc?: string | number | boolean | null
 
   /**
    * Use EPTR.
