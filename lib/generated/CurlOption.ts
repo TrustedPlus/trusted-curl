@@ -994,13 +994,6 @@ export interface CurlOption {
   readonly PROXYPORT: 'PROXYPORT'
 
   /**
-   * Proxy type.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html)
-   */
-  readonly PROXYTYPE: 'PROXYTYPE'
-
-  /**
    * Proxy user name.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYUSERNAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYUSERNAME.html)
@@ -2522,13 +2515,6 @@ export const CurlOptionCamelCaseMap = {
   proxyPort: 'PROXYPORT',
 
   /**
-   * Proxy type.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html)
-   */
-  proxyType: 'PROXYTYPE',
-
-  /**
    * Proxy user name.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYUSERNAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYUSERNAME.html)
@@ -3213,7 +3199,6 @@ export type CurlOptionName =
   | 'PROXYHEADER'
   | 'PROXYPASSWORD'
   | 'PROXYPORT'
-  | 'PROXYTYPE'
   | 'PROXYUSERNAME'
   | 'PROXYUSERPWD'
   | 'PUT'
@@ -5297,20 +5282,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYPORT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYPORT.html)
    */
   proxyPort?: string | number | boolean | null
-
-  /**
-   * Proxy type.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html)
-   */
-  PROXYTYPE?: string | number | boolean | null
-
-  /**
-   * Proxy type.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYTYPE.html)
-   */
-  proxyType?: string | number | boolean | null
 
   /**
    * Proxy user name.

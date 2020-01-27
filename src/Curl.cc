@@ -199,7 +199,6 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"PROXY_SSLVERSION", CURLOPT_PROXY_SSLVERSION},
 #endif
 
-    {"PROXYTYPE", CURLOPT_PROXYTYPE},
     {"PUT", CURLOPT_PUT},
     {"READDATA", CURLOPT_READDATA},
     {"REDIR_PROTOCOLS", CURLOPT_REDIR_PROTOCOLS},
