@@ -15,7 +15,6 @@ const host = process.argv[2] || 'sftp://user:pass@host'
 const curl = new Curl()
 
 curl.setOpt(Curl.option.URL, host)
-curl.setOpt(Curl.option.VERBOSE, true)
 curl.setOpt(Curl.option.SSH_AUTH_TYPES, Curl.ssh_auth.PASSWORD)
 
 curl.setOpt(Curl.option.WRITEFUNCTION, (buf, size, nmemb) => {

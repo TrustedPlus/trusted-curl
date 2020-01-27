@@ -31,8 +31,6 @@ console.log('\n'.repeat(5))
 const stream = fs.createReadStream(fileName)
 
 stream.on('ready', () => {
-  // enabling VERBOSE mode so we can get more details on what is going on.
-  curl.setOpt(Curl.option.VERBOSE, true)
   // set UPLOAD to a truthy value to enable PUT upload.
   curl.setOpt(Curl.option.UPLOAD, true)
   // this is not required, but it let us tell libcurl

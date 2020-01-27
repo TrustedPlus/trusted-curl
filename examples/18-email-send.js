@@ -46,9 +46,6 @@ curl.setOpt(Curl.option.PASSWORD, 'password')
 
 curl.setOpt(Curl.option.URL, url)
 
-// enabling VERBOSE mode so we can get more details on what is going on.
-curl.setOpt(Curl.option.VERBOSE, true)
-
 curl.setOpt(Curl.option.USE_SSL, CurlUseSsl.All)
 curl.setOpt(Curl.option.CAINFO, certfile)
 // This is not safe, but you probably will need it if you are using a self signed certificate.

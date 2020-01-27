@@ -54,7 +54,6 @@ const debugCallback = (infoType, content) => {
 }
 
 curl.setOpt('URL', url)
-curl.setOpt('VERBOSE', true)
 curl.setOpt('DEBUGFUNCTION', debugCallback)
 
 curl.on('end', curl.close.bind(curl))

@@ -35,9 +35,6 @@ curl.setOpt('URL', url)
 curl.setOpt(Curl.option.CONNECTTIMEOUT, 5)
 curl.setOpt(Curl.option.FOLLOWLOCATION, true)
 
-// Enable verbose mode
-curl.setOpt(Curl.option.VERBOSE, true)
-
 // If you use an invalid option, a TypeError exception will be thrown
 
 // By default, this can emit 4 events, `data`, `header`, `end` and `error`.

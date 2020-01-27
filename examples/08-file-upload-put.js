@@ -25,8 +25,6 @@ fs.writeFileSync(fileName, crypto.randomBytes(fileSize))
 console.log('File: ', fs.readFileSync(fileName, 'base64'))
 
 fs.open(fileName, 'r+', function(err, fd) {
-  // enabling VERBOSE mode so we can get more details on what is going on.
-  curl.setOpt(Curl.option.VERBOSE, true)
   // set UPLOAD to a truthy value to enable PUT upload.
   curl.setOpt(Curl.option.UPLOAD, true)
   // pass the file descriptor to the READDATA option

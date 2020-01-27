@@ -22,7 +22,6 @@ curl.setOpt(Curl.option.HTTPHEADER, [
 ])
 
 curl.setOpt(Curl.option.POSTFIELDS, JSON.stringify(data))
-curl.setOpt(Curl.option.VERBOSE, true)
 
 curl.on('end', (statusCode, body) => {
   console.log(body)

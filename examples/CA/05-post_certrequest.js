@@ -17,7 +17,6 @@ curl.setOpt(Curl.option.HTTPHEADER, [
 ])
 
 curl.setOpt(Curl.option.POSTFIELDS, req)
-curl.setOpt(Curl.option.VERBOSE, true)
 
 curl.on('end', (statusCode, body) => {
   console.log(body)

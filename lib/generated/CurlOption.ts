@@ -1597,13 +1597,6 @@ export interface CurlOption {
   readonly USERPWD: 'USERPWD'
 
   /**
-   * Display verbose information.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html](https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html)
-   */
-  readonly VERBOSE: 'VERBOSE'
-
-  /**
    * Transfer multiple files according to a file name pattern.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_WILDCARDMATCH.html](https://curl.haxx.se/libcurl/c/CURLOPT_WILDCARDMATCH.html)
@@ -3216,13 +3209,6 @@ export const CurlOptionCamelCaseMap = {
   userpwd: 'USERPWD',
 
   /**
-   * Display verbose information.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html](https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html)
-   */
-  verbose: 'VERBOSE',
-
-  /**
    * Transfer multiple files according to a file name pattern.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_WILDCARDMATCH.html](https://curl.haxx.se/libcurl/c/CURLOPT_WILDCARDMATCH.html)
@@ -3481,7 +3467,6 @@ export type CurlOptionName =
   | 'USERAGENT'
   | 'USERNAME'
   | 'USERPWD'
-  | 'VERBOSE'
   | 'WILDCARDMATCH'
   | 'WRITEFUNCTION'
   | 'XFERINFOFUNCTION'
@@ -6702,20 +6687,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_USERPWD.html](https://curl.haxx.se/libcurl/c/CURLOPT_USERPWD.html)
    */
   userpwd?: string | number | boolean | null
-
-  /**
-   * Display verbose information.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html](https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html)
-   */
-  VERBOSE?: string | number | boolean | null
-
-  /**
-   * Display verbose information.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html](https://curl.haxx.se/libcurl/c/CURLOPT_VERBOSE.html)
-   */
-  verbose?: string | number | boolean | null
 
   /**
    * Transfer multiple files according to a file name pattern.

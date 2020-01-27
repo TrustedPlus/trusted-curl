@@ -16,7 +16,6 @@ const handle = new Easy()
 
 // Just like before, we can use the option name, or the constant
 handle.setOpt('URL', url)
-handle.setOpt(Curl.option.VERBOSE, url)
 
 // This is used to receive the headers
 // See https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html

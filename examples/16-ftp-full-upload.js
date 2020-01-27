@@ -43,8 +43,6 @@ const fd = fs.openSync(filePath, 'r')
 
 const fileStat = fs.fstatSync(fd)
 
-// enable verbose mode
-curl.setOpt(Curl.option.VERBOSE, true)
 // specify target, username and password
 curl.setOpt(Curl.option.URL, url + uploadFileWithName)
 curl.setOpt(Curl.option.USERNAME, username)

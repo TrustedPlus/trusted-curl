@@ -19,7 +19,6 @@ const curl = new Curl()
 
 curl.setOpt('URL', url)
 curl.setOpt('FOLLOWLOCATION', 1)
-curl.setOpt('VERBOSE', 1)
 
 // Generally libcurl knows where to find the CA Cert of the system
 //  in case that does not work, you need to specify it yourself, otherwise

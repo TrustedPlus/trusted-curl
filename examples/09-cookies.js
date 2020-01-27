@@ -20,7 +20,6 @@ const url = 'http://httpbin.org/cookies/set/cookie1name/cookie1value'
 const cookieJarFile = path.join(__dirname, 'cookiejar.txt')
 
 curl.setOpt(Curl.option.URL, url)
-curl.setOpt(Curl.option.VERBOSE, true)
 curl.setOpt(Curl.option.FOLLOWLOCATION, true)
 curl.setOpt(Curl.option.COOKIEFILE, cookieJarFile)
 curl.setOpt(Curl.option.COOKIEJAR, cookieJarFile)

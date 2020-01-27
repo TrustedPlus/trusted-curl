@@ -26,7 +26,6 @@ curl.setOpt(Curl.option.URL, url)
 //You need to build the query string,
 // node has this helper function for that:
 curl.setOpt(Curl.option.POSTFIELDS, querystring.stringify(data))
-curl.setOpt(Curl.option.VERBOSE, true)
 
 curl.on('end', (statusCode, body) => {
   console.log('Body received from httpbin:')

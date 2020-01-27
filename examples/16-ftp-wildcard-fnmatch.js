@@ -35,7 +35,6 @@ const data = {
 }
 
 handle.setOpt(Curl.option.URL, url)
-handle.setOpt(Curl.option.VERBOSE, 1)
 handle.setOpt(Curl.option.WILDCARDMATCH, true)
 handle.setOpt(Curl.option.FNMATCH_FUNCTION, fnMatch)
 handle.setOpt(Curl.option.CHUNK_BGN_FUNCTION, fileIsComing)

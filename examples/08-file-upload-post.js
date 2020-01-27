@@ -40,7 +40,6 @@ fs.writeFileSync(imageFilename, buffer)
 
 curl.setOpt(Curl.option.URL, url)
 curl.setOpt(Curl.option.HTTPPOST, data)
-curl.setOpt(Curl.option.VERBOSE, true)
 
 curl.on('end', function(statusCode, body) {
   console.log('Response from httpbin:')

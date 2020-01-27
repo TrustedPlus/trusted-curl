@@ -270,7 +270,6 @@ const std::vector<CurlConstant> curlOptionInteger = {
 #endif
 
     {"USE_SSL", CURLOPT_USE_SSL},
-    {"VERBOSE", CURLOPT_VERBOSE},
     {"WILDCARDMATCH", CURLOPT_WILDCARDMATCH},
 
     // _LARGE options
