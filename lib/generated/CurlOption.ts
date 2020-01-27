@@ -945,13 +945,6 @@ export interface CurlOption {
   readonly PROXY_TLSAUTH_USERNAME: 'PROXY_TLSAUTH_USERNAME'
 
   /**
-   * Add transfer mode to URL over proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html)
-   */
-  readonly PROXY_TRANSFER_MODE: 'PROXY_TRANSFER_MODE'
-
-  /**
    * HTTP proxy authentication methods.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYAUTH.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYAUTH.html)
@@ -2452,13 +2445,6 @@ export const CurlOptionCamelCaseMap = {
   proxyTlsAuthUsername: 'PROXY_TLSAUTH_USERNAME',
 
   /**
-   * Add transfer mode to URL over proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html)
-   */
-  proxyTransferMode: 'PROXY_TRANSFER_MODE',
-
-  /**
    * HTTP proxy authentication methods.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXYAUTH.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXYAUTH.html)
@@ -3164,7 +3150,6 @@ export type CurlOptionName =
   | 'PROXY_TLSAUTH_PASSWORD'
   | 'PROXY_TLSAUTH_TYPE'
   | 'PROXY_TLSAUTH_USERNAME'
-  | 'PROXY_TRANSFER_MODE'
   | 'PROXYAUTH'
   | 'PROXYHEADER'
   | 'PROXYPASSWORD'
@@ -5154,20 +5139,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TLSAUTH_USERNAME.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TLSAUTH_USERNAME.html)
    */
   proxyTlsAuthUsername?: string | number | boolean | null
-
-  /**
-   * Add transfer mode to URL over proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html)
-   */
-  PROXY_TRANSFER_MODE?: string | number | boolean | null
-
-  /**
-   * Add transfer mode to URL over proxy.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_TRANSFER_MODE.html)
-   */
-  proxyTransferMode?: string | number | boolean | null
 
   /**
    * HTTP proxy authentication methods.
