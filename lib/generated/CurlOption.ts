@@ -911,13 +911,6 @@ export interface CurlOption {
   readonly PROXY_SSL_OPTIONS: 'PROXY_SSL_OPTIONS'
 
   /**
-   * Verify the host name in the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html)
-   */
-  readonly PROXY_SSL_VERIFYHOST: 'PROXY_SSL_VERIFYHOST'
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -2467,13 +2460,6 @@ export const CurlOptionCamelCaseMap = {
   proxySslOptions: 'PROXY_SSL_OPTIONS',
 
   /**
-   * Verify the host name in the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html)
-   */
-  proxySslVerifyHost: 'PROXY_SSL_VERIFYHOST',
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -3257,7 +3243,6 @@ export type CurlOptionName =
   | 'PROXY_SERVICE_NAME'
   | 'PROXY_SSL_CIPHER_LIST'
   | 'PROXY_SSL_OPTIONS'
-  | 'PROXY_SSL_VERIFYHOST'
   | 'PROXY_SSLCERT'
   | 'PROXY_SSLCERTTYPE'
   | 'PROXY_SSLKEY'
@@ -5191,20 +5176,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_OPTIONS.html)
    */
   proxySslOptions?: CurlSslOpt | null
-
-  /**
-   * Verify the host name in the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html)
-   */
-  PROXY_SSL_VERIFYHOST?: string | number | boolean | null
-
-  /**
-   * Verify the host name in the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html)
-   */
-  proxySslVerifyHost?: string | number | boolean | null
 
   /**
    * Proxy client cert.
