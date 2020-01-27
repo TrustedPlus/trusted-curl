@@ -1,5 +1,5 @@
 const optionKindMap = {
-  dataCallback: ['READFUNCTION', 'HEADERFUNCTION', 'WRITEFUNCTION'],
+  dataCallback: ['HEADERFUNCTION', 'WRITEFUNCTION'],
   progressCallback: ['PROGRESSFUNCTION', 'XFERINFOFUNCTION'],
   stringList: [
     'CONNECT_TO',

@@ -136,56 +136,6 @@ describe('Put Upload', () => {
     curl.perform()
   })
 
-  it('should upload data correctly using READFUNCTION callback option', done => {
-    const CURL_READFUNC_ABORT = 0x10000000
-
-    const stream = fs.createReadStream(fileName)
-
-    const cancelRequested = false
-    let isEnded = false
-
-    curl.setOpt(Curl.option.UPLOAD, true)
-
-    curl.on('end', (statusCode, body) => {
-      statusCode.should.be.equal(200)
-      body.should.be.equal(fileHash)
-
-      done()
-    })
-
-    curl.on('error', done)
-
-    stream.on('error', done)
-
-    stream.on('readable', () => {
-      //
-    })
-
-    stream.on('end', () => {
-      isEnded = true
-    })
-
-    curl.setOpt('READFUNCTION', targetBuffer => {
-      if (cancelRequested) {
-        return CURL_READFUNC_ABORT
-      }
-
-      // stream returns null if it has < requestedBytes available
-      const readBuffer = stream.read(100) || stream.read()
-
-      if (readBuffer === null) {
-        if (isEnded) {
-          return 0
-        }
-      }
-
-      readBuffer.copy(targetBuffer)
-      return readBuffer.length
-    })
-
-    curl.perform()
-  })
-
   it('should abort upload with invalid fd', done => {
     curl.setOpt('UPLOAD', 1)
     curl.setOpt('READDATA', -1)

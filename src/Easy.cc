@@ -75,7 +75,6 @@ void Easy::ResetRequiredHandleOptions() {
   curl_easy_setopt(this->ch, CURLOPT_HEADERFUNCTION, Easy::HeaderFunction);
   curl_easy_setopt(this->ch, CURLOPT_HEADERDATA, this);
 
-  curl_easy_setopt(this->ch, CURLOPT_READFUNCTION, Easy::ReadFunction);
   curl_easy_setopt(this->ch, CURLOPT_READDATA, this);
 
   curl_easy_setopt(this->ch, CURLOPT_SEEKFUNCTION, Easy::SeekFunction);
@@ -214,99 +213,6 @@ size_t Easy::WriteFunction(char* ptr, size_t size, size_t nmemb, void* userdata)
 size_t Easy::HeaderFunction(char* ptr, size_t size, size_t nmemb, void* userdata) {
   Easy* obj = static_cast<Easy*>(userdata);
   return obj->OnHeader(ptr, size, nmemb);
-}
-
-// Called by libcurl as soon as it needs to read data in order to send it to the
-// peer
-size_t Easy::ReadFunction(char* ptr, size_t size, size_t nmemb, void* userdata) {
-  uv_fs_t readReq;
-
-  int32_t returnValue = CURL_READFUNC_ABORT;
-
-  Easy* obj = static_cast<Easy*>(userdata);
-  int32_t fd = obj->readDataFileDescriptor;
-
-  size_t n = size * nmemb;
-
-  CallbacksMap::iterator it = obj->callbacks.find(CURLOPT_READFUNCTION);
-
-  // Read callback was set, use it instead
-  if (it != obj->callbacks.end()) {
-    Nan::HandleScope scope;
-
-    v8::Local<v8::Object> buf = Nan::NewBuffer(static_cast<uint32_t>(n)).ToLocalChecked();
-    v8::Local<v8::Uint32> sizeArg = Nan::New<v8::Uint32>(static_cast<uint32_t>(size));
-    v8::Local<v8::Uint32> nmembArg = Nan::New<v8::Uint32>(static_cast<uint32_t>(nmemb));
-    const int argc = 3;
-    v8::Local<v8::Value> argv[argc] = {
-        buf,
-        sizeArg,
-        nmembArg,
-    };
-
-    Nan::TryCatch tryCatch;
-    Nan::MaybeLocal<v8::Value> returnValueCallback =
-        Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
-
-    if (tryCatch.HasCaught()) {
-      if (obj->isInsideMultiHandle) {
-        obj->callbackError.Reset(tryCatch.Exception());
-      } else {
-        tryCatch.ReThrow();
-      }
-      return returnValue;
-    }
-
-    if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
-      v8::Local<v8::Value> typeError =
-          Nan::TypeError("Return value from the READ callback must be an integer.");
-      if (obj->isInsideMultiHandle) {
-        obj->callbackError.Reset(typeError);
-      } else {
-        Nan::ThrowError(typeError);
-        tryCatch.ReThrow();
-      }
-      return returnValue;
-    } else {
-      returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
-    }
-
-    char* data = node::Buffer::Data(buf);
-
-    bool hasData = !!data && returnValue > 0 && returnValue < CURL_READFUNC_ABORT;
-
-    if (hasData) {
-      std::memcpy(ptr, data, returnValue);
-    }
-
-    // otherwise use the default read callback
-  } else {
-    // abort early if we don't have a file descriptor
-    if (fd == -1) {
-      return CURL_READFUNC_ABORT;
-    }
-
-    // get the offset
-    curl_off_t offset = obj->readDataOffset;
-    if (offset >= 0) {
-      // increment it for the next read
-      obj->readDataOffset += n;
-    }
-
-#if UV_VERSION_MAJOR < 1
-    returnValue = uv_fs_read(uv_default_loop(), &readReq, fd, ptr, n, offset, NULL);
-#else
-    uv_buf_t uvbuf = uv_buf_init(ptr, (unsigned int)(n));
-
-    returnValue = uv_fs_read(uv_default_loop(), &readReq, fd, &uvbuf, 1, offset, NULL);
-#endif
-  }
-
-  if (returnValue < 0) {
-    return CURL_READFUNC_ABORT;
-  }
-
-  return static_cast<size_t>(returnValue);
 }
 
 size_t Easy::SeekFunction(void* userdata, curl_off_t offset, int origin) {
@@ -1322,18 +1228,6 @@ NAN_METHOD(Easy::SetOpt) {
 
           curl_easy_setopt(obj->ch, CURLOPT_PROGRESSDATA, obj);
           setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_PROGRESSFUNCTION, Easy::CbProgress);
-        }
-
-        break;
-
-      case CURLOPT_READFUNCTION:
-
-        setOptRetCode = CURLE_OK;
-
-        obj->callbacks.erase(CURLOPT_READFUNCTION);
-
-        if (!isNull) {
-          obj->callbacks[CURLOPT_READFUNCTION].reset(new Nan::Callback(value.As<v8::Function>()));
         }
 
         break;

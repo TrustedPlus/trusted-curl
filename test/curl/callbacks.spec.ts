@@ -58,7 +58,6 @@ describe('Callbacks', () => {
     })
 
     app.put('/headers', (req, res) => {
-
       req.resume()
 
       req.on('end', () => {
@@ -145,11 +144,6 @@ describe('Callbacks', () => {
           wasCalled = true
           return ['x-random-header: random-value2']
         })
-        curl.setOpt(Curl.option.READFUNCTION, (buffer, size, nmemb) => {
-          const data = 'HELLO'
-          buffer.write(data)
-          return 0
-        })
 
         curl.on('end', (statusCode, body) => {
           if (isFirstCall) {
@@ -186,12 +180,6 @@ describe('Callbacks', () => {
         curl.setOpt('TRAILERFUNCTION', () => {
           return false
         })
-        curl.setOpt(Curl.option.READFUNCTION, (buffer, size, nmemb) => {
-          const data = 'HELLO'
-          buffer.write(data)
-          return 0
-        })
-
         curl.on('end', () => {
           done(new Error('end called - request wast not aborted by request'))
         })
@@ -211,12 +199,6 @@ describe('Callbacks', () => {
         // @ts-ignore
         curl.setOpt('TRAILERFUNCTION', () => {
           return {}
-        })
-
-        curl.setOpt(Curl.option.READFUNCTION, (buffer, size, nmemb) => {
-          const data = 'HELLO'
-          buffer.write(data)
-          return 0
         })
 
         curl.on('end', () => {
