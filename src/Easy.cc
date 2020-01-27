@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 #include "Easy.h"
+#include "strerror.h"
 
 #include "Curl.h"
 #include "CurlHttpPost.h"
@@ -131,7 +132,7 @@ void Easy::MonitorSockets() {
   if (retCurl != CURLE_OK) {
     std::string errorMsg;
 
-    errorMsg += std::string("Failed to receive socket. Reason: ") + curl_easy_strerror(retCurl);
+    errorMsg += std::string("Failed to receive socket. Reason: ") + easy_strerror(retCurl);
 
     Nan::ThrowError(errorMsg.c_str());
     return;
@@ -979,8 +980,6 @@ NAN_METHOD(Easy::SetOpt) {
         "options).");
     return;
   } else if ((optionId = IsInsideCurlConstantStruct(curlOptionSpecific, opt))) {
-    switch (optionId) {
-    }
     // linked list options
   } else if ((optionId = IsInsideCurlConstantStruct(curlOptionLinkedList, opt))) {
     // HTTPPOST is a special case, since it's an array of objects.
@@ -1845,8 +1844,7 @@ NAN_METHOD(Easy::StrError) {
     return;
   }
 
-  const char* errorMsg =
-      curl_easy_strerror(static_cast<CURLcode>(Nan::To<int32_t>(errCode).FromJust()));
+  const char* errorMsg = easy_strerror(static_cast<CURLcode>(Nan::To<int32_t>(errCode).FromJust()));
 
   v8::Local<v8::String> ret = Nan::New(errorMsg).ToLocalChecked();
 

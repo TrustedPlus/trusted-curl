@@ -17,6 +17,7 @@
       'target_name': '<(module_name)',
       'type': 'loadable_module',
       'sources': [
+        'src/strerror.cc',
         'src/node_libcurl.cc',
         'src/Easy.cc',
         'src/Multi.cc',
