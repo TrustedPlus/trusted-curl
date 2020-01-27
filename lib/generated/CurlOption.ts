@@ -918,13 +918,6 @@ export interface CurlOption {
   readonly PROXY_SSL_VERIFYHOST: 'PROXY_SSL_VERIFYHOST'
 
   /**
-   * Verify the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html)
-   */
-  readonly PROXY_SSL_VERIFYPEER: 'PROXY_SSL_VERIFYPEER'
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -2488,13 +2481,6 @@ export const CurlOptionCamelCaseMap = {
   proxySslVerifyHost: 'PROXY_SSL_VERIFYHOST',
 
   /**
-   * Verify the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html)
-   */
-  proxySslVerifyPeer: 'PROXY_SSL_VERIFYPEER',
-
-  /**
    * Proxy client cert.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSLCERT.html)
@@ -3286,7 +3272,6 @@ export type CurlOptionName =
   | 'PROXY_SSL_CIPHER_LIST'
   | 'PROXY_SSL_OPTIONS'
   | 'PROXY_SSL_VERIFYHOST'
-  | 'PROXY_SSL_VERIFYPEER'
   | 'PROXY_SSLCERT'
   | 'PROXY_SSLCERTTYPE'
   | 'PROXY_SSLKEY'
@@ -5235,20 +5220,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYHOST.html)
    */
   proxySslVerifyHost?: string | number | boolean | null
-
-  /**
-   * Verify the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html)
-   */
-  PROXY_SSL_VERIFYPEER?: string | number | boolean | null
-
-  /**
-   * Verify the proxy SSL certificate.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html](https://curl.haxx.se/libcurl/c/CURLOPT_PROXY_SSL_VERIFYPEER.html)
-   */
-  proxySslVerifyPeer?: string | number | boolean | null
 
   /**
    * Proxy client cert.
