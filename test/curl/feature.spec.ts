@@ -15,7 +15,6 @@ const responseLength = responseData.length
 const url = `http://${host}:${port}/`
 
 let curl: Curl
-let headerLength: number
 
 describe('Features', () => {
   beforeEach(() => {
@@ -32,9 +31,6 @@ describe('Features', () => {
 
     app.get('/', (_req, res) => {
       res.send(responseData)
-
-      // @ts-ignore
-      headerLength = res._header.length
     })
   })
 
@@ -48,7 +44,7 @@ describe('Features', () => {
 
     curl.on('end', (_status, data, headers) => {
       data.should.be.an.instanceOf(Buffer).and.have.property('length', 0)
-      headers.should.be.an.instanceOf(Array).and.have.property('length', 1)
+      headers.should.be.an.instanceOf(Array).and.have.property('length', 0)
       done()
     })
 
@@ -80,7 +76,7 @@ describe('Features', () => {
       data.should.be.an
         .instanceOf(Buffer)
         .and.have.property('length', responseLength)
-      headers.should.be.an.instanceOf(Array).and.have.property('length', 1)
+      headers.should.be.an.instanceOf(Array).and.have.property('length', 0)
       done()
     })
 
@@ -96,9 +92,7 @@ describe('Features', () => {
       data.should.be.an
         .instanceOf(String)
         .and.have.property('length', responseLength)
-      headers.should.be.an
-        .instanceOf(Buffer)
-        .and.have.property('length', headerLength)
+      headers.should.be.an.instanceOf(Buffer).and.have.property('length', 0)
       done()
     })
 

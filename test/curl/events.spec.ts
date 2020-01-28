@@ -107,31 +107,6 @@ describe('Events', () => {
     curl.perform()
   })
 
-  it('should emit "error" when the connection is aborted in the header cb', done => {
-    curl.setOpt('HEADERFUNCTION', (_data, _size, _nmemb) => {
-      return -1
-    })
-
-    curl.on('end', () => {
-      clearTimeout(timeout)
-
-      done(Error('end event was called, but the connection was aborted.'))
-    })
-
-    curl.on('error', (error, errorCode) => {
-      error.should.be.instanceof(Error)
-      errorCode.should.be.of
-        .type('number')
-        .and.equal(CurlCode.CURLE_WRITE_ERROR)
-
-      clearTimeout(timeout)
-
-      done()
-    })
-
-    curl.perform()
-  })
-
   it('should emit "error" when the connection is aborted in the data cb', done => {
     curl.setOpt('WRITEFUNCTION', (_data, _size, _nmemb) => {
       return -1

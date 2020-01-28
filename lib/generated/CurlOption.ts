@@ -441,13 +441,6 @@ export interface CurlOption {
   readonly HEADER: 'HEADER'
 
   /**
-   * Callback for writing received headers.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html)
-   */
-  readonly HEADERFUNCTION: 'HEADERFUNCTION'
-
-  /**
    * Control custom headers.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADEROPT.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADEROPT.html)
@@ -1941,13 +1934,6 @@ export const CurlOptionCamelCaseMap = {
   header: 'HEADER',
 
   /**
-   * Callback for writing received headers.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html)
-   */
-  headerFunction: 'HEADERFUNCTION',
-
-  /**
    * Control custom headers.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADEROPT.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADEROPT.html)
@@ -3077,7 +3063,6 @@ export type CurlOptionName =
   | 'HAPPY_EYEBALLS_TIMEOUT_MS'
   | 'HAPROXYPROTOCOL'
   | 'HEADER'
-  | 'HEADERFUNCTION'
   | 'HEADEROPT'
   | 'HTTP_CONTENT_DECODING'
   | 'HTTP_TRANSFER_DECODING'
@@ -3232,7 +3217,7 @@ export type CurlOptionName =
   | 'XFERINFOFUNCTION'
   | 'XOAUTH2_BEARER'
 import { FileInfo, HttpPostField } from '../types'
-export type DataCallbackOptions = 'HEADERFUNCTION' | 'WRITEFUNCTION'
+export type DataCallbackOptions = 'WRITEFUNCTION'
 export type ProgressCallbackOptions = 'PROGRESSFUNCTION' | 'XFERINFOFUNCTION'
 export type StringListOptions =
   | 'CONNECT_TO'
@@ -4113,24 +4098,6 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADER.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADER.html)
    */
   header?: string | number | boolean | null
-
-  /**
-   * Callback for writing received headers.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html)
-   */
-  HEADERFUNCTION?:
-    | ((data: Buffer, size: number, nmemb: number) => number)
-    | null
-
-  /**
-   * Callback for writing received headers.
-   *
-   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html)
-   */
-  headerFunction?:
-    | ((data: Buffer, size: number, nmemb: number) => number)
-    | null
 
   /**
    * Control custom headers.

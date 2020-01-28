@@ -70,18 +70,12 @@ describe('setOpt()', () => {
     }).should.throw(/^Unsupported/)
   })
 
-  it('should restore default internal callbacks when setting WRITEFUNCTION and HEADERFUNCTION callback back to null', done => {
+  it('should restore default internal callbacks when setting WRITEFUNCTION  callback back to null', done => {
     let shouldCallEvents = false
     let lastCall = false
-    let headerEvtCalled = false
     let dataEvtCalled = false
 
     curl.setOpt('WRITEFUNCTION', buffer => {
-      buffer.should.be.instanceof(Buffer)
-      return buffer.length
-    })
-
-    curl.setOpt('HEADERFUNCTION', buffer => {
       buffer.should.be.instanceof(Buffer)
       return buffer.length
     })
@@ -91,14 +85,8 @@ describe('setOpt()', () => {
       dataEvtCalled = true
     })
 
-    curl.on('header', () => {
-      shouldCallEvents.should.be.true()
-      headerEvtCalled = true
-    })
-
     curl.on('end', () => {
       curl.setOpt('WRITEFUNCTION', null)
-      curl.setOpt('HEADERFUNCTION', null)
 
       if (!lastCall) {
         lastCall = true
@@ -108,7 +96,6 @@ describe('setOpt()', () => {
       }
 
       dataEvtCalled.should.be.true()
-      headerEvtCalled.should.be.true()
 
       done()
     })
