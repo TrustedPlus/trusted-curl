@@ -53,10 +53,6 @@ extern const std::vector<CurlConstant> curlInfoInteger;
 extern const std::vector<CurlConstant> curlInfoSocket;
 extern const std::vector<CurlConstant> curlInfoLinkedList;
 
-extern const std::vector<CurlConstant> curlMultiOptionNotImplemented;
-extern const std::vector<CurlConstant> curlMultiOptionInteger;
-extern const std::vector<CurlConstant> curlMultiOptionStringArray;
-
 // export Curl to js
 NAN_MODULE_INIT(Initialize);
 

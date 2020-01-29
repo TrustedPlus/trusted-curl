@@ -458,33 +458,6 @@ const std::vector<CurlConstant> curlOptionSpecific = {
     {"SHARE", CURLOPT_SHARE},
 };
 
-// This should be kept in sync with the options on scripts/utils/multiOptionsBlacklist.js
-const std::vector<CurlConstant> curlMultiOptionNotImplemented = {
-    // Used internally.
-    {"SOCKETFUNCTION", CURLMOPT_SOCKETFUNCTION}, {"SOCKETDATA", CURLMOPT_SOCKETDATA},
-    {"TIMERFUNCTION", CURLMOPT_TIMERFUNCTION},   {"TIMERDATA", CURLMOPT_TIMERDATA},
-
-// Maybe?
-#if NODE_LIBCURL_VER_GE(7, 44, 0)
-    {"PUSHFUNCTION", CURLMOPT_PUSHFUNCTION},     {"PUSHDATA", CURLMOPT_PUSHDATA},
-#endif
-};
-
-const std::vector<CurlConstant> curlMultiOptionInteger = {
-    {"CHUNK_LENGTH_PENALTY_SIZE", CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE},
-    {"CONTENT_LENGTH_PENALTY_SIZE", CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE},
-    {"MAX_HOST_CONNECTIONS", CURLMOPT_MAX_HOST_CONNECTIONS},
-    {"MAX_PIPELINE_LENGTH", CURLMOPT_MAX_PIPELINE_LENGTH},
-    {"MAX_TOTAL_CONNECTIONS", CURLMOPT_MAX_TOTAL_CONNECTIONS},
-    {"MAXCONNECTS", CURLMOPT_MAXCONNECTS},
-    {"PIPELINING", CURLMOPT_PIPELINING},
-};
-
-const std::vector<CurlConstant> curlMultiOptionStringArray = {
-    {"PIPELINING_SERVER_BL", CURLMOPT_PIPELINING_SERVER_BL},
-    {"PIPELINING_SITE_BL", CURLMOPT_PIPELINING_SITE_BL},
-};
-
 const std::vector<CurlConstant> curlInfoNotImplemented = {
 // Complex.
 #if NODE_LIBCURL_VER_GE(7, 34, 0)
@@ -642,17 +615,10 @@ NAN_MODULE_INIT(Initialize) {
   ExportConstants(infosObj, curlInfoSocket, attributes);
   ExportConstants(infosObj, curlInfoLinkedList, attributes);
 
-  // export Curl codes
-  v8::Local<v8::Object> multiObj = Nan::New<v8::Object>();
-  ExportConstants(multiObj, curlMultiOptionNotImplemented, attributesDontEnum);
-  ExportConstants(multiObj, curlMultiOptionInteger, attributes);
-  ExportConstants(multiObj, curlMultiOptionStringArray, attributes);
-
   // static members
   Nan::DefineOwnProperty(obj, Nan::New<v8::String>("option").ToLocalChecked(), optionsObj,
                          attributes);
   Nan::DefineOwnProperty(obj, Nan::New<v8::String>("info").ToLocalChecked(), infosObj, attributes);
-  Nan::DefineOwnProperty(obj, Nan::New<v8::String>("multi").ToLocalChecked(), multiObj, attributes);
 
   Nan::SetMethod(obj, "globalInit", GlobalInit);
   Nan::SetMethod(obj, "globalCleanup", GlobalCleanup);

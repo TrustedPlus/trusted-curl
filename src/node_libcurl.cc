@@ -6,7 +6,6 @@
  */
 #include "Curl.h"
 #include "Easy.h"
-#include "Multi.h"
 
 #include <curl/curl.h>
 #include <nan.h>
@@ -38,7 +37,7 @@ NAN_MODULE_INIT(Init) {
   // (I've opened this issue to make sure
   // https://github.com/nodejs/help/issues/1878) Instead of doing that, we are
   // instead calling setlocale on some specific parts of the code, to be
-  //  more specific, on Easy#SetPerform, Multi#AddHandle and Multi#OnSocket
+  //  more specific, on Easy#SetPerform
   // That code is behind a DEFINE guard, which the user can disable by passing
   //  `node_libcurl_no_setlocale` option when building, this will define
   //  NODE_LIBCURL_NO_SETLOCALE.
@@ -46,7 +45,6 @@ NAN_MODULE_INIT(Init) {
   // setlocale(AC_ALL, "")
   Initialize(target);
   Easy::Initialize(target);
-  Multi::Initialize(target);
 
   node::AtExit(AtExitCallback, NULL);
 }

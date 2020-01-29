@@ -78,7 +78,6 @@ class Easy : public Nan::ObjectWrap {
 
   // members
   CURL* ch;
-  bool isInsideMultiHandle = false;
   bool isOpen = true;
 
   // used to return callback errors when inside Multi interface
@@ -93,7 +92,6 @@ class Easy : public Nan::ObjectWrap {
   // js available methods
   static NAN_METHOD(New);
   static NAN_GETTER(IdGetter);
-  static NAN_GETTER(IsInsideMultiHandleGetter);
   static NAN_METHOD(SetOpt);
   static NAN_METHOD(GetInfo);
   static NAN_METHOD(Send);

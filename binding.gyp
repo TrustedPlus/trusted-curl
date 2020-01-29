@@ -20,7 +20,6 @@
         'src/strerror.cc',
         'src/node_libcurl.cc',
         'src/Easy.cc',
-        'src/Multi.cc',
         'src/Curl.cc',
         'src/CurlHttpPost.cc',
       ],

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 #include "Easy.h"
-#include "strerror.h"
 
 #include "Curl.h"
 #include "CurlHttpPost.h"
 #include "make_unique.h"
+#include "strerror.h"
 
 #include <algorithm>
 #include <cctype>
@@ -69,8 +69,7 @@ Easy::~Easy(void) {
 }
 
 void Easy::ResetRequiredHandleOptions() {
-  curl_easy_setopt(this->ch, CURLOPT_PRIVATE,
-                   this);  // to be used with Multi handle
+  curl_easy_setopt(this->ch, CURLOPT_PRIVATE, this);
 
   curl_easy_setopt(this->ch, CURLOPT_READDATA, this);
 
@@ -323,11 +322,8 @@ long Easy::CbChunkBgn(curl_fileinfo* transferInfo, void* ptr, int remains) {  //
       Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return returnValue;
   }
 
@@ -335,12 +331,8 @@ long Easy::CbChunkBgn(curl_fileinfo* transferInfo, void* ptr, int remains) {  //
     v8::Local<v8::Value> typeError =
         Nan::TypeError("Return value from the CHUNK_BGN callback must be an integer.");
 
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(typeError);
-    } else {
-      Nan::ThrowError(typeError);
-      tryCatch.ReThrow();
-    }
+    Nan::ThrowError(typeError);
+    tryCatch.ReThrow();
   } else {
     returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
   }
@@ -363,23 +355,16 @@ long Easy::CbChunkEnd(void* ptr) {  // NOLINT(runtime/int)
       Nan::Call(*(it->second.get()), obj->handle(), 0, NULL);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return returnValue;
   }
 
   if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
     v8::Local<v8::Value> typeError =
         Nan::TypeError("Return value from the CHUNK_END callback must be an integer.");
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(typeError);
-    } else {
-      Nan::ThrowError(typeError);
-      tryCatch.ReThrow();
-    }
+    Nan::ThrowError(typeError);
+    tryCatch.ReThrow();
   } else {
     returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
   }
@@ -411,23 +396,17 @@ int Easy::CbDebug(CURL* handle, curl_infotype type, char* data, size_t size, voi
       Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return returnValue;
   }
 
   if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
     v8::Local<v8::Value> typeError =
         Nan::TypeError("Return value from the DEBUG callback must be an integer.");
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(typeError);
-    } else {
-      Nan::ThrowError(typeError);
-      tryCatch.ReThrow();
-    }
+
+    Nan::ThrowError(typeError);
+    tryCatch.ReThrow();
   } else {
     returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
   }
@@ -456,23 +435,17 @@ int Easy::CbFnMatch(void* ptr, const char* pattern, const char* string) {
       Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return returnValue;
   }
 
   if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
     v8::Local<v8::Value> typeError =
         Nan::TypeError("Return value from the FNMATCH callback must be an integer.");
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(typeError);
-    } else {
-      Nan::ThrowError(typeError);
-      tryCatch.ReThrow();
-    }
+
+    Nan::ThrowError(typeError);
+    tryCatch.ReThrow();
   } else {
     returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
   }
@@ -511,23 +484,18 @@ int Easy::CbProgress(void* clientp, double dltotal, double dlnow, double ultotal
       Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return returnValue;
   }
 
   if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
     v8::Local<v8::Value> typeError =
         Nan::TypeError("Return value from the PROGRESS callback must be an integer.");
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(typeError);
-    } else {
-      Nan::ThrowError(typeError);
-      tryCatch.ReThrow();
-    }
+
+    Nan::ThrowError(typeError);
+    tryCatch.ReThrow();
+
   } else {
     returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
   }
@@ -557,11 +525,8 @@ int Easy::CbTrailer(struct curl_slist** headerList, void* userdata) {
   Nan::MaybeLocal<v8::Value> returnValueCb = Nan::Call(*(it->second.get()), obj->handle(), 0, NULL);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return CURL_TRAILERFUNC_ABORT;
   }
 
@@ -572,12 +537,8 @@ int Easy::CbTrailer(struct curl_slist** headerList, void* userdata) {
                                                !returnValueCb.ToLocalChecked()->IsFalse());
 
   if (isInvalid) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(returnValueCbTypeError);
-    } else {
-      Nan::ThrowError(returnValueCbTypeError);
-      tryCatch.ReThrow();
-    }
+    Nan::ThrowError(returnValueCbTypeError);
+    tryCatch.ReThrow();
 
     return CURL_TRAILERFUNC_ABORT;
   }
@@ -595,12 +556,8 @@ int Easy::CbTrailer(struct curl_slist** headerList, void* userdata) {
     // not an array of objects
     v8::Local<v8::Value> headerStrValue = Nan::Get(rows, i).ToLocalChecked();
     if (!headerStrValue->IsString()) {
-      if (obj->isInsideMultiHandle) {
-        obj->callbackError.Reset(returnValueCbTypeError);
-      } else {
-        Nan::ThrowError(returnValueCbTypeError);
-        tryCatch.ReThrow();
-      }
+      Nan::ThrowError(returnValueCbTypeError);
+      tryCatch.ReThrow();
 
       return CURL_TRAILERFUNC_ABORT;
     }
@@ -650,23 +607,17 @@ int Easy::CbXferinfo(void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_o
       Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
   if (tryCatch.HasCaught()) {
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(tryCatch.Exception());
-    } else {
-      tryCatch.ReThrow();
-    }
+    tryCatch.ReThrow();
+
     return returnValue;
   }
 
   if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
     v8::Local<v8::Value> typeError =
         Nan::TypeError("Return value from the XFERINFO callback must be an integer.");
-    if (obj->isInsideMultiHandle) {
-      obj->callbackError.Reset(typeError);
-    } else {
-      Nan::ThrowError(typeError);
-      tryCatch.ReThrow();
-    }
+
+    Nan::ThrowError(typeError);
+    tryCatch.ReThrow();
   } else {
     returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
   }
@@ -703,9 +654,6 @@ NAN_MODULE_INIT(Easy::Initialize) {
 
   Nan::SetAccessor(proto, Nan::New("id").ToLocalChecked(), Easy::IdGetter, 0,
                    v8::Local<v8::Value>(), v8::DEFAULT, v8::ReadOnly);
-  Nan::SetAccessor(proto, Nan::New("isInsideMultiHandle").ToLocalChecked(),
-                   Easy::IsInsideMultiHandleGetter, 0, v8::Local<v8::Value>(), v8::DEFAULT,
-                   v8::ReadOnly);
 
   Easy::constructor.Reset(tmpl);
 
@@ -735,12 +683,6 @@ NAN_GETTER(Easy::IdGetter) {
   Easy* obj = Nan::ObjectWrap::Unwrap<Easy>(info.This());
 
   info.GetReturnValue().Set(Nan::New(obj->id));
-}
-
-NAN_GETTER(Easy::IsInsideMultiHandleGetter) {
-  Easy* obj = Nan::ObjectWrap::Unwrap<Easy>(info.This());
-
-  info.GetReturnValue().Set(Nan::New(obj->isInsideMultiHandle));
 }
 
 NAN_METHOD(Easy::SetOpt) {
@@ -1292,7 +1234,8 @@ NAN_METHOD(Easy::GetInfo) {
         curr = linkedList;
 
         while (curr) {
-          arr->Set(arr->CreationContext(), arr->Length(), Nan::New<v8::String>(curr->data).ToLocalChecked());
+          arr->Set(arr->CreationContext(), arr->Length(),
+                   Nan::New<v8::String>(curr->data).ToLocalChecked());
           curr = curr->next;
         }
 
@@ -1484,11 +1427,6 @@ NAN_METHOD(Easy::Close) {
 
   if (!obj->isOpen) {
     Nan::ThrowError("Curl handle already closed.");
-    return;
-  }
-
-  if (obj->isInsideMultiHandle) {
-    Nan::ThrowError("Curl handle is inside a Multi instance, you must remove it first.");
     return;
   }
 
