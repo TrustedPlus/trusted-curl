@@ -6,12 +6,10 @@
  */
 export { Curl } from './Curl'
 export { Easy } from './Easy'
-export { Multi } from './Multi'
 export { curly, CurlyFunction, CurlyResult } from './curly'
 
 // those are only for documentation purposes
 // export { Easy } from './Easy.doc'
-// export { Multi } from './Multi.doc'
 // export { curly, CurlyResult } from './curly.doc'
 
 // enums
@@ -29,7 +27,6 @@ export * from './enum/CurlHttpVersion'
 export * from './enum/CurlInfoDebug'
 export * from './enum/CurlIpResolve'
 export * from './enum/CurlNetrc'
-export * from './enum/CurlPipe'
 export * from './enum/CurlProtocol'
 export * from './enum/CurlRtspRequest'
 export * from './enum/CurlSshAuth'
@@ -48,6 +45,5 @@ export {
   CurlOptionName,
   CurlOptionValueType,
 } from './generated/CurlOption'
-export { MultiOption, MultiOptionName } from './generated/MultiOption'
 
 export { FileInfo, HttpPostField } from './types'

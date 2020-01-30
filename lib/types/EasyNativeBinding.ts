@@ -25,8 +25,6 @@ export interface GetInfoReturn {
 }
 
 export declare class EasyNativeBinding {
-  isInsideMultiHandle: boolean
-
   // START AUTOMATICALLY GENERATED CODE - DO NOT EDIT
   /**
    * Use `Curl.option` for predefined constants.

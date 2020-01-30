@@ -22,7 +22,6 @@ import {
 } from './types'
 
 import { Easy } from './Easy'
-import { Multi } from './Multi'
 import { mergeChunks } from './mergeChunks'
 import { parseHeaders, HeaderInfo } from './parseHeaders'
 import {
@@ -58,26 +57,8 @@ if (
 }
 
 const decoder = new StringDecoder('utf8')
-// Handle used by curl instances created by the Curl wrapper.
-const multiHandle = new Multi()
+
 const curlInstanceMap = new WeakMap<EasyNativeBinding, Curl>()
-
-multiHandle.onMessage((error, handle, errorCode) => {
-  multiHandle.removeHandle(handle)
-
-  const curlInstance = curlInstanceMap.get(handle)
-
-  assert(
-    curlInstance,
-    'Could not retrieve curl instance from easy handle on onMessage callback',
-  )
-
-  if (error) {
-    curlInstance!.onError(error, errorCode)
-  } else {
-    curlInstance!.onEnd()
-  }
-})
 
 /**
  * Wrapper around {@link Easy} class with a more *nodejs-friendly* interface.
@@ -107,6 +88,8 @@ class Curl extends EventEmitter {
    */
   static globalCleanup = _Curl.globalCleanup
 
+  static getCount = _Curl.getCount
+
   static isVersionGreaterOrEqualThan = (
     x: number,
     y: number,
@@ -116,11 +99,6 @@ class Curl extends EventEmitter {
   }
 
   static defaultUserAgent = `trusted-curl/${pkg.version}`
-
-  /**
-   * Returns the number of handles currently open in the internal multi handle being used.
-   */
-  static getCount = multiHandle.getCount
 
   /**
    * Current libcurl version
@@ -171,6 +149,21 @@ class Curl extends EventEmitter {
     const handle = cloneHandle || new Easy()
 
     this.handle = handle
+
+    this.handle.onSocketEvent((error, events) => {
+      const curlInstance = curlInstanceMap.get(this.handle)
+
+      assert(
+        curlInstance,
+        'Could not retrieve curl instance from easy handle on onMessage callback',
+      )
+
+      if (error) {
+        curlInstance!.onError(error, -1)
+      } else {
+        curlInstance!.onEnd()
+      }
+    })
 
     // callbacks called by libcurl
     handle.setOpt(
@@ -362,9 +355,14 @@ class Curl extends EventEmitter {
       throw new Error('Handle already running!')
     }
 
-    this.isRunning = true
+    const result = this.handle.perform()
 
-    multiHandle.addHandle(this.handle)
+    if (result !== CurlCode.CURLE_OK) {
+      this.emit('error', Easy.strError(result), result, this)
+    } else {
+      this.isRunning = true
+      this.handle.monitorSocketEvents()
+    }
 
     return this
   }
@@ -378,10 +376,6 @@ class Curl extends EventEmitter {
     curlInstanceMap.delete(this.handle)
 
     this.removeAllListeners()
-
-    if (this.handle.isInsideMultiHandle) {
-      multiHandle.removeHandle(this.handle)
-    }
 
     this.handle.setOpt(Curl.option.WRITEFUNCTION, null)
 

@@ -5,31 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// https://github.com/curl/curl/blob/7e35eb7729/include/curl/multi.h#L61
-/**
- * @public
- */
-export enum CurlMultiCode {
-  CURLM_CALL_MULTI_PERFORM = -1 /* please call curl_multi_perform() or
-  curl_multi_socket*() soon */,
-  CURLM_OK,
-  CURLM_BAD_HANDLE /* the passed-in handle is not a valid CURLM handle */,
-  CURLM_BAD_EASY_HANDLE /* an easy handle was not good/valid */,
-  CURLM_OUT_OF_MEMORY /* if you ever get this, you're in deep sh*t */,
-  CURLM_INTERNAL_ERROR /* this is a libcurl bug */,
-  CURLM_BAD_SOCKET /* the passed in socket argument did not match */,
-  CURLM_UNKNOWN_OPTION /* curl_multi_setopt() with unsupported option */,
-  CURLM_ADDED_ALREADY /* an easy handle already added to a multi handle was
-  attempted to get added - again */,
-  CURLM_RECURSIVE_API_CALL /* an api function was called from inside a
-  callback */,
-  CURLM_LAST,
-  /* just to make code nicer when using curl_multi_socket() you can now check
-     for CURLM_CALL_MULTI_SOCKET too in the same style it works for
-     curl_multi_perform() and CURLM_CALL_MULTI_PERFORM */
-  CURLM_CALL_MULTI_SOCKET = CURLM_CALL_MULTI_PERFORM,
-}
-
 // https://github.com/curl/curl/blob/e1be825453/include/curl/curl.h#L478
 /**
  * @public
