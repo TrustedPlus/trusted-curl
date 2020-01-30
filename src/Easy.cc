@@ -77,6 +77,14 @@ void Easy::ResetRequiredHandleOptions() {
 
   curl_easy_setopt(this->ch, CURLOPT_WRITEFUNCTION, Easy::WriteFunction);
   curl_easy_setopt(this->ch, CURLOPT_WRITEDATA, this);
+
+  curl_easy_setopt(this->ch, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTPS);
+  curl_easy_setopt(this->ch, CURLOPT_FTPSSLAUTH, CURLFTPAUTH_TLS);
+  curl_easy_setopt(this->ch, CURLOPT_NOPROXY, "*");
+
+#ifdef CURLOPT_STRICT_GOST
+  curl_easy_setopt(this->ch, CURLOPT_STRICT_GOST);
+#endif
 }
 
 // Dispose persistent objects and references stored during the life of this obj.
