@@ -1300,6 +1300,14 @@ NAN_METHOD(Easy::Send) {
   const char* bufContent = node::Buffer::Data(buf);
   size_t bufLength = node::Buffer::Length(buf);
 
+  CURLcode setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_CONNECT_ONLY, 1L);
+
+  if (setOptRetCode != CURLE_OK) {
+    std::string str = std::to_string(static_cast<int>(setOptRetCode));
+
+    Nan::ThrowError(str.c_str());
+  }
+
   size_t n = 0;
   CURLcode curlRet = curl_easy_send(obj->ch, bufContent, bufLength, &n);
 
@@ -1334,6 +1342,14 @@ NAN_METHOD(Easy::Recv) {
 
   char* bufContent = node::Buffer::Data(buf);
   size_t bufLength = node::Buffer::Length(buf);
+
+  CURLcode setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_CONNECT_ONLY, 1L);
+
+  if (setOptRetCode != CURLE_OK) {
+    std::string str = std::to_string(static_cast<int>(setOptRetCode));
+
+    Nan::ThrowError(str.c_str());
+  }
 
   size_t n = 0;
   CURLcode curlRet = curl_easy_recv(obj->ch, bufContent, bufLength, &n);

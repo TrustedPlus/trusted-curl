@@ -12,13 +12,10 @@
 const { Curl, CurlCode, Easy, Multi, SocketState } = require('../dist')
 
 const easy = new Easy()
-const multi = new Multi()
 
 const send = Buffer.from('GET / HTTP/1.0\r\nHost: example.com\r\n\r\n')
 // reserve 5mb for the response
 const recv = Buffer.alloc(5 * 1024 * 1024)
-
-const shouldUseMultiHandle = true
 
 let wasSent = false
 
@@ -78,43 +75,17 @@ easy.onSocketEvent((error, events) => {
     //we don't need to monitor for events anymore, so let's just stop the socket polling
     easy.unmonitorSocketEvents()
 
-    if (shouldUseMultiHandle) {
-      multi.removeHandle(easy)
-      multi.close()
-    }
-
     easy.close()
   }
 })
 
-//send and recv only works with the multi handle
-// if you are using a libcurl version greater than 7.42
-// See: https://github.com/bagder/curl/commit/ecc4940df2c286702262f8c21d7369f893e78968
-if (shouldUseMultiHandle) {
-  multi.onMessage((error, easy, errorCode) => {
-    console.log('Lol3')
+const result = easy.perform()
 
-    if (error) {
-      console.error('Error code: ' + errorCode)
-
-      throw error
-    }
-
-    //ok, connection made!
-    // monitor for socket events
-    easy.monitorSocketEvents()
-  })
-
-  multi.addHandle(easy)
-} else {
-  const result = easy.perform()
-
-  if (result !== Curl.code.CURLE_OK) {
-    throw Error(Easy.strError(result))
-  }
-
-  //Using just the easy interface,
-  // the connection is made right after the perform call
-  // so we can already start monitoring for socket events
-  easy.monitorSocketEvents()
+if (result !== CurlCode.CURLE_OK) {
+  throw Error(Easy.strError(result))
 }
+
+//Using just the easy interface,
+// the connection is made right after the perform call
+// so we can already start monitoring for socket events
+easy.monitorSocketEvents()
