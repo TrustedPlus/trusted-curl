@@ -18,7 +18,7 @@ const { Curl, CurlFeature } = require('../dist')
 //  you can change it using:
 Curl.defaultUserAgent = 'Something Else'
 // or simply remove it
-Curl.defaultUserAgent = null
+// Curl.defaultUserAgent = null
 
 const curl = new Curl()
 
@@ -94,6 +94,3 @@ curl.on('error', (error, errorCode) => {
 
 // this triggers the request
 curl.perform()
-
-// It's async, so it does not block the Node.js thread
-console.log('I will show before the request starts')

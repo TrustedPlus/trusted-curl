@@ -13,6 +13,7 @@ const curlPostRegreq = new Curl()
 const curlGetRegreq = new Curl()
 const curlPostCertreq = new Curl()
 const curlGetCertreq = new Curl()
+const curlGetRawCert = new Curl()
 
 function generateReq() {
   var certReq
@@ -59,93 +60,138 @@ function generateReq() {
   trusted.utils.Csp.deleteContainer(certReq.containerName, 80)
 }
 
-describe('TLS tests', function() {
-  const urlUserAttr =
-    'https://testca2012.cryptopro.ru/ui/api/b1ca4992-d7cd-4f7e-b56e-a81e00db58ee/userattr'
-  const urlRegreq =
-    'https://testca2012.cryptopro.ru/ui/api/b1ca4992-d7cd-4f7e-b56e-a81e00db58ee/regrequest'
-  const urlCertReq = 'https://testca2012.cryptopro.ru/ui/api/certrequest'
+const urlUserAttr =
+  'https://testca2012.cryptopro.ru/ui/api/b1ca4992-d7cd-4f7e-b56e-a81e00db58ee/userattr'
+const urlRegreq =
+  'https://testca2012.cryptopro.ru/ui/api/b1ca4992-d7cd-4f7e-b56e-a81e00db58ee/regrequest'
+const urlCertReq = 'https://testca2012.cryptopro.ru/ui/api/certrequest'
 
-  curlGetUserAttr.setOpt(Curl.option.URL, urlUserAttr)
+curlGetUserAttr.setOpt(Curl.option.URL, urlUserAttr)
 
-  curlGetUserAttr.on('end', (status, body) => {
+curlGetUserAttr.on('end', (status, body) => {
+  curlGetUserAttr.close()
+
+  assert.equal(body !== null, true)
+  console.log(body)
+  const data = {
+    Comment: '3',
+    Description: '2',
+    Email: 'login@email.ru',
+    KeyPhrase: '1',
+    OidArray: [
+      {
+        '2.5.4.3': crypto.randomBytes(16).toString('hex'),
+      },
+      {
+        '2.5.4.10': 'organizationTLS',
+      },
+    ],
+  }
+  curlPostRegreq.setOpt(Curl.option.URL, urlRegreq)
+  curlPostRegreq.setOpt(Curl.option.HTTPHEADER, [
+    'Content-Type: application/json',
+    'Accept: application/json',
+  ])
+  curlPostRegreq.setOpt(Curl.option.POSTFIELDS, JSON.stringify(data))
+
+  curlPostRegreq.on('end', (statusCode, body) => {
+    curlPostRegreq.close()
+
     assert.equal(body !== null, true)
     console.log(body)
-    const data = {
-      Comment: '3',
-      Description: '2',
-      Email: 'login@email.ru',
-      KeyPhrase: '1',
-      OidArray: [
-        {
-          '2.5.4.3': crypto.randomBytes(16).toString('hex'),
-        },
-        {
-          '2.5.4.10': 'organizationTLS',
-        },
-      ],
-    }
-    curlPostRegreq.setOpt(Curl.option.URL, urlRegreq)
-    curlPostRegreq.setOpt(Curl.option.HTTPHEADER, [
-      'Content-Type: application/json',
-      'Accept: application/json',
+    login = JSON.parse(body).RegRequest.Token
+    password = JSON.parse(body).RegRequest.Password
+    curlGetRegreq.setOpt(Curl.option.URL, urlRegreq)
+    curlGetRegreq.setOpt(Curl.option.HTTPHEADER, [
+      `Authorization: Basic ${Buffer.from(login + ':' + password).toString(
+        'base64',
+      )}`,
     ])
-    curlPostRegreq.setOpt(Curl.option.POSTFIELDS, JSON.stringify(data))
+    curlGetRegreq.on('end', (statusCode, body) => {
+      curlGetRegreq.close()
 
-    curlPostRegreq.on('end', (statusCode, body) => {
       assert.equal(body !== null, true)
       console.log(body)
-      login = JSON.parse(body).RegRequest.Token
-      password = JSON.parse(body).RegRequest.Password
-      curlGetRegreq.setOpt(Curl.option.URL, urlRegreq)
-      curlGetRegreq.setOpt(Curl.option.HTTPHEADER, [
-        'Authorization: Basic ' +
-          Buffer.from(login + ':' + password).toString('base64'),
+      generateReq()
+      var req = fs.readFileSync('./certreq.req').toString()
+      curlPostCertreq.setOpt(Curl.option.URL, urlCertReq)
+      curlPostCertreq.setOpt(Curl.option.HTTPHEADER, [
+        'Content-Type: application/octet-stream',
+        `Authorization: Basic ${Buffer.from(login + ':' + password).toString(
+          'base64',
+        )}`,
       ])
-      curlGetRegreq.on('end', (statusCode, body) => {
-        assert.equal(body !== null, true)
-        console.log(body)
-        generateReq()
-        var req = fs.readFileSync('./certreq.req').toString()
-        curlPostCertreq.setOpt(Curl.option.URL, urlCertReq)
-        curlPostCertreq.setOpt(Curl.option.HTTPHEADER, [
-          'Content-Type: application/octet-stream',
-          'Authorization: Basic ' +
-            Buffer.from(login + ':' + password).toString('base64'),
-        ])
-        curlPostCertreq.setOpt(Curl.option.POSTFIELDS, req)
-        curlPostCertreq.on('end', (statusCode, body) => {
-          console.log(body)
-          certReqId = JSON.parse(body).CertRequest.CertRequestId
-          const url5CertReqId =
-            'https://testca2012.cryptopro.ru/ui/api/certrequest/' + certReqId
-          curlGetCertreq.setOpt(Curl.option.URL, url5CertReqId)
-          curlGetCertreq.setOpt(Curl.option.HTTPHEADER, [
-            'Authorization: Basic ' +
-              Buffer.from(login + ':' + password).toString('base64'),
-          ])
-          curlGetCertreq.on('end', (statusCode, body) => {
-            console.log(body)
-            curlGetCertreq.close()
-          })
-          console.log('================ GET certrequest ================')
-          curlGetCertreq.perform()
-        })
-        console.log('================ POST certrequest ================')
-        curlPostCertreq.perform()
-      })
-      console.log('================= GET regrequest =================')
-      curlGetRegreq.perform()
-    })
-    console.log('================= POST regrequest =================')
-    curlPostRegreq.perform()
-  })
-  console.log('=============== GET user attributes ===============')
-  curlGetUserAttr.perform()
+      curlPostCertreq.setOpt(Curl.option.POSTFIELDS, req)
+      curlPostCertreq.on('end', (statusCode, body) => {
+        curlPostCertreq.close()
 
-  curlGetCertreq.on('error', curlGetCertreq.close.bind(curlGetCertreq))
-  curlPostCertreq.on('error', curlPostCertreq.close.bind(curlPostCertreq))
-  curlGetRegreq.on('error', curlGetRegreq.close.bind(curlGetRegreq))
-  curlPostRegreq.on('error', curlPostRegreq.close.bind(curlPostRegreq))
-  curlGetUserAttr.on('error', curlGetUserAttr.close.bind(curlGetUserAttr))
+        console.log(body)
+        certReqId = JSON.parse(body).CertRequest.CertRequestId
+        const url5CertReqId =
+          'https://testca2012.cryptopro.ru/ui/api/certrequest/' + certReqId
+        curlGetCertreq.setOpt(Curl.option.URL, url5CertReqId)
+        curlGetCertreq.setOpt(Curl.option.HTTPHEADER, [
+          `Authorization: Basic ${Buffer.from(login + ':' + password).toString(
+            'base64',
+          )}`,
+        ])
+        curlGetCertreq.on('end', (statusCode, body) => {
+          console.log(body)
+          curlGetCertreq.close()
+
+          certReqId = JSON.parse(body).CertRequest.CertRequestId
+
+          curlGetRawCert.setOpt(
+            Curl.option.URL,
+            `https://testca2012.cryptopro.ru/ui/api/certrequest/${certReqId}/rawcert`,
+          )
+          curlGetRawCert.setOpt(Curl.option.HTTPHEADER, [
+            `Authorization: Basic ${Buffer.from(
+              login + ':' + password,
+            ).toString('base64')}`,
+          ])
+
+          let data = new Buffer('')
+
+          curlGetRawCert.on('data', (chunk, curlInstance) => {
+            data = Buffer.concat([data, chunk])
+            return chunk.length
+          })
+
+          curlGetRawCert.on('end', (statusCode, body) => {
+            if (statusCode === 200) {
+              const cert = new trusted.pki.Certificate()
+
+              cert.import(data)
+              const pemCert = cert.export(trusted.DataFormat.PEM).toString()
+
+              console.log(pemCert)
+            }
+
+            curlGetRawCert.close()
+          })
+
+          console.log('================ GET raw cert ================')
+          curlGetRawCert.perform()
+        })
+        console.log('================ GET certrequest ================')
+        curlGetCertreq.perform()
+      })
+      console.log('================ POST certrequest ================')
+      curlPostCertreq.perform()
+    })
+    console.log('================= GET regrequest =================')
+    curlGetRegreq.perform()
+  })
+  console.log('================= POST regrequest =================')
+  curlPostRegreq.perform()
 })
+console.log('=============== GET user attributes ===============')
+curlGetUserAttr.perform()
+
+curlGetCertreq.on('error', curlGetCertreq.close.bind(curlGetCertreq))
+curlPostCertreq.on('error', curlPostCertreq.close.bind(curlPostCertreq))
+curlGetRegreq.on('error', curlGetRegreq.close.bind(curlGetRegreq))
+curlPostRegreq.on('error', curlPostRegreq.close.bind(curlPostRegreq))
+curlGetUserAttr.on('error', curlGetUserAttr.close.bind(curlGetUserAttr))
+curlGetRawCert.on('error', curlGetRawCert.close.bind(curlGetRawCert))

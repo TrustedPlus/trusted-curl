@@ -1,3 +1,5 @@
+const crypto = require('crypto')
+
 const { Curl } = require('../../dist')
 
 const curl = new Curl()
@@ -11,7 +13,7 @@ const data = {
   KeyPhrase: '1',
   OidArray: [
     {
-      '2.5.4.3': 'g21',
+      '2.5.4.3': crypto.randomBytes(16).toString('hex'),
     },
     {
       '2.5.4.10': 'cp',
