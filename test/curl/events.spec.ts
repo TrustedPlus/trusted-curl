@@ -6,54 +6,26 @@
  */
 import 'should'
 
-import { app, host, port, server } from '../helper/server'
 import { Curl, CurlCode } from '../../lib'
 
 let curl: Curl
-let timeout: NodeJS.Timeout
 
 describe('Events', () => {
   beforeEach(() => {
     curl = new Curl()
-    curl.setOpt('URL', `http://${host}:${port}`)
+    curl.setOpt('URL', 'http://example.com')
   })
 
   afterEach(() => {
     curl.close()
   })
 
-  before(done => {
-    app.all('/', (req, res) => {
-      if (req.body.errReq) {
-        res.status(500)
-        res.end()
-      } else {
-        res.send('Hello World!')
-      }
-
-      timeout = setTimeout(() => {
-        throw Error('No action taken.')
-      }, 1000)
-    })
-
-    server.listen(port, host, done)
-  })
-
-  after(() => {
-    app._router.stack.pop()
-    server.close()
-  })
-
   it('should emit "end" event when the connection ends without errors.', done => {
     curl.on('end', () => {
-      clearTimeout(timeout)
-
       done()
     })
 
     curl.on('error', error => {
-      clearTimeout(timeout)
-
       done(error)
     })
 
@@ -61,21 +33,17 @@ describe('Events', () => {
   })
 
   it('should emit "error" event when the connection fails', done => {
-    curl.setOpt('POSTFIELDS', 'errReq=true')
+    curl.setOpt('URL', 'http://nodomain')
     curl.setOpt('FAILONERROR', true)
 
     curl.on('end', () => {
-      clearTimeout(timeout)
       done(Error('end event was called, but the connection failed.'))
     })
 
     curl.on('error', (error, errorCode) => {
-      error.should.be.instanceof(Error)
       errorCode.should.be.of
         .type('number')
-        .and.equal(CurlCode.CURLE_HTTP_RETURNED_ERROR)
-
-      clearTimeout(timeout)
+        .and.equal(CurlCode.CURLE_COULDNT_RESOLVE_HOST)
 
       done()
     })
@@ -91,16 +59,10 @@ describe('Events', () => {
     curl.setOpt('NOPROGRESS', false)
 
     curl.on('end', () => {
-      clearTimeout(timeout)
-
       done(Error('end event was called, but the connection was aborted.'))
     })
 
     curl.on('error', error => {
-      error.should.be.instanceof(Error)
-
-      clearTimeout(timeout)
-
       done()
     })
 
@@ -113,18 +75,13 @@ describe('Events', () => {
     })
 
     curl.on('end', () => {
-      clearTimeout(timeout)
-
       done(Error('end event was called, but the connection was aborted.'))
     })
 
     curl.on('error', (error, errorCode) => {
-      error.should.be.instanceof(Error)
       errorCode.should.be.of
         .type('number')
         .and.equal(CurlCode.CURLE_WRITE_ERROR)
-
-      clearTimeout(timeout)
 
       done()
     })

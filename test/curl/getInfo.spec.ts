@@ -6,10 +6,9 @@
  */
 import 'should'
 
-import { app, host, port, server } from '../helper/server'
 import { Curl } from '../../lib'
 
-const url = `http://${host}:${port}/`
+const url = 'https://example.com'
 
 let curl: Curl
 describe('getInfo()', () => {
@@ -20,19 +19,6 @@ describe('getInfo()', () => {
 
   afterEach(() => {
     curl.close()
-  })
-
-  before(done => {
-    server.listen(port, host, done)
-
-    app.get('/', (_req, res) => {
-      res.send('Hello World!')
-    })
-  })
-
-  after(() => {
-    app._router.stack.pop()
-    server.close()
   })
 
   it('should not work with non-implemented infos', done => {

@@ -6,28 +6,32 @@
  */
 import 'should'
 
-import { app, caBundle, host, portHttps, serverHttps } from '../helper/server'
 import { Curl } from '../../lib'
 
 describe('SSL', () => {
-  before(done => {
-    serverHttps.listen(portHttps, host, done)
-
-    app.get('/', (_req, res) => {
-      res.send('ok')
-    })
-  })
-
-  after(() => {
-    serverHttps.close()
-    app._router.stack.pop()
-  })
-
-  it('should work with ssl site', done => {
+  it('should work with GOST ssl site', done => {
     const curl = new Curl()
 
-    curl.setOpt('URL', `https://${host}:${portHttps}/`)
-    curl.setOpt('CAINFO', caBundle)
+    curl.setOpt('URL', 'https://cpca20.cryptopro.ru/')
+
+    curl.on('end', statusCode => {
+      statusCode.should.be.equal(200)
+      curl.close()
+      done()
+    })
+
+    curl.on('error', error => {
+      curl.close()
+      done(error)
+    })
+
+    curl.perform()
+  })
+
+  it('should work with RSA ssl site', done => {
+    const curl = new Curl()
+
+    curl.setOpt('URL', 'https://example.com')
 
     curl.on('end', statusCode => {
       statusCode.should.be.equal(200)

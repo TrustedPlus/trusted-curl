@@ -6,10 +6,9 @@
  */
 import 'should'
 
-import { app, host, port, server } from '../helper/server'
 import { Curl } from '../../lib'
 
-const url = `http://${host}:${port}/`
+const url = 'http://example.com'
 
 let curl: Curl
 
@@ -23,21 +22,8 @@ describe('setOpt()', () => {
     curl.close()
   })
 
-  before(done => {
-    server.listen(port, host, done)
-
-    app.get('/', (_req, res) => {
-      res.send('Hello World!')
-    })
-  })
-
-  after(() => {
-    server.close()
-    app._router.stack.pop()
-  })
-
   it('should accept Curl.option constants', () => {
-    curl.setOpt(Curl.option.URL, url)
+    curl.setOpt('URL', url)
   })
 
   it('should not accept invalid argument type', () => {
@@ -68,41 +54,6 @@ describe('setOpt()', () => {
       // @ts-ignore
       curl.setOpt(Curl.option.SSL_CTX_FUNCTION, 1)
     }).should.throw(/^Unsupported/)
-  })
-
-  it('should restore default internal callbacks when setting WRITEFUNCTION  callback back to null', done => {
-    let shouldCallEvents = false
-    let lastCall = false
-    let dataEvtCalled = false
-
-    curl.setOpt('WRITEFUNCTION', buffer => {
-      buffer.should.be.instanceof(Buffer)
-      return buffer.length
-    })
-
-    curl.on('data', () => {
-      shouldCallEvents.should.be.true()
-      dataEvtCalled = true
-    })
-
-    curl.on('end', () => {
-      curl.setOpt('WRITEFUNCTION', null)
-
-      if (!lastCall) {
-        lastCall = true
-        shouldCallEvents = true
-        curl.perform()
-        return
-      }
-
-      dataEvtCalled.should.be.true()
-
-      done()
-    })
-
-    curl.on('error', done)
-
-    curl.perform()
   })
 
   describe('HTTPPOST', () => {
