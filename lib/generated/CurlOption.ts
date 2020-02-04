@@ -1022,6 +1022,13 @@ export interface CurlOption {
   readonly READDATA: 'READDATA'
 
   /**
+   * Callback for reading data.
+   *
+   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html)
+   */
+  readonly READFUNCTION: 'READFUNCTION'
+
+  /**
    * Protocols to allow redirects to.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_REDIR_PROTOCOLS.html](https://curl.haxx.se/libcurl/c/CURLOPT_REDIR_PROTOCOLS.html)
@@ -2529,6 +2536,13 @@ export const CurlOptionCamelCaseMap = {
   readData: 'READDATA',
 
   /**
+   * Callback for reading data.
+   *
+   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html)
+   */
+  readFunction: 'READFUNCTION',
+
+  /**
    * Protocols to allow redirects to.
    *
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_REDIR_PROTOCOLS.html](https://curl.haxx.se/libcurl/c/CURLOPT_REDIR_PROTOCOLS.html)
@@ -3175,6 +3189,7 @@ export type CurlOptionName =
   | 'RANDOM_FILE'
   | 'RANGE'
   | 'READDATA'
+  | 'READFUNCTION'
   | 'REDIR_PROTOCOLS'
   | 'REFERER'
   | 'REQUEST_TARGET'
@@ -3247,7 +3262,10 @@ export type CurlOptionName =
   | 'XFERINFOFUNCTION'
   | 'XOAUTH2_BEARER'
 import { FileInfo, HttpPostField } from '../types'
-export type DataCallbackOptions = 'HEADERFUNCTION' | 'WRITEFUNCTION'
+export type DataCallbackOptions =
+  | 'READFUNCTION'
+  | 'HEADERFUNCTION'
+  | 'WRITEFUNCTION'
 export type ProgressCallbackOptions = 'PROGRESSFUNCTION' | 'XFERINFOFUNCTION'
 export type StringListOptions =
   | 'CONNECT_TO'
@@ -5309,6 +5327,20 @@ export type CurlOptionValueType = {
    * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_READDATA.html](https://curl.haxx.se/libcurl/c/CURLOPT_READDATA.html)
    */
   readData?: string | number | boolean | null
+
+  /**
+   * Callback for reading data.
+   *
+   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html)
+   */
+  READFUNCTION?: ((data: Buffer, size: number, nmemb: number) => number) | null
+
+  /**
+   * Callback for reading data.
+   *
+   * Official libcurl documentation: : [https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html](https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html)
+   */
+  readFunction?: ((data: Buffer, size: number, nmemb: number) => number) | null
 
   /**
    * Protocols to allow redirects to.

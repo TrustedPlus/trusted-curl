@@ -56,6 +56,24 @@ curl.setOpt(Curl.option.MAIL_RCPT, [receiver])
 // As we are sending data, we need to set this option.
 curl.setOpt(Curl.option.UPLOAD, true)
 
+// This callback is responsible for sending the email to the server.
+// Check https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html for more info about it.
+// buffer is a Node.js Buffer instance with length of size * nmemb
+// You must return the number of bytes written.
+curl.setOpt(Curl.option.READFUNCTION, (buffer, size, nmemb) => {
+  const data = rawEmail[linesRead]
+
+  if (linesRead === rawEmail.length || size === 0 || nmemb === 0) {
+    return 0
+  }
+
+  const ret = buffer.write(data)
+
+  linesRead++
+
+  return ret
+})
+
 curl.on('end', (statusCode, body) => {
   console.log(body)
   this.close()
