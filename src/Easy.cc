@@ -676,7 +676,6 @@ NAN_METHOD(Easy::New) {
     Nan::ThrowError("You must use \"new\" to instantiate this object.");
   }
 
-  v8::Local<v8::Value> jsHandle = info[0];
   Easy* obj = nullptr;
 
   obj = new Easy();
