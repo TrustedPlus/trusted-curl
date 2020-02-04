@@ -76,6 +76,7 @@ void Easy::ResetRequiredHandleOptions() {
 
   curl_easy_setopt(this->ch, CURLOPT_READDATA, this);
 
+  curl_easy_setopt(this->ch, CURLOPT_SEEKFUNCTION, Easy::SeekFunction);
   curl_easy_setopt(this->ch, CURLOPT_SEEKDATA, this);
 
   curl_easy_setopt(this->ch, CURLOPT_WRITEFUNCTION, Easy::WriteFunction);
@@ -219,6 +220,69 @@ size_t Easy::WriteFunction(char* ptr, size_t size, size_t nmemb, void* userdata)
 size_t Easy::HeaderFunction(char* ptr, size_t size, size_t nmemb, void* userdata) {
   Easy* obj = static_cast<Easy*>(userdata);
   return obj->OnHeader(ptr, size, nmemb);
+}
+
+size_t Easy::SeekFunction(void* userdata, curl_off_t offset, int origin) {
+  Easy* obj = static_cast<Easy*>(userdata);
+
+  int32_t returnValue = CURL_SEEKFUNC_FAIL;
+
+  CallbacksMap::iterator it = obj->callbacks.find(CURLOPT_READFUNCTION);
+
+  // Read callback was set, look for a seek callback
+  if (it != obj->callbacks.end()) {
+    it = obj->callbacks.find(CURLOPT_SEEKFUNCTION);
+
+    // Seek callback was set, use it instead
+    if (it != obj->callbacks.end()) {
+      Nan::HandleScope scope;
+
+      v8::Local<v8::Uint32> offsetArg = Nan::New<v8::Uint32>(static_cast<uint32_t>(offset));
+      v8::Local<v8::Uint32> originArg = Nan::New<v8::Uint32>(static_cast<uint32_t>(origin));
+      const int argc = 2;
+      v8::Local<v8::Value> argv[argc] = {
+          offsetArg,
+          originArg,
+      };
+
+      Nan::TryCatch tryCatch;
+      Nan::MaybeLocal<v8::Value> returnValueCallback =
+          Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
+
+      if (tryCatch.HasCaught()) {
+        if (obj->isInsideMultiHandle) {
+          obj->callbackError.Reset(tryCatch.Exception());
+        } else {
+          tryCatch.ReThrow();
+        }
+        return returnValue;
+      }
+
+      if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
+        v8::Local<v8::Value> typeError =
+            Nan::TypeError("Return value from the SEEK callback must be an integer.");
+        if (obj->isInsideMultiHandle) {
+          obj->callbackError.Reset(typeError);
+        } else {
+          Nan::ThrowError(typeError);
+          tryCatch.ReThrow();
+        }
+      } else {
+        returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
+      }
+
+      // otherwise we can't seek directly
+    } else {
+      returnValue = CURL_SEEKFUNC_CANTSEEK;
+    }
+
+    // otherwise use the default seek callback
+  } else {
+    obj->readDataOffset = offset;
+    returnValue = CURL_SEEKFUNC_OK;
+  }
+
+  return returnValue;
 }
 
 size_t Easy::OnData(char* data, size_t size, size_t nmemb) {
@@ -1113,6 +1177,18 @@ NAN_METHOD(Easy::SetOpt) {
 
           curl_easy_setopt(obj->ch, CURLOPT_PROGRESSDATA, obj);
           setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_PROGRESSFUNCTION, Easy::CbProgress);
+        }
+
+        break;
+
+      case CURLOPT_SEEKFUNCTION:
+
+        setOptRetCode = CURLE_OK;
+
+        obj->callbacks.erase(CURLOPT_SEEKFUNCTION);
+
+        if (!isNull) {
+          obj->callbacks[CURLOPT_SEEKFUNCTION].reset(new Nan::Callback(value.As<v8::Function>()));
         }
 
         break;
