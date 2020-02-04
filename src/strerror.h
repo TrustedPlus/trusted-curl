@@ -7,6 +7,8 @@
 #ifndef STRERROR_H
 #define STRERROR_H
 
+#include "macros.h"
+
 #include <curl/curl.h>
 
 const char* easy_strerror(CURLcode);
