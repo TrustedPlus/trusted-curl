@@ -76,12 +76,15 @@
               }
             }
           },
-          'dependencies': [
-            '<!@(node "<(module_root_dir)/tools/retrieve-win-deps.js")'
-          ],
           'defines' : [
             'CURL_STATICLIB'
-          ]
+          ],
+          'libraries' : [
+		    '-lcrypt32.lib',
+            '-lWldap32.lib',
+            '-lws2_32.lib',
+            '-lNormaliz.lib'
+		  ],
         }, { # OS != "win"
             # Use level 2 optimizations
           'cflags' : [
