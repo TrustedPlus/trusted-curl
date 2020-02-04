@@ -147,18 +147,27 @@
               'defines': [
                   'CURL_STATICLIB',
               ],
-              'libraries': [
-                '<!@(<(curl_config_bin) --static-libs)',
+              'link_settings': {
+                  'libraries': [
+                      '-Wl,-rpath, /opt/cprocsp/lib',
+                      '-framework libcpcurl'
+                  ],
+              },
+                'libraries': [
+                  '-F/opt/cprocsp/lib',
+                  "-framework libcpcurl"
               ],
-              'xcode_settings': {
-                'LD_RUNPATH_SEARCH_PATHS': [
-                  '<!@(<(curl_config_bin) --static-libs | node -e "console.log(require(\'fs\').readFileSync(0, \'utf-8\').split(\' \').filter(i => i.startsWith(\'-L\')).join(\' \').replace(/-L/g, \'\'))")'
+            }, {  # do not use static linking - default
+                'link_settings': {
+                  'libraries': [
+                      '-Wl,-rpath, /opt/cprocsp/lib',
+                      '-framework libcpcurl'
+                  ],
+                },
+                'libraries': [
+                    '-F/opt/cprocsp/lib',
+                    "-framework libcpcurl"
                 ],
-              }
-            }, { # do not use static linking - default
-              'libraries': [
-                '-L <!@(<(curl_config_bin) --prefix)/lib -lcurl'
-              ],
               'xcode_settings': {
                 'LD_RUNPATH_SEARCH_PATHS': [
                   '<!(<(curl_config_bin) --prefix)/lib',
@@ -219,8 +228,8 @@
             'action': [
               'install_name_tool',
               '-change',
-              '<!@(otool -D `curl-config --prefix`/lib/libcurl.dylib | sed -n 2p)',
-              '@rpath/libcurl.dylib',
+              '/opt/cprocsp/lib/libcpcurl.framework/libcpcurl.4.dylib',
+              '/opt/cprocsp/lib/libcpcurl.framework/libcpcurl',
               '<(module_path)/<(module_name).node'
             ],
           },
