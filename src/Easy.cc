@@ -256,23 +256,17 @@ size_t Easy::ReadFunction(char* ptr, size_t size, size_t nmemb, void* userdata) 
         Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
     if (tryCatch.HasCaught()) {
-      if (obj->isInsideMultiHandle) {
-        obj->callbackError.Reset(tryCatch.Exception());
-      } else {
-        tryCatch.ReThrow();
-      }
+      tryCatch.ReThrow();
       return returnValue;
     }
 
     if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
       v8::Local<v8::Value> typeError =
           Nan::TypeError("Return value from the READ callback must be an integer.");
-      if (obj->isInsideMultiHandle) {
-        obj->callbackError.Reset(typeError);
-      } else {
-        Nan::ThrowError(typeError);
-        tryCatch.ReThrow();
-      }
+
+      Nan::ThrowError(typeError);
+      tryCatch.ReThrow();
+
       return returnValue;
     } else {
       returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
@@ -344,23 +338,18 @@ size_t Easy::SeekFunction(void* userdata, curl_off_t offset, int origin) {
           Nan::Call(*(it->second.get()), obj->handle(), argc, argv);
 
       if (tryCatch.HasCaught()) {
-        if (obj->isInsideMultiHandle) {
-          obj->callbackError.Reset(tryCatch.Exception());
-        } else {
-          tryCatch.ReThrow();
-        }
+        tryCatch.ReThrow();
+
         return returnValue;
       }
 
       if (returnValueCallback.IsEmpty() || !returnValueCallback.ToLocalChecked()->IsInt32()) {
         v8::Local<v8::Value> typeError =
             Nan::TypeError("Return value from the SEEK callback must be an integer.");
-        if (obj->isInsideMultiHandle) {
-          obj->callbackError.Reset(typeError);
-        } else {
-          Nan::ThrowError(typeError);
-          tryCatch.ReThrow();
-        }
+
+        Nan::ThrowError(typeError);
+        tryCatch.ReThrow();
+
       } else {
         returnValue = Nan::To<int32_t>(returnValueCallback.ToLocalChecked()).FromJust();
       }

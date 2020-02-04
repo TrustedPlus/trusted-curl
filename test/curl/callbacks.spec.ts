@@ -49,40 +49,6 @@ describe('Callbacks', () => {
 
         curl.perform()
       })
-
-      it('should throw an error on invalid return value', done => {
-        curl.setOpt('URL', `${url}/headers`)
-        curl.setOpt('UPLOAD', true)
-        curl.setOpt('HTTPHEADER', ['x-random-header: random-value'])
-        // @ts-ignore
-        curl.setOpt('TRAILERFUNCTION', () => {
-          return {}
-        })
-
-        curl.setOpt(Curl.option.READFUNCTION, (buffer, size, nmemb) => {
-          const data = 'HELLO'
-          buffer.write(data)
-          return 0
-        })
-
-        curl.on('end', () => {
-          done(new Error('end called - request wast not aborted by request'))
-        })
-
-        curl.on('error', (error, errorCode) => {
-          error.should.be.equal(
-            'Operation was aborted by an application callback',
-          )
-
-          if (errorCode) {
-            errorCode.should.be.equal(CurlCode.CURLE_ABORTED_BY_CALLBACK)
-          }
-
-          done()
-        })
-
-        curl.perform()
-      })
     })
   }
 })

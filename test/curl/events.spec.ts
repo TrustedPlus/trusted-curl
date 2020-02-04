@@ -75,18 +75,13 @@ describe('Events', () => {
     })
 
     curl.on('end', () => {
-      clearTimeout(timeout)
-
       done(Error('end event was called, but the connection was aborted.'))
     })
 
     curl.on('error', (error, errorCode) => {
-      error.should.be.instanceof(Error)
       errorCode.should.be.of
         .type('number')
         .and.equal(CurlCode.CURLE_WRITE_ERROR)
-
-      clearTimeout(timeout)
 
       done()
     })
