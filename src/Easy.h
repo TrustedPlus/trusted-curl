@@ -36,6 +36,7 @@ class Easy : public Nan::ObjectWrap {
   void UnmonitorSockets();
 
   size_t OnData(char* data, size_t size, size_t nmemb);
+  size_t OnHeader(char* data, size_t size, size_t nmemb);
 
   // static members
   static uint32_t counter;
@@ -104,6 +105,7 @@ class Easy : public Nan::ObjectWrap {
   static NAN_METHOD(StrError);
 
   // cURL callbacks
+  static size_t HeaderFunction(char* ptr, size_t size, size_t nmemb, void* userdata);
   static size_t WriteFunction(char* ptr, size_t size, size_t nmemb, void* userdata);
 
   static long CbChunkBgn(curl_fileinfo* transferInfo,  // NOLINT(runtime/int)

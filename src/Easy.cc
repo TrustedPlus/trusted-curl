@@ -71,6 +71,9 @@ Easy::~Easy(void) {
 void Easy::ResetRequiredHandleOptions() {
   curl_easy_setopt(this->ch, CURLOPT_PRIVATE, this);
 
+  curl_easy_setopt(this->ch, CURLOPT_HEADERFUNCTION, Easy::HeaderFunction);
+  curl_easy_setopt(this->ch, CURLOPT_HEADERDATA, this);
+
   curl_easy_setopt(this->ch, CURLOPT_READDATA, this);
 
   curl_easy_setopt(this->ch, CURLOPT_SEEKDATA, this);
@@ -212,6 +215,12 @@ size_t Easy::WriteFunction(char* ptr, size_t size, size_t nmemb, void* userdata)
   return obj->OnData(ptr, size, nmemb);
 }
 
+// Called by libcurl when some chunk of data (from headers) is available
+size_t Easy::HeaderFunction(char* ptr, size_t size, size_t nmemb, void* userdata) {
+  Easy* obj = static_cast<Easy*>(userdata);
+  return obj->OnHeader(ptr, size, nmemb);
+}
+
 size_t Easy::OnData(char* data, size_t size, size_t nmemb) {
   Nan::HandleScope scope;
 
@@ -241,6 +250,49 @@ size_t Easy::OnData(char* data, size_t size, size_t nmemb) {
     retVal = Nan::Call(*(it->second.get()), this->handle(), argc, argv);
   } else {
     retVal = Nan::CallAsFunction(Nan::To<v8::Object>(cbOnData).ToLocalChecked(), this->handle(),
+                                 argc, argv);
+  }
+
+  size_t ret = n;
+
+  if (retVal.IsEmpty()) {
+    ret = 0;
+  } else {
+    ret = Nan::To<uint32_t>(retVal.ToLocalChecked()).FromJust();
+  }
+
+  return ret;
+}
+
+size_t Easy::OnHeader(char* data, size_t size, size_t nmemb) {
+  Nan::HandleScope scope;
+
+  size_t n = size * nmemb;
+
+  CallbacksMap::iterator it = this->callbacks.find(CURLOPT_HEADERFUNCTION);
+  v8::Local<v8::Value> cbOnHeader =
+      Nan::Get(this->handle(), Nan::New(Easy::onHeaderCbSymbol)).ToLocalChecked();
+
+  bool hasHeaderCallback = (it != this->callbacks.end());
+
+  // No callback is set
+  if (!hasHeaderCallback && cbOnHeader->IsUndefined()) {
+    return n;
+  }
+
+  const int argc = 3;
+  v8::Local<v8::Object> buf = Nan::CopyBuffer(data, static_cast<uint32_t>(n)).ToLocalChecked();
+  v8::Local<v8::Uint32> sizeArg = Nan::New<v8::Uint32>(static_cast<uint32_t>(size));
+  v8::Local<v8::Uint32> nmembArg = Nan::New<v8::Uint32>(static_cast<uint32_t>(nmemb));
+
+  v8::Local<v8::Value> argv[argc] = {buf, sizeArg, nmembArg};
+  Nan::MaybeLocal<v8::Value> retVal;
+
+  // Callback set with HEADERFUNCTION has priority over the onHeader one.
+  if (hasHeaderCallback) {
+    retVal = Nan::Call(*(it->second.get()), this->handle(), argc, argv);
+  } else {
+    retVal = Nan::CallAsFunction(Nan::To<v8::Object>(cbOnHeader).ToLocalChecked(), this->handle(),
                                  argc, argv);
   }
 
@@ -1035,6 +1087,18 @@ NAN_METHOD(Easy::SetOpt) {
           curl_easy_setopt(obj->ch, CURLOPT_FNMATCH_DATA, obj);
           setOptRetCode = curl_easy_setopt(obj->ch, CURLOPT_FNMATCH_FUNCTION, Easy::CbFnMatch);
         }
+        break;
+
+      case CURLOPT_HEADERFUNCTION:
+
+        setOptRetCode = CURLE_OK;
+
+        obj->callbacks.erase(CURLOPT_HEADERFUNCTION);
+
+        if (!isNull) {
+          obj->callbacks[CURLOPT_HEADERFUNCTION].reset(new Nan::Callback(value.As<v8::Function>()));
+        }
+
         break;
 
       case CURLOPT_PROGRESSFUNCTION:

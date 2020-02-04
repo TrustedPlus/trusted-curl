@@ -17,6 +17,15 @@ const handle = new Easy()
 // Just like before, we can use the option name, or the constant
 handle.setOpt('URL', url)
 
+// This is used to receive the headers
+// See https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html
+handle.setOpt(Curl.option.HEADERFUNCTION, function(buf, size, nmemb) {
+  console.log('HEADERFUNCTION: ')
+  console.log(arguments)
+
+  return size * nmemb
+})
+
 // This is used to receive the response data
 // See https://curl.haxx.se/libcurl/c/CURLOPT_WRITEFUNCTION.html
 handle.setOpt(Curl.option.WRITEFUNCTION, function(buf, size, nmemb) {

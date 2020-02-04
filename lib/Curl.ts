@@ -136,6 +136,13 @@ class Curl extends EventEmitter {
   protected chunks: Buffer[]
   protected chunksLength: number
 
+  /**
+   * Stores current headers payload
+   * This will not store anything in case the NO_DATA_STORAGE flag is enabled
+   */
+  protected headerChunks: Buffer[]
+  protected headerChunksLength: number
+
   protected features: CurlFeature
 
   /**
@@ -170,11 +177,17 @@ class Curl extends EventEmitter {
       Curl.option.WRITEFUNCTION,
       this.defaultWriteFunction.bind(this),
     )
+    handle.setOpt(
+      Curl.option.HEADERFUNCTION,
+      this.defaultHeaderFunction.bind(this),
+    )
 
     handle.setOpt(Curl.option.USERAGENT, Curl.defaultUserAgent)
 
     this.chunks = []
     this.chunksLength = 0
+    this.headerChunks = []
+    this.headerChunksLength = 0
 
     this.features = 0
 
@@ -194,6 +207,17 @@ class Curl extends EventEmitter {
     return size * nmemb
   }
 
+  protected defaultHeaderFunction(chunk: Buffer, size: number, nmemb: number) {
+    if (!(this.features & CurlFeature.NoHeaderStorage)) {
+      this.headerChunks.push(chunk)
+      this.headerChunksLength += chunk.length
+    }
+
+    this.emit('header', chunk, this)
+
+    return size * nmemb
+  }
+
   /**
    * Event called when an error is thrown on this handle.
    */
@@ -202,6 +226,8 @@ class Curl extends EventEmitter {
 
     this.chunks = []
     this.chunksLength = 0
+    this.headerChunks = []
+    this.headerChunksLength = 0
 
     this.emit('error', error, errorCode, this)
   }
@@ -224,10 +250,15 @@ class Curl extends EventEmitter {
     const dataRaw = isDataStorageEnabled
       ? mergeChunks(this.chunks, this.chunksLength)
       : Buffer.alloc(0)
-    const headersRaw = Buffer.alloc(0)
+    const headersRaw = isHeaderStorageEnabled
+      ? mergeChunks(this.headerChunks, this.headerChunksLength)
+      : Buffer.alloc(0)
 
     this.chunks = []
     this.chunksLength = 0
+
+    this.headerChunks = []
+    this.headerChunksLength = 0
 
     const data = isDataParsingEnabled ? decoder.write(dataRaw) : dataRaw
     const headers = isHeaderParsingEnabled
@@ -280,7 +311,7 @@ class Curl extends EventEmitter {
     // we are using never as arguments here, because we want to make sure the client
     //  uses one of the overloaded types
 
-    // special case for WRITEFUNCTION callbacks
+    // special case for WRITEFUNCTION and HEADERFUNCTION callbacks
     //  since if they are set back to null, we must restore the default callback.
     let value = optionValue
     if (
@@ -289,6 +320,12 @@ class Curl extends EventEmitter {
       !optionValue
     ) {
       value = this.defaultWriteFunction.bind(this) as never
+    } else if (
+      (optionIdOrName === Curl.option.HEADERFUNCTION ||
+        optionIdOrName === 'HEADERFUNCTION') &&
+      !optionValue
+    ) {
+      value = this.defaultHeaderFunction.bind(this) as never
     }
 
     const code = this.handle.setOpt(optionIdOrName, value)
@@ -378,6 +415,7 @@ class Curl extends EventEmitter {
     this.removeAllListeners()
 
     this.handle.setOpt(Curl.option.WRITEFUNCTION, null)
+    this.handle.setOpt(Curl.option.HEADERFUNCTION, null)
 
     this.handle.close()
   }
