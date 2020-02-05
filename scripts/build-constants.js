@@ -58,17 +58,6 @@ const run = async () => {
     filePath: curlInfoFilePath,
   })
 
-  const allowedMultiOptions = await retrieveConstantList({
-    url: 'https://curl.haxx.se/libcurl/c/curl_multi_setopt.html',
-    constantPrefix: 'CURLMOPT_',
-    blacklist: multiOptionsBlacklist,
-  })
-  await createConstantsFile({
-    constants: allowedMultiOptions,
-    variableName: 'MultiOption',
-    filePath: multiOptionFilePath,
-  })
-
   // add extra types to CurlOption
   const union = arr => arr.map(i => inspect(i)).join(' | ')
 
@@ -110,9 +99,7 @@ const run = async () => {
     optionsValueTypeData = [
       ...optionsValueTypeData,
       `${optionDescription}${option.constantName}?: ${optionValueType} | null`,
-      `${optionDescription}${
-        option.constantNameCamelCase
-      }?: ${optionValueType} | null`,
+      `${optionDescription}${option.constantNameCamelCase}?: ${optionValueType} | null`,
     ]
   }
 
