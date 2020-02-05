@@ -130,7 +130,7 @@ const std::vector<CurlConstant> curlOptionNotImplemented = {
 #endif
 
 #if NODE_LIBCURL_VER_GE(7, 18, 0)
-    {"PROXY_TRANSFER_MODE ", CURLOPT_PROXY_TRANSFER_MODE},
+    {"PROXY_TRANSFER_MODE", CURLOPT_PROXY_TRANSFER_MODE},
 #endif
 };
 
