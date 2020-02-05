@@ -7,18 +7,13 @@ _Based on the work from [jiangmiao/node-curl](https://github.com/jiangmiao/node-
   - [Install](#install)
   - [Simple Request - Async / Await](#simple-request---async--await)
   - [Simple Request](#simple-request)
-  - [MultiPart Upload / HttpPost libcurl Option](#multipart-upload--httppost-libcurl-option)
 - [API](#api)
-- [Supported Libcurl Versions](#supported-libcurl-versions)
 - [Detailed Installation](#detailed-installation)
-  - [Important Notes on Prebuilt Binaries / Direct Installation](#important-notes-on-prebuilt-binaries--direct-installation)
-    - [Missing Packages](#missing-packages)
   - [Building on Linux](#building-on-linux)
   - [Building on macOS](#building-on-macos)
     - [Xcode &gt;= 10 | macOS Mojave](#xcode-gt-10--macos-mojave)
   - [Building on Windows](#building-on-windows)
-  - [Electron / NW.js](#electron--nwjs)
-    - [NW.js (aka node-webkit)](#nwjs-aka-node-webkit)
+  - [Electron](#electron--nwjs)
     - [electron (aka atom-shell)](#electron-aka-atom-shell)
 - [Getting Help](#getting-help)
 - [Contributing](#contributing)
@@ -28,18 +23,26 @@ _Based on the work from [jiangmiao/node-curl](https://github.com/jiangmiao/node-
 ### Install
 windows
 ```bat
-git clone --recurse-submodules https://github.com/TrustedPlus/trusted-curl.git
-cd trusted-curl\deps\curl-for-windows
-python configure.py
-cd ../..
-npm install --build-from-source
+git clone https://github.com/TrustedPlus/trusted-curl.git
+cd ./trusted-curl
+git checkout whitelist
+npm install --build-from-source --curl_include_dirs="D:\\curl\\builds\\libcurl-vc15-x64-release-static-ipv6-sspi-winssl\\include" --curl_libraries="D:\\curl\\builds\\libcurl-vc15-x64-release-static-ipv6-sspi-winssl\\lib\\libcurl_a.lib"
 tsc
 ```
 linux
 ```shell
 git clone https://github.com/TrustedPlus/trusted-curl.git
 cd ./trusted-curl
-npm install --build-from-source
+git checkout whitelist
+npm install --build-from-source --curl_include_dirs="/opt/cprocsp/include" --curl_libraries="/opt/cprocsp/lib/amd64/libcpcurl.so"
+tsc
+```
+macos
+```shell
+git clone https://github.com/TrustedPlus/trusted-curl.git
+cd ./trusted-curl
+git checkout whitelist
+npm install --build-from-source --curl_include_dirs="/opt/cprocsp/include"
 tsc
 ```
 ### Simple Request - Async / Await
@@ -82,26 +85,6 @@ curl.setOpt(Curl.option.HTTPHEADER,
   ['Content-Type: application/x-amz-json-1.1'])
 ```
 
-### MultiPart Upload / HttpPost libcurl Option
-
-```javascript
-const { Curl } = require('trusted-curl');
-
-const curl = new Curl();
-const close = curl.close.bind(curl);
-
-curl.setOpt(Curl.option.URL, '127.0.0.1/upload.php');
-curl.setOpt(Curl.option.HTTPPOST, [
-    { name: 'input-name', file: '/file/path', type: 'text/html' },
-    { name: 'input-name2', contents: 'field-contents' }
-]);
-
-curl.on('end', close);
-curl.on('error', close);
-```
-
-For more examples check the [examples folder](./examples).
-
 ## API
 
 The code provides Typescript type definitions, which should document most of the API.
@@ -110,103 +93,30 @@ Almost all [CURL options](https://curl.haxx.se/libcurl/c/curl_easy_setopt.html) 
 
 For more usage examples check the [examples folder](./examples).
 
-## Supported Libcurl Versions
-
-The addon is only tested against libcurl version `7.50.0` and the latest one available.
-
-The code itself is made to compile with any version greater than `7.32.0`, any libcurl version lower than that is **not** supported.
-
 ## Detailed Installation
 
 The latest version of this package has prebuilt binaries (thanks to [node-pre-gyp](https://github.com/mapbox/node-pre-gyp/)) 
  available for:
 * node.js: Latest two versions on active LTS (see https://github.com/nodejs/Release)
 * electron v5, v4 and v3
-* nw.js (node-webkit): Latest two versions
-and on the following platforms:
+* following platforms:
 * Linux 64 bits
 * Mac OS X 64 bits
 * Windows 32 and 64 bits
-
-Installing via `yarn add trusted-curl` or `npm install trusted-curl` should download a prebuilt binary and no compilation will be needed. However if you trying to install on `nw.js` or `electron` additional steps will be required, check their corresponding section on building from source.
-
-The prebuilt binary is statically built with the following library versions, features and protocols:
-```
-Version: libcurl/7.64.1 OpenSSL/1.1.0j zlib/1.2.11 brotli/1.0.7 libidn2/2.1.1 libssh2/1.8.2 nghttp2/1.34.0
-Features: AsynchDNS, IDN, IPv6, Largefile, NTLM, NTLM_WB, SSL, libz, brotli, TLS-SRP, HTTP2, UnixSockets, HTTPS-proxy
-Protocols: dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, pop3, pop3s, rtsp, scp, sftp, smb, smbs, smtp, smtps, telnet, tftp
-```
-
-If there is no prebuilt binary available that matches your system, or if the installation fails, then you will need an environment capable of compiling Node.js addons, which means [python 2.7](https://www.python.org/download/releases/2.7) installed and an updated C++ compiler able to compile C++11.
-
-If you don't want to use the prebuilt binary even if it works on your system, you can pass a flag when installing:
-> With `npm`
-```sh
-npm install trusted-curl --build-from-source
-```
-> With `yarn`
-```sh
-npm_config_build_from_source=true yarn add trusted-curl
-```
-
-### Important Notes on Prebuilt Binaries / Direct Installation
-
-> Those notes are not important when building on Windows
-
-The prebuilt binaries are statically linked with `brotli`, `libidn2`, `libssh2`, `openLDAP`, `OpenSSL` `nghttp2` and `zlib`.
-
-The `brotli`, `nghttp2`, `OpenSSL` and `zlib` versions **must** match the version Node.js uses, this is necessary to avoid any possible issues by mixing library symbols of different versions, since Node.js also exports some of the symbols of their deps.
-
-In case you are building the addon yourself with the libraries mentioned above, you must make sure their version is ABI compatible with the one Node.js uses, otherwise you are probably going to hit a Segmentation Fault.
-
-If you want to build a statically linked version of the addon yourself, you need to pass the `curl_static_build=true` flag when calling install.
-
-> If using `npm`:
-```sh
-npm install trusted-curl --build-from-source --curl_static_build=true
-```
-> If using `yarn`:
-```sh
-npm_config_build_from_source=true npm_config_curl_static_build=true yarn add trusted-curl
-```
-
-The build process will use `curl-config` available on path, if you want to overwrite it to your own libcurl installation one, you can set the `curl_config_bin` variable, like mentioned above for `curl_static_build`.
-
-And if you don't want to use `curl-config`, you can pass two extra variables to control the build process:
-- `curl_include_dirs`
-    Space separated list of directories to search for header files
-- `curl_libraries`
-    Space separated list of flags to pass to the linker
-
-#### Missing Packages
-
-The statically linked version currently does not have support for `GSS-API`, `SPNEGO`, `KERBEROS`, `RTMP`, `Metalink`, `PSL` and `Alt-svc`.
-
-The scripts to build Kerberos exists on the `./scripts/ci` folder, but it was removed for two reasons:
-- If built with Heimdal, the addon becomes too big
-- If built with MIT Kerberos, the addon would be bound to their licensing terms.
 
 ### Building on Linux
 
 To build the addon on linux based systems you must have:
 - gcc >= 4.8
-- libcurl dev files
 - python 2.7
-
-If you are on a debian based system, you can get those by running:
-```bash
-sudo apt-get install python libcurl4-openssl-dev build-essential
-```
-
-If you don't want to use the libcurl version shipped with your system, since it's probably very old, you can install libcurl from source, for the addon to use that libcurl version you can use the variable mentioned above, `curl_config_bin`.
-
-In case you want some examples check the CI configuration files ([`.travis.yml`](./.travis.yml), [`.circleci/config.yml`](./.circleci/config.yml)) and the [`scripts/ci/`](./scripts/ci) folder.
+- cryptopro csp 5.0 with dev package
 
 ### Building on macOS
 
 On macOS you must have:
 - macOS >= 10.12 (Sierra)
 - Xcode Command Line Tools
+- cryptopro csp 5.0 with dev package
 
 You can check if you have Xcode Command Line Tools be running:
 ```sh
@@ -247,6 +157,7 @@ If building from source, you must have:
 - Python 2.7
 - [Visual Studio >= 2017](https://visualstudio.microsoft.com/downloads/)
 - [nasm](https://www.nasm.us/)
+- prebuild libcurl
 
 Python 2.7 and the Visual Studio compiler can be installed by running:
 ```sh
@@ -258,33 +169,11 @@ npm install --global --production windows-build-tools
 cinst nasm
 ```
 
-Currently there is no support to use other libcurl version than the one provided by the [curl-for-windows](https://github.com/JCMais/curl-for-windows) submodule (help is appreciated on adding this feature).
+### Electron
 
-An important note about building the addon on Windows is that we have to do some "hacks" with the header files included by `node-gyp`/`nw-gyp`. The reason for that is because as we are using a standalone version of OpenSSL, we don't want to use the OpenSSL headers provided by Node.js, which are by default added to `<nw-gyp-or-node-gyp-folder>/include/node/openssl`, so what we do is that before compilation that folder is renamed to `openssl.disabled`. After a successful installation the folder is renamed back to their original name, **however** if any error happens during compilation the folder will stay renamed until the addon is compiled successfully. More info on why that was needed and some context can be found on issue [#164](https://github.com/JCMais/trusted-curl/issues/164).
-
-### Electron / NW.js
-
-If building for a `Electron` or `NW.js` you need to pass additional parameters to the install command.
+If building for a `Electron` you need to pass additional parameters to the install command.
 
 If you are trying to use the prebuilt binary (if available), do not pass the `npm_config_build_from_source=true` / `--build-from-source` below.
-
-#### NW.js (aka node-webkit)
-For building from source on NW.js you first need to make sure you have nw-gyp installed globally:
-`yarn global add nw-gyp` or `npm i -g nw-gyp`
-
-> If on Windows, you also need addition steps, currently the available win_delay_load_hook.cc on `nw-gyp` is not working with this addon, so it's necessary to apply a patch to it. The patch can be found on `./scripts/ci/patches/win_delay_load_hook.cc.patch`, and should be applied to the file on `<nw-gyp-folder>/src/win_delay_load_hook.cc`.
-
-Then:
-> yarn
-```
-npm_config_build_from_source=true npm_config_runtime=node-webkit npm_config_target=0.38.2 yarn add trusted-curl
-```
-> npm
-```bash
-npm install trusted-curl --build-from-source --runtime=node-webkit --target=0.38.2 --save
-```
-
-where `target` is the current version of NW.js you are using
 
 #### electron (aka atom-shell)
 
