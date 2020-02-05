@@ -1,7 +1,10 @@
 {
   "name": "trusted-curl",
   "version": "3.0.0",
-  "author": "Jonathan Cardoso <me@jonathancardoso.com>",
+  "author": "Trusted Plus development team",
+  "contributors": [
+    "Aleksandr Gavrilov <alg@digt.ru> (https://github.com/algv)"
+  ],
   "description": "Node bindings for libcurl. Based on the work from node-curl.",
   "keywords": [
     "node-curl",
