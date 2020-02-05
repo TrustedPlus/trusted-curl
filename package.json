@@ -1,6 +1,6 @@
 {
   "name": "trusted-curl",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "author": "Jonathan Cardoso <me@jonathancardoso.com>",
   "description": "Node bindings for libcurl. Based on the work from node-curl.",
   "keywords": [
