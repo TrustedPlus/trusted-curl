@@ -8,7 +8,7 @@ import 'should'
 
 import { Curl } from '../../lib'
 
-const url = 'https://example.com'
+const url = 'http://example.com'
 
 let curl: Curl
 describe('getInfo()', () => {
