@@ -14,7 +14,7 @@
   },
   'targets': [
     {
-      'target_name': '<(module_name)',
+      'target_name': 'trusted_curl',
       'type': 'loadable_module',
       'sources': [
         'src/strerror.cc',
@@ -214,11 +214,11 @@
     {
       'target_name': 'action_after_build',
       'type': 'none',
-      'dependencies': [ '<(module_name)' ],
+      'dependencies': [ 'trusted_curl' ],
       'copies': [
         {
-          'files': [ '<(PRODUCT_DIR)/<(module_name).node' ],
-          'destination': '<(module_path)'
+          'files': [ '<(PRODUCT_DIR)/trusted_curl.node' ],
+          'destination': './lib/binding/'
         }
       ],
       'conditions': [['OS=="mac" and curl_static_build!="true"', {
@@ -230,7 +230,7 @@
               '-change',
               '/opt/cprocsp/lib/libcpcurl.framework/libcpcurl.4.dylib',
               '/opt/cprocsp/lib/libcpcurl.framework/libcpcurl',
-              '<(module_path)/<(module_name).node'
+              './lib/binding//trusted_curl.node'
             ],
           },
         ]

@@ -49,14 +49,6 @@
     "host": "https://github.com/TrustedPlus/trusted-curl/releases/download",
     "remote_path": "./v{version}/"
   },
-  "dependencies": {
-    "env-paths": "2.2.0",
-    "nan": "2.14.0",
-    "node-gyp": "5.0.3",
-    "node-pre-gyp": "0.13.0",
-    "npmlog": "4.1.2",
-    "tslib": "^1.10.0"
-  },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.3.8",
     "@microsoft/api-extractor": "^7.3.2",
@@ -71,6 +63,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cookie-parser": "^1.4.4",
     "electron-mocha": "^8.1.0",
+    "env-paths": "^2.2.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
@@ -80,7 +73,11 @@
     "lint-staged": "^9.2.0",
     "mocha": "^6.2.0",
     "multiparty": "^4.2.1",
+    "nan": "^2.14.0",
+    "node-gyp": "^5.0.3",
+    "node-pre-gyp": "^0.13.0",
     "np": "^5.0.3",
+    "npmlog": "^4.1.2",
     "octonode": "^0.9.5",
     "prettier": "^1.18.2",
     "progress": "^2.0.3",
@@ -115,5 +112,8 @@
       "commitmsg": "commitlint -e $HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "tslib": "^1.10.0"
   }
 }
