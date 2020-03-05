@@ -908,7 +908,7 @@ NAN_METHOD(Easy::SetOpt) {
 #define CURLE_UNKNOWN_OPTION CURLE_UNKNOWN_TELNET_OPTION
 #endif
 
-  CURLcode setOptRetCode = CURLE_UNKNOWN_TELNET_OPTION;
+  CURLcode setOptRetCode = CURLE_UNKNOWN_OPTION;
 
   int optionId;
 
