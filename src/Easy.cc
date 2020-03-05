@@ -903,8 +903,12 @@ NAN_METHOD(Easy::SetOpt) {
 
   v8::Local<v8::Value> opt = info[0];
   v8::Local<v8::Value> value = info[1];
+    
+#ifndef CURLE_UNKNOWN_OPTION
+#define CURLE_UNKNOWN_OPTION CURLE_UNKNOWN_TELNET_OPTION
+#endif
 
-  CURLcode setOptRetCode = CURLE_UNKNOWN_OPTION;
+  CURLcode setOptRetCode = CURLE_UNKNOWN_TELNET_OPTION;
 
   int optionId;
 

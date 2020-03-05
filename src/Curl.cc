@@ -24,7 +24,9 @@ bool isLibcurlBuiltWithThreadedResolver = true;
 const std::vector<CurlConstant> curlOptionNotImplemented = {
     // Options that are complex to add support for.
     {"SSL_CTX_FUNCTION", CURLOPT_SSL_CTX_FUNCTION},
+#ifdef CURLOPT_CLOSESOCKETFUNCTION
     {"CLOSESOCKETFUNCTION", CURLOPT_CLOSESOCKETFUNCTION},
+#endif
     {"SOCKOPTFUNCTION", CURLOPT_SOCKOPTFUNCTION},
 
 #if NODE_LIBCURL_VER_GE(7, 59, 0)
@@ -58,7 +60,9 @@ const std::vector<CurlConstant> curlOptionNotImplemented = {
     {"IOCTLDATA", CURLOPT_IOCTLDATA},
     {"SOCKOPTDATA", CURLOPT_SOCKOPTDATA},
     {"OPENSOCKETDATA", CURLOPT_OPENSOCKETDATA},
+#ifdef CURLOPT_CLOSESOCKETDATA
     {"CLOSESOCKETDATA", CURLOPT_CLOSESOCKETDATA},
+#endif
     {"SSL_CTX_DATA", CURLOPT_SSL_CTX_DATA},
     {"INTERLEAVEDATA", CURLOPT_INTERLEAVEDATA},
     {"CHUNK_DATA", CURLOPT_CHUNK_DATA},
@@ -135,7 +139,9 @@ const std::vector<CurlConstant> curlOptionNotImplemented = {
 };
 
 const std::vector<CurlConstant> curlOptionInteger = {
+#ifdef CURLOPT_ACCEPTTIMEOUT_MS
     {"ACCEPTTIMEOUT_MS", CURLOPT_ACCEPTTIMEOUT_MS},
+#endif
     {"ADDRESS_SCOPE", CURLOPT_ADDRESS_SCOPE},
     {"APPEND", CURLOPT_APPEND},
     {"AUTOREFERER", CURLOPT_AUTOREFERER},
@@ -176,7 +182,9 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"FTP_USE_EPRT", CURLOPT_FTP_USE_EPRT},
     {"FTP_USE_EPSV", CURLOPT_FTP_USE_EPSV},
     {"FTP_USE_PRET", CURLOPT_FTP_USE_PRET},
+#ifdef CURLOPT_GSSAPI_DELEGATION
     {"GSSAPI_DELEGATION", CURLOPT_GSSAPI_DELEGATION},
+#endif
 
 #if NODE_LIBCURL_VER_GE(7, 59, 0)
     {"HAPPY_EYEBALLS_TIMEOUT_MS", CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS},
@@ -255,7 +263,9 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"RTSP_CLIENT_CSEQ", CURLOPT_RTSP_CLIENT_CSEQ},
     {"RTSP_REQUEST", CURLOPT_RTSP_REQUEST},
     {"RTSP_SERVER_CSEQ", CURLOPT_RTSP_SERVER_CSEQ},
+#ifdef CURLOPT_SASL_IR
     {"SASL_IR", CURLOPT_SASL_IR},
+#endif
 
 #if NODE_LIBCURL_VER_GE(7, 55, 0)
     {"SOCKS5_AUTH", CURLOPT_SOCKS5_AUTH},
@@ -291,9 +301,15 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"TCP_FASTOPEN", CURLOPT_TCP_FASTOPEN},
 #endif
 
+#ifdef CURLOPT_TCP_KEEPALIVE
     {"TCP_KEEPALIVE", CURLOPT_TCP_KEEPALIVE},
+#endif
+#ifdef CURLOPT_TCP_KEEPIDLE
     {"TCP_KEEPIDLE", CURLOPT_TCP_KEEPIDLE},
+#endif
+#ifdef CURLOPT_TCP_KEEPINTVL
     {"TCP_KEEPINTVL", CURLOPT_TCP_KEEPINTVL},
+#endif
     {"TCP_NODELAY", CURLOPT_TCP_NODELAY},
     {"TFTP_BLKSIZE", CURLOPT_TFTP_BLKSIZE},
     {"TIMECONDITION", CURLOPT_TIMECONDITION},
@@ -301,7 +317,9 @@ const std::vector<CurlConstant> curlOptionInteger = {
     {"TIMEOUT_MS", CURLOPT_TIMEOUT_MS},
     {"TIMEVALUE", CURLOPT_TIMEVALUE},
     {"TRANSFERTEXT", CURLOPT_TRANSFERTEXT},
+#ifdef CURLOPT_TRANSFER_ENCODING
     {"TRANSFER_ENCODING", CURLOPT_TRANSFER_ENCODING},
+#endif
     {"UNRESTRICTED_AUTH", CURLOPT_UNRESTRICTED_AUTH},
     {"UPLOAD", CURLOPT_UPLOAD},
 
@@ -326,7 +344,9 @@ const std::vector<CurlConstant> curlOptionInteger = {
 };
 
 const std::vector<CurlConstant> curlOptionString = {
+#ifdef CURLOPT_ACCEPT_ENCODING
     {"ACCEPT_ENCODING", CURLOPT_ACCEPT_ENCODING},
+#endif
     {"CAINFO", CURLOPT_CAINFO},
     {"CAPATH", CURLOPT_CAPATH},
     {"COOKIE", CURLOPT_COOKIE},
@@ -346,7 +366,9 @@ const std::vector<CurlConstant> curlOptionString = {
     {"DNS_LOCAL_IP6", CURLOPT_DNS_LOCAL_IP6},
 #endif
 
+#ifdef CURLOPT_DNS_SERVERS
     {"DNS_SERVERS", CURLOPT_DNS_SERVERS},
+#endif
 
 #if NODE_LIBCURL_VER_GE(7, 62, 0)
     {"DOH_URL", CURLOPT_DOH_URL},
@@ -366,7 +388,9 @@ const std::vector<CurlConstant> curlOptionString = {
     {"LOGIN_OPTIONS", CURLOPT_LOGIN_OPTIONS},
 #endif
 
+#ifdef CURLOPT_MAIL_AUTH
     {"MAIL_AUTH", CURLOPT_MAIL_AUTH},
+#endif
     {"MAIL_FROM", CURLOPT_MAIL_FROM},
     {"NETRC_FILE", CURLOPT_NETRC_FILE},
     {"NOPROXY", CURLOPT_NOPROXY},
@@ -441,9 +465,15 @@ const std::vector<CurlConstant> curlOptionString = {
     {"TLS13_CIPHERS", CURLOPT_TLS13_CIPHERS},
 #endif
 
+#ifdef CURLOPT_TLSAUTH_PASSWORD
     {"TLSAUTH_PASSWORD", CURLOPT_TLSAUTH_PASSWORD},
+#endif
+#ifdef CURLOPT_TLSAUTH_TYPE
     {"TLSAUTH_TYPE", CURLOPT_TLSAUTH_TYPE},
+#endif
+#ifdef CURLOPT_TLSAUTH_USERNAME
     {"TLSAUTH_USERNAME", CURLOPT_TLSAUTH_USERNAME},
+#endif
 
 #if NODE_LIBCURL_VER_GE(7, 40, 0)
     {"UNIX_SOCKET_PATH", CURLOPT_UNIX_SOCKET_PATH},

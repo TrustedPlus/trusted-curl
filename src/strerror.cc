@@ -15,33 +15,45 @@ const char* easy_strerror(CURLcode error) {
     case CURLE_URL_MALFORMAT:
       return "URL using bad/illegal format or missing URL";
 
+#ifdef CURLE_NOT_BUILT_IN
     case CURLE_NOT_BUILT_IN:
       return "A requested feature, protocol or option was not found built-in in"
              " this libcurl due to a build-time decision.";
+#endif
 
     case CURLE_COULDNT_RESOLVE_PROXY:
       return "Couldn't resolve proxy name";
 
+#ifndef CURLM_UNKNOWN_OPTION
     case CURLE_COULDNT_RESOLVE_HOST:
       return "Couldn't resolve host name";
+#endif
 
     case CURLE_COULDNT_CONNECT:
       return "Couldn't connect to server";
 
+#ifdef CURLE_WEIRD_SERVER_REPLY
     case CURLE_WEIRD_SERVER_REPLY:
       return "Weird server reply";
+#endif
 
     case CURLE_REMOTE_ACCESS_DENIED:
       return "Access denied to remote resource";
 
+#ifdef CURLE_FTP_ACCEPT_FAILED
     case CURLE_FTP_ACCEPT_FAILED:
       return "FTP: The server failed to connect to data port";
+#endif
 
+#ifdef CURLE_FTP_ACCEPT_TIMEOUT
     case CURLE_FTP_ACCEPT_TIMEOUT:
       return "FTP: Accepting server connect has timed out";
+#endif
 
+#ifndef CURLE_FTP_PRET_FAILED
     case CURLE_FTP_PRET_FAILED:
       return "FTP: The server did not accept the PRET command.";
+#endif
 
     case CURLE_FTP_WEIRD_PASS_REPLY:
       return "FTP: unknown PASS reply";
@@ -55,8 +67,10 @@ const char* easy_strerror(CURLcode error) {
     case CURLE_FTP_CANT_GET_HOST:
       return "FTP: can't figure out the host in the PASV response";
 
+#ifdef CURLE_HTTP2
     case CURLE_HTTP2:
       return "Error in the HTTP2 framing layer";
+#endif
 
     case CURLE_FTP_COULDNT_SET_TYPE:
       return "FTP: couldn't set file type";
@@ -130,8 +144,15 @@ const char* easy_strerror(CURLcode error) {
     case CURLE_TOO_MANY_REDIRECTS:
       return "Number of redirects hit maximum amount";
 
+#ifdef CURLE_UNKNOWN_OPTION
     case CURLE_UNKNOWN_OPTION:
       return "An unknown option was passed in to libcurl";
+#endif
+          
+#ifdef CURLE_UNKNOWN_TELNET_OPTION
+      case CURLE_UNKNOWN_TELNET_OPTION:
+          return "An unknown option was passed in to libcurl";
+#endif
 
     case CURLE_TELNET_OPTION_SYNTAX:
       return "Malformed telnet option";
@@ -241,20 +262,30 @@ const char* easy_strerror(CURLcode error) {
     case CURLE_CHUNK_FAILED:
       return "Chunk callback failed";
 
+#ifdef CURLE_NO_CONNECTION_AVAILABLE
     case CURLE_NO_CONNECTION_AVAILABLE:
       return "The max connection limit is reached";
+#endif
 
+#ifdef CURLE_SSL_PINNEDPUBKEYNOTMATCH
     case CURLE_SSL_PINNEDPUBKEYNOTMATCH:
       return "SSL public key does not match pinned public key";
+#endif
 
+#ifdef CURLE_SSL_INVALIDCERTSTATUS
     case CURLE_SSL_INVALIDCERTSTATUS:
       return "SSL server certificate status verification FAILED";
+#endif
 
+#ifdef CURLE_HTTP2_STREAM
     case CURLE_HTTP2_STREAM:
       return "Stream error in the HTTP/2 framing layer";
+#endif
 
+#ifdef CURLE_RECURSIVE_API_CALL
     case CURLE_RECURSIVE_API_CALL:
       return "API function called from within callback";
+#endif
 
 #if NODE_LIBCURL_VER_GE(7, 66, 0)
     case CURLE_AUTH_ERROR:
@@ -270,7 +301,9 @@ const char* easy_strerror(CURLcode error) {
     case CURLE_OBSOLETE44:
     case CURLE_OBSOLETE46:
     case CURLE_OBSOLETE50:
+#ifdef CURLE_OBSOLETE51
     case CURLE_OBSOLETE51:
+#endif
     case CURLE_OBSOLETE57:
     case CURL_LAST:
       break;
