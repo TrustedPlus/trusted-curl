@@ -1471,24 +1471,48 @@ NAN_METHOD(Easy::GetInfo) {
     curl_slist* curr;
 
     curlInfo = static_cast<CURLINFO>(infoId);
-    code = curl_easy_getinfo(obj->ch, curlInfo, &linkedList);
+    if (CURLINFO_CERTINFO == curlInfo) {
+      curl_certinfo *ci = NULL;
+      code = curl_easy_getinfo(obj->ch, curlInfo, &ci);
 
-    if (code == CURLE_OK) {
-      v8::Local<v8::Array> arr = Nan::New<v8::Array>();
+      if (code == CURLE_OK) {
+        v8::Local<v8::Array> arr = Nan::New<v8::Array>();
+        for( int i = 0; i < ci->num_of_certs; i++) {
+          linkedList = ci->certinfo[i];
 
-      if (linkedList) {
-        curr = linkedList;
+          if (linkedList) {
+            curr = linkedList;
 
-        while (curr) {
-          arr->Set(arr->CreationContext(), arr->Length(),
-                   Nan::New<v8::String>(curr->data).ToLocalChecked());
-          curr = curr->next;
+            while (curr) {
+              arr->Set(arr->CreationContext(), arr->Length(),
+                      Nan::New<v8::String>(curr->data).ToLocalChecked());
+              curr = curr->next;
+            }
+          }
+        }
+        retVal = arr;
+      }
+    }
+    else {
+      code = curl_easy_getinfo(obj->ch, curlInfo, &linkedList);
+
+      if (code == CURLE_OK) {
+        v8::Local<v8::Array> arr = Nan::New<v8::Array>();
+
+        if (linkedList) {
+          curr = linkedList;
+
+          while (curr) {
+            arr->Set(arr->CreationContext(), arr->Length(),
+                    Nan::New<v8::String>(curr->data).ToLocalChecked());
+            curr = curr->next;
+          }
+
+          curl_slist_free_all(linkedList);
         }
 
-        curl_slist_free_all(linkedList);
+        retVal = arr;
       }
-
-      retVal = arr;
     }
   }
 

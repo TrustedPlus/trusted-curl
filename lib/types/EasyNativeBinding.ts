@@ -20,7 +20,7 @@ import { SocketState } from '../enum/SocketState'
 import { FileInfo, HttpPostField } from './'
 
 export interface GetInfoReturn {
-  data: number | string | null
+  data: number | string | any[] | null
   code: CurlCode
 }
 
